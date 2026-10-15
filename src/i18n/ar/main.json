@@ -268,7 +268,8 @@
   "ui": {
     "language": "اللغة",
     "open_menu": "فتح القائمة",
-    "close_menu": "إغلاق القائمة"
+    "close_menu": "إغلاق القائمة",
+    "breadcrumb": "مسار التنقل"
   },
   "partners": {
     "label": "الشركات الشريكة",

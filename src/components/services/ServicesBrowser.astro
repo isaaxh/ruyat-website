@@ -1,0 +1,108 @@
+---
+// All Services: category filter tabs with a live count, over the full grid of service cards.
+import { categoryKey, fmt, getServices, type Locale } from '../../i18n';
+import ServiceCard from './ServiceCard.astro';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const s = getServices(lang);
+const p = s.all_services_page;
+// Tab 0 is "All"; the rest map, in order, to the category keys (Business Setup, Government, Umrah & Hajj).
+const KEYS = ['all', 'business-setup', 'government', 'umrah-and-hajj'];
+---
+<section class="wrap browser" data-section="services-grid" data-browser data-count-label={p.count_label}>
+  <div class="bar">
+    <div class="tabs" role="tablist" aria-label={p.tabs_label}>
+      {p.filter_tabs.map((label, i) => (
+        <button
+          type="button"
+          role="tab"
+          class="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls="services-list"
+          tabindex={i === 0 ? 0 : -1}
+          data-filter={KEYS[i]}
+        >{label}</button>
+      ))}
+    </div>
+    <p class="count" aria-live="polite" data-count>{fmt(p.count_label, { count: s.services.length })}</p>
+  </div>
+  <div class="grid" id="services-list" role="tabpanel">
+    {s.services.map((svc, i) => (
+      <div class="cell" data-category={categoryKey(svc.id)}>
+        <ServiceCard lang={lang} service={svc} index={i} tag />
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-browser]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const cells = [...root.querySelectorAll<HTMLElement>('[data-category]')];
+    const count = root.querySelector<HTMLElement>('[data-count]')!;
+    const label = root.dataset.countLabel ?? '{count}';
+    const select = (tab: HTMLButtonElement) => {
+      const key = tab.dataset.filter;
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      let n = 0;
+      cells.forEach((c) => {
+        const show = key === 'all' || c.dataset.category === key;
+        c.hidden = !show;
+        if (show) n++;
+      });
+      count.textContent = label.replace('{count}', String(n));
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        const rtl = getComputedStyle(root).direction === 'rtl';
+        const step = { ArrowRight: rtl ? -1 : 1, ArrowLeft: rtl ? 1 : -1 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        next.focus();
+        select(next);
+      });
+    });
+  });
+</script>
+
+<style>
+  .browser { padding: 25px var(--space-6) 0; }
+  .tabs {
+    display: flex; gap: var(--space-2); overflow-x: auto; scrollbar-width: none;
+    margin-inline: calc(-1 * var(--space-6)); padding-inline: var(--space-6);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: none; height: var(--size-tap); padding: 0 var(--space-5); border: 0; border-radius: var(--radius-pill);
+    background: var(--ivory-100); color: var(--navy-900); cursor: pointer; white-space: nowrap;
+    font-size: 15px; font-weight: 700; line-height: 1.4;
+  }
+  .tab[aria-selected='true'] { background: var(--navy-900); color: var(--gold-400); }
+  .tab:focus-visible { outline: 2px solid var(--navy-900); outline-offset: 2px; }
+  .count { margin: var(--space-4) 0 14px; color: var(--ink-muted); font-size: 13px; font-weight: 500; line-height: 1.5; }
+  :lang(ar) .count { font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .grid { display: flex; flex-direction: column; gap: 14px; }
+  .cell[hidden] { display: none; }
+
+  @media (min-width: 641px) {
+    .browser { padding: var(--space-10) var(--space-8) 0; }
+    .bar {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+      padding-bottom: var(--space-6); margin-bottom: var(--space-8); border-bottom: 1px solid var(--bronze-line);
+    }
+    .tabs { gap: 10px; margin: 0; padding: 0; }
+    .count { margin: 0; flex: none; font-size: 15px; font-weight: 700; line-height: 1.4; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+  }
+  @media (min-width: 1024px) {
+    .browser { padding-inline: var(--space-10); }
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  }
+</style>

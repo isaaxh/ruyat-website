@@ -1,22 +1,23 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getMain, getServices, localeStaticPaths, localizePath, categoryKey, fmt, type Locale } from '../../../i18n';
+import PageHero from '../../../components/PageHero.astro';
+import ServicesBrowser from '../../../components/services/ServicesBrowser.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { getMain, getServices, localeStaticPaths, localizePath, type Locale } from '../../../i18n';
 
 export const getStaticPaths = localeStaticPaths;
 const lang = Astro.params.lang as Locale;
-const s = getServices(lang);
-const p = s.all_services_page;
+const t = getMain(lang);
+const p = getServices(lang).all_services_page;
 ---
-<BaseLayout lang={lang} title={`${p.title} | ${getMain(lang).meta.site_name}`} description={p.subtitle}>
-  <h1>{p.title}</h1>
-  <p>{p.subtitle}</p>
-  <!-- TODO: filter tabs + dynamic count (p.filter_tabs, p.count_label) styled from prototype -->
-  <p data-count>{fmt(p.count_label, { count: s.services.length })}</p>
-  <ul>
-    {s.services.map((svc) => (
-      <li data-category={categoryKey(svc.id)}>
-        <a href={localizePath(lang, `/services/${svc.id}/`)}>{svc.title}</a>
-      </li>
-    ))}
-  </ul>
+<BaseLayout lang={lang} title={`${p.title} | ${t.meta.site_name}`} description={p.subtitle} active="services">
+  <PageHero
+    lang={lang}
+    eyebrow={p.eyebrow}
+    title={p.title}
+    subtitle={p.subtitle}
+    crumbs={[{ label: t.nav.home, href: localizePath(lang, '/') }, { label: p.eyebrow }]}
+  />
+  <ServicesBrowser lang={lang} />
+  <CtaBand title={p.cta_title} text={p.cta_text} cta={t.nav.contact} href={localizePath(lang, '/contact/')} />
 </BaseLayout>

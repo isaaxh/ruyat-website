@@ -1,0 +1,71 @@
+---
+// Navy title band at the top of inner pages: breadcrumb (desktop), eyebrow pill, h1, gold rule, intro, ribbons.
+import { getMain, type Locale } from '../i18n';
+
+interface Crumb { label: string; href?: string }
+interface Props {
+  lang: Locale;
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  crumbs?: Crumb[];
+}
+const { lang, eyebrow, title, subtitle, crumbs = [] } = Astro.props;
+const t = getMain(lang);
+---
+<section class="page-hero" data-section="page-hero">
+  <div class="rib r1" style="--rot:-35deg"></div>
+  <div class="rib r2" style="--rot:-35deg"></div>
+  <div class="wrap inner">
+    {crumbs.length > 0 && (
+      <nav class="crumbs" aria-label={t.ui.breadcrumb}>
+        {crumbs.map((c, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> / </span>}
+            {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+          </>
+        ))}
+      </nav>
+    )}
+    <span class="eyebrow on-dark">{eyebrow}</span>
+    <h1 class="title t-display">{title}</h1>
+    <div class="rule on-dark"></div>
+    {subtitle && <p class="sub t-lead">{subtitle}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero { position: relative; overflow: hidden; background: var(--navy-900); color: var(--white); padding: 105px 0 36px; }
+  .r1 { width: 300px; inset-inline-end: -127px; top: 62px; }
+  .r2 { width: 300px; inset-inline-end: -107px; top: 99px; opacity: 0.4; }
+  .inner { position: relative; padding-inline: var(--space-6); }
+  .crumbs { display: none; }
+  .title { margin: 15px 0 0; color: var(--white); }
+  .page-hero .rule { margin-top: 15px; }
+  .sub { margin: var(--space-4) 0 0; max-width: 620px; color: var(--on-navy-text); font-size: 16px; }
+
+  @media (min-width: 641px) {
+    .page-hero { padding: 148px 0 64px; }
+    .r1, .r2 { width: 480px; height: 18px; }
+    .r1 { inset-inline-end: -110px; top: 122px; }
+    .r2 { inset-inline-end: -85px; top: 169px; }
+    .sub { margin-top: var(--space-5); font-size: 18px; }
+    .title { margin-top: 18px; }
+    .page-hero .rule { margin-top: var(--space-5); width: 306px; }
+    .inner { padding-inline: var(--space-8); }
+  }
+  @media (min-width: 1024px) {
+    .page-hero { padding: 152px 0 68px; }
+    .r1, .r2 { height: 16px; }
+    .r1 { inset-inline-end: -90px; top: 135px; }
+    .r2 { inset-inline-end: -49px; top: 192px; }
+    .inner { padding-inline: var(--space-10); }
+    .crumbs {
+      display: block; margin-bottom: 26px; color: var(--on-navy-dim);
+      font-size: 13px; font-weight: 500; line-height: 1.5;
+    }
+    .crumbs a { color: var(--gold-400); text-decoration: underline; }
+    :lang(ar) .crumbs { font-size: 15px; margin-bottom: 28px; }
+    :lang(ar).page-hero, :lang(ar) .page-hero { padding-bottom: var(--space-16); }
+  }
+</style>
