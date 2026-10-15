@@ -1,5 +1,5 @@
 ---
-// FAQ accordion (one answer open at a time; the first starts open). Desktop: sticky intro with a contact prompt beside the list.
+// FAQ accordion (one answer open at a time; all start closed). Desktop: sticky intro with a contact prompt beside the list.
 import { getMain, localizePath, type Locale } from '../i18n';
 
 interface Props { lang: Locale }
@@ -19,9 +19,9 @@ const f = t.faq;
   </div>
   <div class="list" data-faq>
     {f.items.map((item, i) => (
-      <div class="item" data-open={i === 0 ? '' : undefined}>
+      <div class="item">
         <h3 class="q-wrap">
-          <button type="button" class="q" id={`faq-q-${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`faq-a-${i}`}>
+          <button type="button" class="q" id={`faq-q-${i}`} aria-expanded="false" aria-controls={`faq-a-${i}`}>
             <span class="q-text t-h3">{item.question}</span>
             <span class="icon" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></line><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></line></svg>
