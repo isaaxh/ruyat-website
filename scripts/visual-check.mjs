@@ -1,5 +1,5 @@
 // Visual check: screenshots the running dev server and compares each [data-section] against design/screenshots/.
-// Usage: node scripts/visual-check.mjs [--page home] [--vp mobile,tablet,desktop] [--lang en,ar] [--section hero] [--range 400] [--base http://localhost:4321]
+// Usage: node scripts/visual-check.mjs [--page home] [--vp mobile,tablet,desktop] [--lang en,ar] [--section hero] [--range 400] [--css 'extra css for tuning'] [--base http://localhost:4321]
 // Sections marked data-align="top" are compared at their own position; others are aligned to the best vertical offset within --range px.
 // Output: test-results/visual/<lang>-<page>-<vp>[-<section>].png (mine | reference | diff) and a % report.
 import { chromium } from '@playwright/test';
@@ -18,11 +18,12 @@ const PAGES = {
   'service-detail': '/services/company-establishment/',
   contact: '/contact/',
 };
-// Reference mobile screenshots are a 390px-wide viewport (iPhone 12-14) scaled to 702px, with the hero at its 560px minimum.
+// Viewports the reference screenshots were taken at (measured from the fixed WhatsApp button's position).
+// The device pixel ratio is derived from each reference's width (mobile home is 702px = 1.8x, other mobile pages 780px = 2x).
 const VIEWPORTS = {
-  mobile: { width: 390, height: 560, dpr: 1.8 },
-  tablet: { width: 834, height: 900, dpr: 1 },
-  desktop: { width: 1440, height: 900, dpr: 1 },
+  mobile: { width: 390, height: 844 },
+  tablet: { width: 834, height: 1112 },
+  desktop: { width: 1440, height: 900 },
 };
 const pages = (args.page || Object.keys(PAGES).join(',')).split(',');
 const vps = (args.vp || Object.keys(VIEWPORTS).join(',')).split(',');
@@ -103,6 +104,7 @@ const STATE = {
 
 // Bring interactive widgets into the state the reference screenshots show, using the page's own controls.
 async function prepare(page, tag) {
+  if (args.css) await page.addStyleTag({ content: args.css });
   const st = { ...STATE[tag], ...(args.slide ? { slide: Number(args.slide) } : {}) };
   if (st.slide !== undefined) await page.locator(`[data-dot="${st.slide}"]`).click().catch(() => {});
   await page.evaluate(() => document.fonts.ready);
@@ -116,13 +118,14 @@ for (const lang of langs) {
     for (const vp of vps) {
       const ref = refPath(lang, pg, vp);
       if (!fs.existsSync(ref)) continue;
-      const { width, height, dpr } = VIEWPORTS[vp];
+      const { width, height } = VIEWPORTS[vp];
+      const refPng = PNG.sync.read(fs.readFileSync(ref));
+      const dpr = refPng.width / width;
       const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: dpr, reducedMotion: 'reduce' });
       const page = await ctx.newPage();
       await page.goto(`${BASE}/${lang}${PAGES[pg]}?visual=1`, { waitUntil: 'networkidle' });
       await prepare(page, `${lang}-${pg}-${vp}`);
       const shot = PNG.sync.read(await page.screenshot({ fullPage: true, animations: 'disabled' }));
-      const refPng = PNG.sync.read(fs.readFileSync(ref));
       const sections = await page.$$eval('[data-section]', (els) =>
         els.map((e) => {
           const r = e.getBoundingClientRect();
