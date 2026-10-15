@@ -15,7 +15,7 @@ const t = getMain(lang);
   <div class="rib" style="--rot:-35deg"></div>
   <nav aria-label={t.nav.menu_label} class="menu-nav">
     {navItems(lang, active).map((n) => (
-      <a class="menu-link" href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>
+      <a class="menu-link" data-nav={n.key} href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>
     ))}
   </nav>
   <a href={localizePath(lang, '/contact/')} class="btn btn-gold menu-cta">{t.nav.contact}</a>

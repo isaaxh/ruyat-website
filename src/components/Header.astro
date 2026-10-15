@@ -26,7 +26,7 @@ const items = navItems(lang, active);
     </a>
     <nav class="links" aria-label={t.nav.main_label}>
       {items.map((n) => (
-        <a class="nav-link" href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>
+        <a class="nav-link" data-nav={n.key} href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>
       ))}
     </nav>
     <div class="actions">
@@ -48,6 +48,28 @@ const items = navItems(lang, active);
   </div>
 </header>
 <MobileMenu lang={lang} active={active} />
+
+<script>
+  // Home page scroll-spy: the nav link matching the section in view is marked active (header and burger menu).
+  const spy = ['hero', 'about', 'services', 'testimonials', 'contact']
+    .map((id) => document.querySelector<HTMLElement>(id === 'hero' ? '[data-hero]' : `#${id}`))
+    .map((el, i) => ({ el, key: ['home', 'about', 'services', 'testimonials', null][i] }));
+  if (spy.every((s) => s.el)) {
+    const links = document.querySelectorAll<HTMLElement>('[data-nav]');
+    let current: string | null | undefined;
+    const update = () => {
+      const line = window.innerHeight * 0.35;
+      let key: string | null = 'home';
+      for (const s of spy) if (s.el!.getBoundingClientRect().top <= line) key = s.key;
+      if (key === current) return;
+      current = key;
+      links.forEach((a) => (a.dataset.nav === key ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+</script>
 
 <script>
   const header = document.querySelector<HTMLElement>('[data-header]');
