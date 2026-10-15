@@ -29,7 +29,6 @@ const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
     <div class="link to-start" aria-hidden="true"><span class="spark"></span></div>
     <div class="hub-wrap">
       <div class="ring" aria-hidden="true"></div>
-      <div class="ring late" aria-hidden="true"></div>
       {[card('ruyat')].map((c) => (
         <article class="hub">
           <div class="hub-rib" aria-hidden="true"></div>
@@ -76,18 +75,18 @@ const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
   .hub-wrap { position: relative; width: var(--hub-w); height: var(--hub-h); flex: none; }
   .hub {
     width: 100%; height: 100%; overflow: hidden; background: var(--navy-900);
-    box-shadow: var(--shadow-hub); outline: 1px solid var(--gold-400); outline-offset: -8px;
+    box-shadow: 0 16px 40px rgba(4, 18, 56, 0.28); outline: 1px solid var(--gold-400); outline-offset: -8px;
   }
   .hub-rib {
     position: absolute; top: 18px; inset-inline-end: -40px; width: 140px; height: 12px;
     background: var(--rib-band); transform: rotate(calc(45deg * var(--dir)));
   }
+  /* Soft gold halo that grows out from the card edge and fades, then rests before the next pulse. */
   .ring {
-    position: absolute; inset: 0; box-sizing: border-box; border-radius: var(--radius-lg);
-    border: 2px solid var(--gold-400); opacity: 0;
-    animation: pulse var(--duration-pulse) linear infinite;
+    position: absolute; inset: 0; border-radius: var(--radius-lg);
+    background: var(--gold-400); opacity: 0; filter: blur(4px);
+    animation: pulse 2400ms ease-out infinite;
   }
-  .ring.late { animation-delay: calc(var(--duration-pulse) / 2); }
 
   /* Connector between cards (vertical on mobile), with a spark flowing out from the hub. */
   .link { position: relative; width: 2px; height: var(--link); flex: none; background: var(--gold-connector-y); }
@@ -101,11 +100,8 @@ const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
   .to-end .spark { top: 0; --fx: 0px; --fy: var(--flow); }
 
   @keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    25% { transform: scale(1.09); opacity: 0.32; }
-    50% { transform: scale(1.135); opacity: 0.16; }
-    75% { transform: scale(1.155); opacity: 0.05; }
-    100% { transform: scale(1.16); opacity: 0; }
+    0% { transform: scale(1); opacity: 0.2; }
+    58%, 100% { transform: scale(1.2); opacity: 0; }
   }
   @keyframes flow {
     0% { transform: translate(0, 0); opacity: 0; }
