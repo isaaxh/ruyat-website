@@ -15,8 +15,6 @@ type Key = keyof typeof LOGOS;
 const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
 ---
 <section class="partners" aria-label={t.label} data-section="partners">
-  <div class="band b1" aria-hidden="true"></div>
-  <div class="band b2" aria-hidden="true"></div>
   <div class="head">
     <div class="eyebrow-text">{t.eyebrow}</div>
     <h2 class="t-h1 title">{t.title}</h2>
@@ -59,12 +57,6 @@ const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
     --side-w: 230px; --side-h: 240px; --side-pad: var(--space-6); --logo: 180px;
     --hub-w: 270px; --hub-h: 290px; --link: 56px; --flow: 36px; --spark: 20px;
   }
-  .band {
-    position: absolute; width: 200px; height: 12px; background: var(--rib-band);
-    transform: rotate(calc(-45deg * var(--dir)));
-  }
-  .b1 { top: 22px; inset-inline-start: -58px; }
-  .b2 { bottom: 22px; inset-inline-end: -58px; }
 
   .head { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); max-width: var(--container-text); text-align: center; }
   .eyebrow-text { color: var(--gold-700); font-size: 13px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -132,9 +124,6 @@ const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
       --side-w: 220px; --side-h: 236px; --side-pad: var(--space-5); --logo: 170px;
       --hub-w: 250px; --hub-h: 270px; --link: 40px; --flow: 26px; --spark: 14px;
     }
-    .band { width: 260px; height: 14px; }
-    .b1 { top: 30px; inset-inline-start: -64px; }
-    .b2 { bottom: 30px; inset-inline-end: -64px; }
     .head { gap: var(--space-3); }
     .stage { flex-direction: row; padding-block: 15px; }
     .hub-rib { width: 150px; }
@@ -152,9 +141,6 @@ const card = (key: Key) => ({ key, logo: LOGOS[key], ...t.items[key] });
       --side-w: 300px; --side-h: 320px; --side-pad: 28px; --logo: 240px;
       --hub-w: 340px; --hub-h: 360px; --link: 90px; --flow: 66px; --spark: 24px;
     }
-    .band { width: 320px; height: 18px; }
-    .b1 { top: var(--space-10); inset-inline-start: -70px; }
-    .b2 { bottom: var(--space-10); inset-inline-end: -70px; }
     .head { gap: 14px; }
     .stage { padding-block: 0; }
     .hub-rib { top: 22px; inset-inline-end: -46px; width: 180px; height: 14px; }
