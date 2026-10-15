@@ -1,0 +1,29 @@
+---
+// Floating WhatsApp button on every page. Opens a chat with the business number and a greeting in the page language.
+import { getMain, type Locale } from '../i18n';
+import { buildWhatsAppUrl } from '../lib/whatsapp';
+import WhatsAppIcon from './icons/WhatsAppIcon.astro';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).whatsapp;
+---
+<a class="wa-fab" href={buildWhatsAppUrl(t.fab_message)} target="_blank" rel="noopener" aria-label={t.fab_label}>
+  <WhatsAppIcon size={30} />
+</a>
+
+<style>
+  .wa-fab {
+    position: fixed; inset-inline-end: var(--space-4); bottom: max(var(--space-4), env(safe-area-inset-bottom)); z-index: 60;
+    width: var(--size-fab); height: var(--size-fab); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--wa-fab); color: var(--white); text-decoration: none; box-shadow: var(--shadow-wa-fab);
+    transition: transform var(--duration-fast) ease, background var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+  }
+  .wa-fab:hover { background: var(--wa-fab-hover); color: var(--white); transform: translateY(-3px); box-shadow: var(--shadow-wa-fab-hover); }
+  .wa-fab:focus-visible { outline: 3px solid var(--gold-200); outline-offset: 3px; }
+  /* The prototype switches the FAB size with its tablet template (768px). */
+  @media (min-width: 768px) {
+    .wa-fab { inset-inline-end: 28px; bottom: max(28px, env(safe-area-inset-bottom)); width: 60px; height: 60px; }
+  }
+</style>
