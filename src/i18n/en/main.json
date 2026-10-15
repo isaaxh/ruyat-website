@@ -67,8 +67,14 @@
     ]
   },
   "about": {
-    "heading": "About Us",
-    "body": "Ruyat is your trusted partner in business solutions, backed by 10+ years of experience in e-services and 4+ years in company establishment. From idea to achievement, we help clients navigate their business needs with speed, credibility, and expertise. We also proudly serve the guests of the Most Merciful, offering complete Umrah and Hajj coordination — from visa processing to hotels, transport, and catering — so every pilgrim's journey is seamless from start to finish."
+    "eyebrow": "About Us",
+    "title": "From idea to achievement",
+    "paragraphs": [
+      "Ruyat Al Injaz is your trusted partner in business solutions, backed by 10+ years of experience in e-services and 4+ years in company establishment. From idea to achievement, we help clients navigate their business needs with speed, credibility, and expertise.",
+      "We also proudly serve the guests of the Most Merciful, offering complete Umrah and Hajj coordination — from visa processing to hotels, transport, and catering — so every pilgrim's journey is seamless from start to finish."
+    ],
+    "cta": "Explore Our Services",
+    "image_alt": "Ruyat Al Injaz Business Services — From idea to achievement"
   },
   "services": {
     "heading": "Services",

@@ -8,7 +8,6 @@
 :root {
   /* 1 in LTR, -1 in RTL: multiply angles/offsets of decorative elements so they mirror. */
   --dir: 1;
-  --font-arabic: var(--font-sans);
   --gold-rule-stop: #a87323;
   --ivory-200: #f1ece1;
   --navy-glass: rgba(4, 18, 56, 0.35);
@@ -63,7 +62,7 @@
   --color-slate-600: #454e57;
   --color-ivory-100: #f5f0e6;
   --font-latin: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
-  --font-arabic: 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+  --font-arabic: 'Tajawal', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
   --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
   --font-bangla: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
   /* Breakpoints from design-system tokens (--bp-tablet, --bp-desktop). Use `tablet:` and `desktop:`. */
@@ -134,6 +133,12 @@
   }
 }
 
+/* Scroll reveal: sections marked data-reveal fade up once in view (script in BaseLayout). No JS or reduced motion: always visible. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity var(--duration-slow) ease, transform var(--duration-slow) ease; }
+  html.js [data-reveal][data-revealed] { opacity: 1; transform: none; }
+}
+
 /* Shared primitives used across sections. Mobile first; tablet from 641px, desktop from 1024px. */
 @layer components {
   .wrap {
@@ -167,7 +172,7 @@
     text-transform: uppercase; font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em;
   }
   .eyebrow.on-dark { background: var(--navy-600); }
-  :lang(ar) .eyebrow { letter-spacing: 0; }
+  :lang(ar) .eyebrow { font-size: 15px; line-height: 1.5; letter-spacing: 0; }
 
   .h2 { margin: 14px 0 0; color: var(--ink); }
   @media (min-width: 641px) { .h2 { margin-top: var(--space-4); } }

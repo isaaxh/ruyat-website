@@ -1,0 +1,77 @@
+---
+// Home "About us": framed brand card + intro copy. Card sits above the copy below desktop, beside it on desktop.
+import { getMain, localizePath, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).about;
+---
+<section id="about" class="wrap about" data-section="about" data-reveal>
+  <div class="visual">
+    <div class="backdrop"></div>
+    <div class="card">
+      <div class="edge"></div>
+      <div class="rib r1" style="--rot:38deg"></div>
+      <div class="rib r2" style="--rot:38deg"></div>
+      <img src="/logos/ruyat-logo-primary-white.svg" alt={t.image_alt} />
+    </div>
+  </div>
+  <div class="copy">
+    <span class="eyebrow">{t.eyebrow}</span>
+    <h2 class="h2">{t.title}</h2>
+    <div class="rule"></div>
+    {t.paragraphs.map((p, i) => <p class:list={['para', 't-body', `p${i + 1}`]}>{p}</p>)}
+    <a href={localizePath(lang, '/services/')} class="btn btn-navy cta">{t.cta}</a>
+  </div>
+</section>
+
+<style>
+  .about { padding: var(--space-14) var(--space-6) var(--space-16); }
+  /* The Arabic mobile reference keeps the card's LTR geometry (gold edge on the left); it mirrors from tablet up. */
+  .visual { position: relative; height: 400px; direction: ltr; --dir: 1; }
+  .backdrop {
+    position: absolute; inset-inline-start: 0; inset-inline-end: 28px; top: 44px; bottom: 0;
+    border-radius: var(--radius-xl); background: var(--ivory-200);
+  }
+  .card {
+    position: absolute; inset-inline-start: 14px; inset-inline-end: 0; top: 0; bottom: 28px;
+    border-radius: var(--radius-xl); overflow: hidden; background: var(--navy-900); box-shadow: var(--shadow-raised);
+  }
+  .edge { position: absolute; inset-inline-start: 0; top: 0; bottom: 0; width: 6px; background: var(--rib-metal-v); }
+  .r1 { width: 170px; height: 14px; inset-inline-end: -50px; top: var(--space-6); }
+  .r2 { width: 150px; height: 14px; inset-inline-start: -44px; bottom: var(--space-6); opacity: 0.8; }
+  .card img { position: absolute; left: 50%; top: 50%; width: 220px; transform: translate(-50%, -50%); }
+
+  .copy { margin-top: 36px; }
+  .para { color: var(--ink); margin: var(--space-5) 0 0; }
+  .p2 { color: var(--ink-muted); margin-top: 14px; }
+  .cta { display: none; }
+
+  @media (min-width: 641px) {
+    .about { padding-block: var(--space-28); padding-inline: var(--space-8); display: flex; flex-direction: column; gap: var(--space-10); }
+    .visual { height: 460px; direction: inherit; --dir: inherit; }
+    .backdrop { top: var(--space-12); inset-inline-end: 36px; background: var(--ivory-100); }
+    .card { inset-inline-start: var(--space-5); bottom: 36px; }
+    .r1 { width: 260px; height: 16px; inset-inline-end: -70px; top: 34px; }
+    .r2 { width: 240px; height: 16px; inset-inline-start: -60px; bottom: 34px; }
+    .card img { width: 300px; }
+    .copy { margin-top: 0; }
+    .para { margin: var(--space-6) 0 var(--space-4); }
+    .p2 { margin: 0; }
+    .para { font-size: 18px; }
+  }
+
+  @media (min-width: 1024px) {
+    .about {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-18); align-items: center;
+      padding-inline: var(--space-10);
+    }
+    .visual { height: 480px; }
+    .backdrop { top: 52px; background: var(--ivory-200); }
+    .r1 { width: 240px; inset-inline-end: -64px; }
+    .r2 { width: 220px; inset-inline-start: -58px; }
+    .card img { width: 290px; }
+    .p2 { margin-bottom: var(--space-8); }
+    .cta { display: inline-flex; }
+  }
+</style>

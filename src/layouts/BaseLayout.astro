@@ -45,6 +45,7 @@ const hreflang = (l: Locale) => getMain(l).meta.hreflang;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href={fontsHref} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <Header lang={lang} active={active} />
@@ -53,5 +54,18 @@ const hreflang = (l: Locale) => getMain(l).meta.hreflang;
     </main>
     <!-- TODO: Footer from prototype -->
     <WhatsAppFab lang={lang} />
+    <script>
+      // Reveal [data-reveal] sections once they scroll into view.
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.setAttribute('data-revealed', '');
+            io.unobserve(e.target);
+          }),
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    </script>
   </body>
 </html>
