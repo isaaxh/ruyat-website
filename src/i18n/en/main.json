@@ -202,5 +202,24 @@
     "language": "Language",
     "open_menu": "Open menu",
     "close_menu": "Close menu"
+  },
+  "partners": {
+    "label": "Our partner companies",
+    "eyebrow": "Our Network",
+    "title": "Connected to Serve You Better",
+    "items": {
+      "al-faisal": {
+        "name": "Al Faisal Group and Partners",
+        "alt": "Al Faisal Group and Partners (Arabic logo)"
+      },
+      "ruyat": {
+        "name": "Ruyat Al Injaz Business Services",
+        "alt": "Ruyat Al Injaz Business Services"
+      },
+      "ruyat-shams": {
+        "name": "Ruyat Shams",
+        "alt": "Ruyat Shams, fruits, vegetables and catering"
+      }
+    }
   }
 }
