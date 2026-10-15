@@ -95,7 +95,9 @@ const items = navItems(lang, active);
   .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
   .brand-name { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: 0.01em; }
   .brand-tag { font-size: 10.5px; font-weight: 600; color: var(--gold-400); letter-spacing: 0.06em; text-transform: uppercase; }
-  :lang(ar) .brand-text { line-height: 1.3; }
+
+  /* Tajawal sits high in its line box; drop the text 2px so it centres on the logo. */
+  :lang(ar) .brand-text { padding-top: 4px; }
   :lang(ar) .brand-name { font-size: 18px; letter-spacing: 0; }
   :lang(ar) .brand-tag { font-size: 12px; letter-spacing: 0; font-weight: 700; }
 

@@ -162,6 +162,9 @@
   }
   @media (min-width: 641px) { .btn { padding: 0 var(--space-6); } }
   @media (min-width: 1024px) { :lang(ar) .btn { font-size: 16px; } }
+  /* Tajawal's glyphs sit above the line-box centre; nudge text down, keep icons centred. */
+  :lang(ar) .btn { padding-top: 0.28em; }
+  :lang(ar) .btn > svg { translate: 0 -0.14em; }
   .btn:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
   .btn-gold { background: var(--accent-fill); color: var(--on-accent); }
   .btn-gold:hover { background: var(--accent-fill-hover); color: var(--on-accent); }
