@@ -1,0 +1,35 @@
+---
+// "What's included" checklist: a plain list on phones, bordered tiles in two columns from tablet.
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+<ul class="included">
+  {items.map((item) => (
+    <li class="t-body">
+      <span class="check">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+      <span>{item}</span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .included { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  li { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--ink); }
+  .check {
+    flex: none; width: var(--size-icon); height: var(--size-icon); border-radius: var(--radius-circle);
+    background: var(--navy-900); color: var(--gold-400); display: flex; align-items: center; justify-content: center;
+  }
+  .check svg { width: 12px; height: 12px; }
+
+  @media (min-width: 641px) {
+    .included { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    li { padding: 18px; border: 1px solid var(--border); border-radius: var(--radius-md); }
+  }
+  @media (min-width: 1024px) {
+    li { border-radius: var(--radius-menu); }
+  }
+</style>

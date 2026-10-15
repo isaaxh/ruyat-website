@@ -1,0 +1,59 @@
+---
+// Service detail aside: navy "Ready to get started?" card, plus a "Prefer to talk?" contact card on desktop.
+import { getServices, localizePath, type Locale } from '../../../i18n';
+import { EMAIL, PHONE_DISPLAY, PHONE_TEL } from '../../../lib/site';
+
+interface Props {
+  lang: Locale;
+  cta: string;
+}
+const { lang, cta } = Astro.props;
+const p = getServices(lang).service_detail_page;
+---
+<aside class="aside">
+  <div class="ready">
+    <div class="rib" style="--rot:-35deg"></div>
+    <div class="ready-title">{p.aside_title}</div>
+    <p class="ready-text t-body">{p.aside_text}</p>
+    <a class="btn btn-gold ready-btn" href={localizePath(lang, '/contact/')}>{cta}</a>
+  </div>
+  <div class="talk">
+    <div class="talk-label">{p.talk_label}</div>
+    <a class="talk-phone latin" href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
+    <a class="talk-mail latin" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+  </div>
+</aside>
+
+<style>
+  .aside { min-width: 0; }
+  .ready { position: relative; overflow: hidden; padding: 26px 22px; border-radius: var(--radius-lg); background: var(--navy-900); color: var(--white); }
+  .rib { width: 130px; inset-inline-end: -42px; top: var(--space-4); }
+  .ready-title { position: relative; margin-bottom: var(--space-2); font-size: 19px; font-weight: 800; line-height: 1.25; }
+  :lang(ar) .ready-title { font-size: 22px; line-height: 1.45; }
+  .ready-text { position: relative; margin-bottom: var(--space-5); color: var(--on-navy-muted); }
+  .ready-btn { position: relative; display: flex; min-height: 52px; }
+  .talk { display: none; }
+
+  @media (min-width: 641px) {
+    .ready { padding: var(--space-8); }
+    .rib { width: 260px; inset-inline-end: -90px; top: 28px; }
+    .ready-title { margin-bottom: 10px; font-size: 26px; font-weight: 700; line-height: 1.3; }
+    :lang(ar) .ready-title { font-size: 26px; line-height: 1.45; }
+    .ready-text { margin-bottom: var(--space-6); color: var(--on-navy-text); }
+  }
+  @media (min-width: 1024px) {
+    .aside { position: sticky; top: 112px; }
+    .rib { width: 220px; inset-inline-end: -70px; top: var(--space-6); }
+    :lang(ar) .ready-title { font-size: 30px; line-height: 1.45; }
+    .ready-text { color: var(--on-navy-muted); }
+    .talk {
+      display: block; margin-top: var(--space-4); padding: var(--space-6);
+      border-radius: var(--radius-lg); border: 1px solid var(--bronze-line-card); background: var(--white);
+    }
+    .talk-label { margin-bottom: 10px; color: var(--accent); text-transform: uppercase; font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em; }
+    :lang(ar) .talk-label { font-size: 15px; letter-spacing: 0; }
+    .talk-phone { display: block; width: fit-content; padding: var(--space-1) 0; color: var(--ink); text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; font-size: 13px; font-weight: 500; line-height: 1.5; }
+    .talk-mail { display: block; width: fit-content; margin-top: var(--space-1); color: var(--ink-muted); text-decoration: none; font-size: 16px; line-height: 1.6; }
+    .talk-phone:hover, .talk-mail:hover { color: var(--accent); }
+  }
+</style>

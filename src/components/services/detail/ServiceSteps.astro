@@ -1,0 +1,48 @@
+---
+// "How it works" steps: a numbered timeline on phones and tablets, ivory step tiles in two columns on desktop.
+interface Props {
+  steps: string[];
+}
+const { steps } = Astro.props;
+---
+<ol class="steps">
+  {steps.map((step, i) => (
+    <li class="step">
+      <span class="marker">
+        <span class="num latin">{i + 1}</span>
+        <span class="line"></span>
+      </span>
+      <span class="text t-body">{step}</span>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .step { display: flex; align-items: stretch; gap: var(--space-4); }
+  .marker { display: flex; flex-direction: column; align-items: center; flex: none; }
+  .num {
+    display: flex; width: 38px; height: 38px; box-sizing: border-box; border-radius: var(--radius-circle);
+    border: 1.5px solid var(--gold-500); background: var(--ivory-100); align-items: center; justify-content: center;
+    color: var(--ink); font-size: 15px; font-weight: 800; line-height: 1;
+  }
+  .line { flex: 1; width: 1.5px; min-height: 18px; background: var(--bronze-line-strong); }
+  .step:last-child .line { background: transparent; }
+  .text { display: block; padding: 7px 0 22px; color: var(--ink); }
+  :lang(ar) .text { padding: 6px 0 21px; }
+
+  @media (min-width: 641px) {
+    .step { gap: 18px; }
+    .num { width: 44px; height: 44px; font-size: 17px; }
+    .line { width: 2px; min-height: var(--space-5); }
+    .text { padding: 10px 0 26px; }
+    :lang(ar) .text { padding: 7px 0 28px; }
+  }
+  @media (min-width: 1024px) {
+    .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .step { align-items: flex-start; gap: 14px; padding: 22px; border-radius: var(--radius-tile); background: var(--ivory-100); }
+    .num { width: 41px; height: 41px; font-size: 15px; background: var(--white); }
+    .line { display: none; }
+    .text, :lang(ar) .text { padding: var(--space-2) 0 0; }
+  }
+</style>

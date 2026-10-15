@@ -1,0 +1,53 @@
+---
+// Service detail body: overview, what's included and how it works, with the contact aside (beside on desktop, below otherwise).
+import { getServices, type Locale, type Service } from '../../../i18n';
+import SectionHeading from './SectionHeading.astro';
+import IncludedList from './IncludedList.astro';
+import ServiceSteps from './ServiceSteps.astro';
+import ServiceAside from './ServiceAside.astro';
+
+interface Props {
+  lang: Locale;
+  service: Service;
+}
+const { lang, service } = Astro.props;
+const p = getServices(lang).service_detail_page;
+---
+<section class="wrap body" data-section="service-body">
+  <div class="main">
+    <SectionHeading text={p.overview_label} mobileHidden />
+    <p class="full">{service.full_description}</p>
+
+    <div class="block">
+      <SectionHeading text={p.whats_included_label} />
+      <IncludedList items={service.whats_included} />
+    </div>
+
+    <div class="block">
+      <SectionHeading text={p.how_it_works_label} />
+      <ServiceSteps steps={service.how_it_works} />
+    </div>
+  </div>
+  <ServiceAside lang={lang} cta={service.cta} />
+</section>
+
+<style>
+  .body { display: flex; flex-direction: column; gap: var(--space-6); padding-top: 27px; padding-inline: var(--space-6); }
+  .body:lang(ar) { padding-top: 29px; }
+  .main { min-width: 0; }
+  .full { color: var(--ink); font-size: 16px; line-height: 1.6; }
+  :lang(ar) .full { line-height: 1.8; }
+  .block { margin-top: 36px; }
+
+  @media (min-width: 641px) {
+    .body, .body:lang(ar) { gap: var(--space-14); padding-top: 80px; padding-inline: var(--space-8); }
+    .full { font-size: 18px; }
+    :lang(ar) .full { font-weight: 500; }
+    .block { margin-top: var(--space-14); }
+  }
+  @media (min-width: 1024px) {
+    .body, .body:lang(ar) { flex-direction: row; flex-wrap: wrap; align-items: flex-start; padding-inline: var(--space-10); }
+    .main { flex: 999 1 560px; }
+    .body > :global(.aside) { flex: 1 1 320px; }
+  }
+</style>

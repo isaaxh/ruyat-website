@@ -1,0 +1,114 @@
+---
+// Navy title band of a service detail page: back link and breadcrumb, category pill, title, intro, CTAs and the icon visual.
+import { getMain, getServices, localizePath, type Locale, type Service } from '../../../i18n';
+import { SERVICE_ICONS } from '../../../lib/serviceIcons';
+import { PHONE_DISPLAY, PHONE_TEL } from '../../../lib/site';
+
+interface Props {
+  lang: Locale;
+  service: Service;
+}
+const { lang, service } = Astro.props;
+const t = getMain(lang);
+const p = getServices(lang).service_detail_page;
+const [callBefore, callAfter = ''] = p.call_label.split('{phone}');
+---
+<section class="svc-hero" data-section="service-hero">
+  <div class="wrap top">
+    <a class="back t-label" href={localizePath(lang, '/services/')} aria-label={p.back_button}>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      {p.back_short}
+    </a>
+    <nav class="crumbs" aria-label={t.ui.breadcrumb}>
+      <a href={localizePath(lang, '/')}>{t.nav.home}</a> <span aria-hidden="true">/</span>{' '}
+      <a href={localizePath(lang, '/services/')}>{p.breadcrumb_services}</a> <span aria-hidden="true">/</span>{' '}
+      <span aria-current="page">{service.title}</span>
+    </nav>
+  </div>
+  <div class="wrap split">
+    <div class="copy">
+      <span class="pill">{service.category}</span>
+      <h1 class="title t-display">{service.title}</h1>
+      <p class="intro t-lead">{service.short_description}</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href={localizePath(lang, '/contact/')}>{service.cta}</a>
+        <a class="btn btn-ghost call" href={`tel:${PHONE_TEL}`}>{callBefore}<span class="latin">{PHONE_DISPLAY}</span>{callAfter}</a>
+      </div>
+    </div>
+    <div class="visual">
+      <div class="rib r1" style="--rot:-30deg"></div>
+      <div class="rib r2" style="--rot:-30deg"></div>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d={SERVICE_ICONS[service.id]}></path></svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .svc-hero { position: relative; overflow: hidden; background: var(--navy-900); color: var(--white); padding: 100px 0 0; }
+  .wrap { padding-inline: var(--space-6); }
+  .top { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px; min-height: var(--size-tap); margin-bottom: var(--space-1);
+    color: var(--gold-400); text-decoration: none;
+  }
+  .back:hover { color: var(--gold-200); }
+  .back svg { width: 14px; height: 14px; flex: none; }
+  :global([dir='rtl']) .back svg { transform: scaleX(-1); }
+  .crumbs { display: none; }
+  .pill {
+    display: inline-block; margin-bottom: var(--space-4); padding: 6px 14px;
+    border-radius: var(--radius-pill); border: 1px solid var(--gold-line-strong); color: var(--gold-400);
+    font-size: 13px; font-weight: 500; line-height: 1.5;
+  }
+  :lang(ar) .pill { padding-block: 5px; font-size: 15px; font-weight: 700; line-height: 1.33; }
+  .title { margin: 0 0 var(--space-3); color: var(--white); }
+  .intro { color: var(--on-navy-text); font-size: 16px; }
+  :lang(ar) .intro { font-weight: 400; }
+  .ctas { display: none; }
+  .visual { position: relative; height: 200px; margin-top: 28px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--navy-600); overflow: hidden; }
+  .r1 { width: 220px; height: 14px; inset-inline-start: -40px; top: 150px; }
+  .r2 { width: 200px; height: 14px; inset-inline-start: -10px; top: 186px; opacity: 0.4; }
+  .icon {
+    position: absolute; inset-inline-end: 28px; top: 30px; width: 110px; height: 110px;
+    fill: none; stroke: var(--gold-400); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  @media (min-width: 641px) {
+    .svc-hero { padding: 116px 0 var(--space-18); }
+    .wrap { padding-inline: var(--space-8); }
+    .back { gap: var(--space-3); margin: 0; }
+    .back svg { width: 16px; height: 16px; }
+    .split { display: flex; flex-direction: column; gap: 36px; padding-top: var(--space-6); }
+    .pill { margin-bottom: 18px; padding: 7px 14px; font-size: 15px; font-weight: 700; line-height: 1.4; }
+    :lang(ar) .pill { padding-block: 7px; line-height: 1.4; }
+    .title { margin-bottom: 18px; }
+    .intro { font-size: 18px; }
+    :lang(ar) .intro { font-weight: 500; }
+    .visual { height: 380px; margin: 0; border-radius: var(--radius-lg); }
+    .r1, .r2 { width: 560px; height: 16px; }
+    .r1 { inset-inline-start: -152px; top: 322px; }
+    .r2 { inset-inline-start: -122px; top: 402px; }
+    .icon { inset-inline-end: var(--space-18); top: 100px; width: 160px; height: 160px; }
+    .svc-hero:lang(ar) { padding-bottom: 68px; }
+  }
+  @media (min-width: 1024px) {
+    .svc-hero { padding: 120px 0 76px; }
+    .wrap { padding-inline: var(--space-10); }
+    .back {
+      gap: var(--space-2); padding-inline: var(--space-3) var(--space-4); box-sizing: border-box;
+      border-radius: var(--radius-pill); border: 1px solid var(--gold-line-strong);
+    }
+    .back svg { width: 14px; height: 14px; }
+    .crumbs { display: block; color: var(--on-navy-dim); font-size: 13px; font-weight: 500; line-height: 1.5; }
+    .crumbs a { color: var(--gold-400); text-decoration: underline; }
+    .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-16); align-items: center; padding-top: var(--space-10); }
+    .title { margin: 18px 0; }
+    .intro { margin-bottom: var(--space-8); }
+    .ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+    .r1 { width: 360px; inset-inline-start: -40px; top: 300px; }
+    .r2 { width: 340px; inset-inline-start: 0; top: 344px; }
+    .icon { inset-inline-end: 52px; top: 46px; width: 150px; height: 150px; }
+    :lang(ar) .crumbs { font-size: 15px; }
+    .svc-hero:lang(ar) { padding-bottom: var(--space-18); }
+  }
+</style>

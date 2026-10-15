@@ -23,7 +23,15 @@
     "whats_included_label": "What's included",
     "how_it_works_label": "How it works",
     "related_services_label": "Related services",
-    "cta": "Get in Touch"
+    "cta": "Get in Touch",
+    "back_short": "All Services",
+    "breadcrumb_services": "Services",
+    "overview_label": "Overview",
+    "call_label": "Call {phone}",
+    "aside_title": "Ready to get started?",
+    "aside_text": "Tell us about your needs and our team will get back to you shortly.",
+    "talk_label": "Prefer to talk?",
+    "view_all": "View All Services"
   },
   "services": [
     {

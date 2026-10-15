@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { LOCALES, getMain, getServices, localizePath, type Locale, type Service } from '../../../i18n';
+import ServiceHero from '../../../components/services/detail/ServiceHero.astro';
+import ServiceDetailBody from '../../../components/services/detail/ServiceDetailBody.astro';
+import RelatedServices from '../../../components/services/detail/RelatedServices.astro';
+import { LOCALES, getMain, getServices, type Locale, type Service } from '../../../i18n';
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) =>
@@ -9,10 +12,9 @@ export function getStaticPaths() {
 }
 const lang = Astro.params.lang as Locale;
 const { service } = Astro.props as { service: Service };
-const labels = getServices(lang).service_detail_page;
 ---
-<BaseLayout lang={lang} title={`${service.title} | ${getMain(lang).meta.site_name}`} description={service.short_description}>
-  <a href={localizePath(lang, '/services/')}>{labels.back_button}</a>
-  <h1>{service.title}</h1>
-  <!-- TODO: category tag, hero image, description, what's included, how it works, CTA, related services — from prototype -->
+<BaseLayout lang={lang} title={`${service.title} | ${getMain(lang).meta.site_name}`} description={service.short_description} active="services">
+  <ServiceHero lang={lang} service={service} />
+  <ServiceDetailBody lang={lang} service={service} />
+  <RelatedServices lang={lang} service={service} />
 </BaseLayout>

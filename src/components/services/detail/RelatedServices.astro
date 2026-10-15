@@ -1,0 +1,51 @@
+---
+// Related services: other services in the same category (up to three), with a "View All Services" link from tablet.
+import { getServices, localizePath, type Locale, type Service } from '../../../i18n';
+import RelatedCard from './RelatedCard.astro';
+
+interface Props {
+  lang: Locale;
+  service: Service;
+}
+const { lang, service } = Astro.props;
+const copy = getServices(lang);
+const p = copy.service_detail_page;
+const related = copy.services.filter((s) => s.category === service.category && s.id !== service.id).slice(0, 3);
+---
+{related.length > 0 && (
+  <section class="wrap related" data-section="related">
+    <div class="head">
+      <div>
+        <h2 class="t-h1 title">{p.related_services_label}</h2>
+        <div class="rule"></div>
+      </div>
+      <a class="view-all t-label" href={localizePath(lang, '/services/')}>{p.view_all}</a>
+    </div>
+    <div class="grid">
+      {related.map((s) => <RelatedCard lang={lang} service={s} />)}
+    </div>
+  </section>
+)}
+
+<style>
+  .related { padding: 40px var(--space-6) var(--space-12); }
+  .related:lang(ar) { padding-top: 46px; }
+  .title { color: var(--ink); }
+  .rule { margin: 10px 0 var(--space-5); }
+  .view-all { display: none; }
+  .grid { display: flex; flex-direction: column; gap: var(--space-3); }
+
+  @media (min-width: 641px) {
+    .related, .related:lang(ar) { padding: 96px var(--space-8) var(--space-28); }
+    .head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; margin-bottom: 28px; }
+    .rule { margin: var(--space-3) 0 0; }
+    .view-all { display: block; padding: var(--space-3) 0; text-decoration: underline; text-underline-offset: 4px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+  }
+  @media (min-width: 1024px) {
+    .related, .related:lang(ar) { padding-inline: var(--space-10); }
+    .related:lang(ar) { padding-top: 90px; }
+    .rule { width: 200px; margin-top: 14px; }
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  }
+</style>

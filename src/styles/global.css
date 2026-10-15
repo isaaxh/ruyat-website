@@ -27,6 +27,7 @@
   --gold-halo: rgba(220, 160, 77, 0.28);
   --bronze-line: rgba(181, 125, 45, 0.35);
   --bronze-line-strong: rgba(181, 125, 45, 0.5);
+  --bronze-line-card: rgba(181, 125, 45, 0.45);
   --bronze-line-open: rgba(181, 125, 45, 0.6);
   --bronze-faint: rgba(181, 125, 45, 0.3);
   --field-line: rgba(4, 18, 56, 0.18);
@@ -48,6 +49,7 @@
   --radius-xl: 22px;
   --radius-card: 16px;
   --radius-menu: 12px;
+  --radius-tile: 14px;
 }
 
 [dir='rtl'] { --dir: -1; }
