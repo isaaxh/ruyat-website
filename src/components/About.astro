@@ -73,5 +73,7 @@ const t = getMain(lang).about;
     .card img { width: 290px; }
     .p2 { margin-bottom: var(--space-8); }
     .cta { display: inline-flex; }
+    /* The Arabic desktop reference sets the copy in a narrower measure. */
+    :lang(ar) .copy { max-width: 490px; }
   }
 </style>
