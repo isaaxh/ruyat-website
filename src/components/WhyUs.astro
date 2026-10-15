@@ -1,0 +1,84 @@
+---
+// "Why Choose Us": four values on navy. 2x2 on mobile and tablet, one row of four on desktop.
+import { getMain, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).why_us;
+// Line icons (24x24 stroke paths) in item order: speed, credibility, experience, trust.
+const ICONS = [
+  'M13 2L3 14h9l-1 8 10-12h-9z',
+  'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z M9 12l2 2 4-4',
+  'M12 2a6 6 0 1 0 0 12a6 6 0 1 0 0-12 M8.2 13.2L7 22l5-3 5 3-1.2-8.8',
+  'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M5 7a4 4 0 1 0 8 0a4 4 0 1 0-8 0 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
+];
+---
+<section class="why" data-section="why-us">
+  <div class="rib r1" style="--rot:-35deg"></div>
+  <div class="rib r2" style="--rot:-35deg"></div>
+  <div class="wrap inner">
+    <div class="head">
+      <span class="eyebrow on-dark">{t.eyebrow}</span>
+      <h2 class="h2 title">{t.title}</h2>
+      <div class="rule center"></div>
+    </div>
+    <div class="grid">
+      {t.items.map((item, i) => (
+        <div class:list={['item', `n${i + 1}`]} data-reveal style={`--reveal-delay:${i * 0.1}s`}>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS[i]}></path></svg>
+          <h3 class="item-title t-h3">{item.title}</h3>
+          <p class="item-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why { position: relative; overflow: hidden; background: var(--navy-900); padding: var(--space-14) 0; }
+  .r1 { width: 300px; inset-inline-end: -120px; top: var(--space-10); opacity: 0.6; }
+  .r2 { display: none; }
+  .inner { position: relative; padding-inline: var(--space-6); }
+  .head { text-align: center; margin-bottom: 28px; }
+  .title { color: var(--white); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .item {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    padding: var(--space-6) var(--space-4); box-sizing: border-box;
+  }
+  .n1, .n3 { border-inline-end: 1px solid var(--gold-line-faint); }
+  .n1, .n2 { border-bottom: 1px solid var(--gold-line-faint); }
+  .icon { width: 44px; height: 44px; fill: none; stroke: var(--gold-400); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .item-title { margin: 0; color: var(--white); }
+  .item-desc { margin: 0; color: var(--on-navy-faint); font-size: 13px; font-weight: 500; line-height: 1.5; }
+  :lang(ar) .item-desc { line-height: 1.6; }
+
+  @media (min-width: 641px) {
+    .why { padding: var(--space-28) 0 96px; }
+    .r1 { width: 460px; height: 16px; top: 70px; }
+    .inner { padding-inline: var(--space-8); }
+    .head { margin-bottom: var(--space-14); }
+    .title { margin-top: 18px; }
+    .head .rule { margin-top: 22px; }
+    .head .rule::after { background: var(--gold-400); }
+    .item { gap: var(--space-3); padding: 44px 28px; }
+    .n1, .n2, .n3 { border: 0; }
+    .n2, .n4 { border-inline-start: 1px solid var(--gold-line-faint); }
+    .n3, .n4 { border-top: 1px solid var(--gold-line-faint); }
+    .icon { width: var(--size-control); height: var(--size-control); margin-bottom: 6px; }
+    .item-desc { max-width: 260px; }
+  }
+
+  @media (min-width: 1024px) {
+    .r1 { width: 480px; inset-inline-end: -130px; top: 76px; }
+    .r2 { display: block; width: 360px; height: 16px; inset-inline-start: -140px; bottom: 60px; opacity: 0.25; }
+    .inner { padding-inline: var(--space-10); }
+    .head .rule::after { background: var(--gold-500); }
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .n3, .n4 { border-top: 0; }
+    .n2, .n3, .n4 { border-inline-start: 1px solid var(--gold-line-faint); }
+    .icon { width: 52px; height: 52px; }
+    .item-desc { max-width: 240px; }
+  }
+</style>

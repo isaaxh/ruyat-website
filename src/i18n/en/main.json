@@ -100,12 +100,25 @@
     "view_all": "View All"
   },
   "why_us": {
-    "heading": "Why Us",
+    "eyebrow": "Why Us",
+    "title": "Why Choose Us",
     "items": [
-      "Speed",
-      "Credibility",
-      "Experience",
-      "Trust"
+      {
+        "title": "Speed",
+        "desc": "Fast turnaround on every request, without cutting corners."
+      },
+      {
+        "title": "Credibility",
+        "desc": "A name clients rely on for accurate, compliant work."
+      },
+      {
+        "title": "Experience",
+        "desc": "10+ years in e-services and 4+ in company establishment."
+      },
+      {
+        "title": "Trust",
+        "desc": "Your business and your pilgrimage, handled with care."
+      }
     ]
   },
   "testimonials": {
