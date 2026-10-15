@@ -1,0 +1,163 @@
+---
+// Home hero slider. Mobile and tablet: full-bleed photo under the scrim, text at the bottom.
+// Desktop: photo on the reading-end side, faded into navy; text on the reading-start side.
+import { fmt, getMain, localizePath, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang);
+
+// Photo per slide (design-system Hero assets) and its object-position below desktop.
+// `tabletPhoto: false` = the prototype shows the navy watermark variant on tablet for that slide.
+const SLIDES = [
+  { img: '/images/hero/hero-skyline.jpg', posMobile: '62% center', posTablet: '62% center', tabletPhoto: true },
+  { img: '/images/hero/hero-business-handshake.jpg', posMobile: '50% center', posTablet: '30% center', tabletPhoto: true },
+  { img: '/images/hero/hero-umrah-kaaba.jpg', posMobile: '50% center', posTablet: '50% center', tabletPhoto: false },
+];
+const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
+---
+<section class="hero" aria-label={t.hero.label} data-section="hero" data-hero>
+  {slides.map((s, i) => (
+    <div class="slide" data-slide={i} data-active={i === 0 ? '' : undefined} aria-hidden={i === 0 ? undefined : 'true'}>
+      <div class:list={['photo', { 'no-tablet': !s.tabletPhoto }]} style={`--pos-m:${s.posMobile};--pos-t:${s.posTablet}`}>
+        <img src={s.img} alt="" width="1254" height="1254" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} />
+      </div>
+      {!s.tabletPhoto && (
+        <div class="plain" aria-hidden="true">
+          <img src="/logos/ruyat-logo-submark.svg" alt="" class="watermark" />
+          <div class="rib r1" style="--rot:-35deg"></div>
+          <div class="rib r2" style="--rot:-35deg"></div>
+        </div>
+      )}
+      <div class="shade"></div>
+      <div class="wrap content-wrap">
+        <div class="content">
+          <div class="bar"></div>
+          <h2 class="title t-display">{s.title}</h2>
+          <p class="sub t-lead">{s.subtitle}</p>
+          <div class="ctas">
+            <a href={localizePath(lang, '/contact/')} class="btn btn-gold" tabindex={i === 0 ? undefined : -1}>{t.nav.contact}</a>
+            <a href={localizePath(lang, '/#about')} class="btn btn-ghost" tabindex={i === 0 ? undefined : -1}>{t.hero.learn_more}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+  <div class="wrap dots">
+    {slides.map((_, i) => (
+      <button type="button" class="dot" aria-label={fmt(t.hero.dot_label, { n: i + 1 })} aria-current={i === 0 ? 'true' : undefined} data-dot={i}>
+        <span></span>
+      </button>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hero]').forEach((hero) => {
+    const slides = [...hero.querySelectorAll<HTMLElement>('[data-slide]')];
+    const dots = [...hero.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current = 0;
+    let timer: number | undefined;
+    const show = (n: number) => {
+      current = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const on = i === current;
+        s.toggleAttribute('data-active', on);
+        s.toggleAttribute('aria-hidden', !on);
+        s.querySelectorAll('a').forEach((a) => (on ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
+      });
+      dots.forEach((d, i) => (i === current ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+    };
+    const start = () => {
+      window.clearInterval(timer);
+      if (!reduce.matches) timer = window.setInterval(() => show(current + 1), 4500);
+    };
+    dots.forEach((d, i) => d.addEventListener('click', () => { show(i); start(); }));
+    reduce.addEventListener('change', start);
+    start();
+  });
+</script>
+
+<style>
+  .hero { position: relative; height: 100svh; min-height: 560px; background: var(--navy-900); overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0; opacity: 0; pointer-events: none;
+    transition: opacity var(--duration-slide) ease;
+  }
+  .slide[data-active] { opacity: 1; pointer-events: auto; }
+
+  .photo { position: absolute; inset: 0; overflow: hidden; }
+  .photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: var(--pos-m);
+    transition: transform 4.5s ease-out;
+  }
+  .slide[data-active] .photo img { transform: scale(1.08); }
+  .plain { display: none; position: absolute; inset: 0; background: var(--navy-900); }
+  .shade { position: absolute; inset: 0; background: var(--hero-scrim); }
+
+  .content-wrap { position: absolute; inset-inline: 0; bottom: 96px; padding-inline: var(--space-6); }
+  .content {
+    color: var(--white); transform: translateY(16px); opacity: 0;
+    transition: transform 0.7s ease 0.15s, opacity 0.7s ease 0.15s;
+  }
+  .slide[data-active] .content { transform: none; opacity: 1; }
+  .bar { width: 48px; height: 3px; border-radius: 2px; background: var(--gold-400); margin-bottom: 18px; }
+  .title { margin: 0 0 14px; color: var(--white); }
+  .sub { margin: 0 0 26px; color: var(--gold-400); }
+  .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .dots { position: absolute; inset-inline: 0; bottom: 48px; z-index: 2; display: flex; gap: var(--space-2); padding-inline: var(--space-6); }
+  .dot { height: 4px; padding: 0; border: none; background: none; cursor: pointer; display: flex; align-items: center; }
+  .dot span {
+    display: block; width: 14px; height: 4px; border-radius: 2px; background: var(--on-navy-ghost);
+    transition: width var(--duration-base) ease;
+  }
+  .dot[aria-current] span { width: 32px; background: var(--gold-400); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .photo img, .content, .dot span { transition: none; }
+  }
+
+  /* Tablet: taller, wrap-aligned text, 44px dot targets. */
+  @media (min-width: 641px) {
+    .hero { height: 820px; min-height: 0; }
+    .photo img { object-position: var(--pos-t); transition-duration: 5s; }
+    .slide[data-active] .photo img { transform: scale(1.06); }
+    .photo.no-tablet { display: none; }
+    .plain { display: block; }
+    .watermark { position: absolute; inset-inline-end: -90px; top: 110px; width: 520px; opacity: var(--opacity-watermark); }
+    .r1, .r2 { width: 980px; height: 16px; }
+    .r1 { inset-inline-start: -120px; top: 330px; }
+    .r2 { inset-inline-start: -60px; top: 400px; opacity: 0.5; }
+
+    .content-wrap {
+      inset: 0; bottom: auto; height: 100%; padding-inline: var(--space-8);
+      display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 108px; box-sizing: border-box;
+    }
+    .content { max-width: var(--container-text); }
+    .bar { width: 56px; margin-bottom: 22px; }
+    .title { margin-bottom: var(--space-4); }
+    .sub { margin-bottom: var(--space-8); }
+    .ctas { gap: var(--space-3); }
+
+    .dots { bottom: var(--space-10); gap: var(--space-1); padding-inline: var(--space-8); }
+    .dot { height: var(--size-tap); padding: 0 var(--space-1); }
+    .dot[aria-current] span { width: 36px; }
+  }
+
+  /* Desktop: photo panel on the reading-end side, faded into navy on its reading-start edge. */
+  @media (min-width: 1024px) {
+    .hero { height: var(--hero-height); }
+    .photo, .photo.no-tablet { display: block; inset: 0; inset-inline-start: auto; width: 720px; }
+    .photo::after {
+      content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 0; width: 24%;
+      background: linear-gradient(calc(90deg * var(--dir)), var(--navy-900) 0%, rgba(4, 18, 56, 0) 100%);
+    }
+    .photo img, .slide[data-active] .photo img { object-position: center; transform: scale(1.025); transition: none; }
+    .plain, .shade { display: none; }
+    .content-wrap { padding-inline: var(--space-10); }
+    .dots { padding-inline: var(--space-10); }
+  }
+</style>
