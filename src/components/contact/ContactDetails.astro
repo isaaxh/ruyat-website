@@ -48,5 +48,7 @@ const t = m.contact;
   .k { display: block; color: var(--ink-muted); font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em; }
   :lang(ar) .k { letter-spacing: 0; font-size: 14px; }
   .v { display: block; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
+  /* .latin forces ltr, which left-aligns short values (Ruyat.sa) under a wider RTL label; pin them to the reading start. */
+  :global([dir='rtl']) .v.latin { text-align: right; }
   .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 </style>
