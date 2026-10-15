@@ -169,10 +169,12 @@
     ]
   },
   "faq": {
-    "heading": "FAQ",
+    "eyebrow": "FAQ",
+    "title": "Frequently asked questions",
+    "help": "Can't find the answer you're looking for? Our team is happy to help.",
     "items": [
       {
-        "question": "What services does Ruyat provide?",
+        "question": "What services does Ruyat Al Injaz provide?",
         "answer": "We offer company establishment, government liaison services, Umrah and Hajj coordination, licensing, residency applications, and full business support solutions."
       },
       {

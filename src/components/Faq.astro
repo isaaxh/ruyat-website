@@ -1,0 +1,100 @@
+---
+// FAQ accordion (one answer open at a time; the first starts open). Desktop: sticky intro with a contact prompt beside the list.
+import { getMain, localizePath, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang);
+const f = t.faq;
+---
+<section id="faq" class="wrap faq" data-section="faq" data-reveal>
+  <div class="intro">
+    <span class="eyebrow">{f.eyebrow}</span>
+    <h2 class="h2">{f.title}</h2>
+    <div class="rule"></div>
+    <div class="help">
+      <p class="t-body">{f.help}</p>
+      <a href={localizePath(lang, '/contact/')} class="btn btn-navy">{t.nav.contact}</a>
+    </div>
+  </div>
+  <div class="list" data-faq>
+    {f.items.map((item, i) => (
+      <div class="item" data-open={i === 0 ? '' : undefined}>
+        <h3 class="q-wrap">
+          <button type="button" class="q" id={`faq-q-${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`faq-a-${i}`}>
+            <span class="q-text t-h3">{item.question}</span>
+            <span class="icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></line><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></line></svg>
+            </span>
+          </button>
+        </h3>
+        <div class="a-wrap" id={`faq-a-${i}`} role="region" aria-labelledby={`faq-q-${i}`}>
+          <div class="a-inner"><p class="a t-body">{item.answer}</p></div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-faq]').forEach((list) => {
+    const items = [...list.querySelectorAll<HTMLElement>('.item')];
+    items.forEach((item) => {
+      const btn = item.querySelector<HTMLButtonElement>('.q')!;
+      btn.addEventListener('click', () => {
+        const open = !item.hasAttribute('data-open');
+        items.forEach((other) => {
+          const on = other === item && open;
+          other.toggleAttribute('data-open', on);
+          other.querySelector('.q')!.setAttribute('aria-expanded', String(on));
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .faq { padding: var(--space-14) var(--space-6); }
+  .help { display: none; }
+  .list { display: flex; flex-direction: column; gap: var(--space-3); margin-top: 26px; }
+  .item {
+    border-radius: var(--radius-card); border: 1px solid var(--border); background: var(--white);
+    transition: background var(--duration-base) ease, border-color var(--duration-base) ease;
+  }
+  .item[data-open] { background: var(--ivory-100); border-color: var(--bronze-line-open); }
+  .q-wrap { margin: 0; }
+  .q {
+    display: flex; width: 100%; align-items: flex-start; justify-content: space-between; gap: var(--space-4);
+    padding: var(--space-5); border: 0; background: none; cursor: pointer; text-align: start; color: var(--ink);
+    border-radius: var(--radius-card);
+  }
+  .q:focus-visible { outline: 2px solid var(--navy-900); outline-offset: 2px; }
+  .icon {
+    flex: none; width: 28px; height: 28px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid var(--gold-500);
+    display: flex; align-items: center; justify-content: center; color: var(--gold-700);
+  }
+  .icon svg { transition: transform var(--duration-base) ease; }
+  .item[data-open] .icon svg { transform: rotate(45deg); }
+  .a-wrap { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.35s ease; }
+  :global(html.js) .item:not([data-open]) .a-wrap { grid-template-rows: 0fr; }
+  .a-inner { overflow: hidden; }
+  .a { margin: 0; color: var(--ink-muted); padding: 0 var(--space-5) var(--space-5); }
+
+  @media (min-width: 641px) {
+    .faq { padding: var(--space-28) var(--space-8); display: flex; flex-direction: column; gap: 36px; }
+    .list { margin-top: 0; }
+    .q { padding: 22px var(--space-6); }
+    .a { padding: 0 var(--space-6) 22px; }
+  }
+
+  @media (min-width: 1024px) {
+    .faq {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-18); align-items: start;
+      padding-inline: var(--space-10);
+    }
+    .intro { position: sticky; top: var(--space-28); }
+    .help { display: block; margin-top: var(--space-6); }
+    .help p { margin: 0 0 var(--space-6); color: var(--ink-muted); }
+    .icon { width: 30px; height: 30px; }
+  }
+</style>
