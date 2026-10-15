@@ -1,14 +1,25 @@
 ---
 import '../styles/global.css';
 import { LOCALES, DEFAULT_LOCALE, dirFor, stripLocale, localizePath, getMain, type Locale } from '../i18n';
-import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import Header from '../components/Header.astro';
+import type { NavKey } from '../lib/nav';
 
 interface Props {
   lang: Locale;
   title: string;
   description?: string;
+  /** Highlighted main-nav item. */
+  active?: NavKey;
 }
-const { lang, title, description } = Astro.props;
+const { lang, title, description, active } = Astro.props;
+// Fonts per script (design system): Latin = Plus Jakarta Sans; Arabic = Tajawal (no 600). Latin is also needed on RTL pages for codes and numbers.
+const FONTS: Record<Locale, string> = {
+  en: 'family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+  ar: 'family=Tajawal:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+  ur: 'family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+  bn: 'family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+};
+const fontsHref = `https://fonts.googleapis.com/css2?${FONTS[lang]}&display=swap`;
 const dir = dirFor(lang);
 const rest = stripLocale(Astro.url.pathname);
 const abs = (l: Locale) => new URL(localizePath(l, rest), Astro.site).href;
@@ -30,10 +41,12 @@ const hreflang = (l: Locale) => getMain(l).meta.hreflang;
     <meta property="og:url" content={abs(lang)} />
     <link rel="icon" type="image/svg+xml" href="/logos/ruyat-logo-submark.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontsHref} />
   </head>
   <body>
-    <!-- TODO: Header / Nav from prototype -->
-    <LanguageSwitcher lang={lang} />
+    <Header lang={lang} active={active} />
     <main>
       <slot />
     </main>

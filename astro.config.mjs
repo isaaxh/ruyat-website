@@ -8,6 +8,7 @@ export default defineConfig({
   site: 'https://ruyat.sa',
   output: 'static',
   trailingSlash: 'always',
+  devToolbar: { enabled: false },
   integrations: [
     sitemap({
       filter: (page) => page !== 'https://ruyat.sa/', // "/" is only a redirect

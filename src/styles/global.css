@@ -1,26 +1,201 @@
 @import 'tailwindcss';
+@import './tokens.css';
 
 /*
- * Design tokens.
- * TODO: map from design/design-system/ (colors, type scale, spacing, radii, shadows, motion, breakpoints).
- * Do not add values here that are not in the design system.
+ * Values used by the prototype (design/prototype.html) that tokens.json does not name yet.
+ * Named here so components never paste raw values; move them into the design system when it is next updated.
  */
+:root {
+  /* 1 in LTR, -1 in RTL: multiply angles/offsets of decorative elements so they mirror. */
+  --dir: 1;
+  --font-arabic: var(--font-sans);
+  --gold-rule-stop: #a87323;
+  --ivory-200: #f1ece1;
+  --navy-glass: rgba(4, 18, 56, 0.35);
+  --on-navy-strong: rgba(255, 255, 255, 0.88);
+  --on-navy-soft: rgba(255, 255, 255, 0.85);
+  --on-navy-faint: rgba(255, 255, 255, 0.78);
+  --on-navy-dim: rgba(255, 255, 255, 0.72);
+  --on-navy-ghost: rgba(255, 255, 255, 0.45);
+  --ghost-border: rgba(255, 255, 255, 0.7);
+  --gold-line-strong: rgba(220, 160, 77, 0.7);
+  --gold-line: rgba(220, 160, 77, 0.6);
+  --gold-line-soft: rgba(220, 160, 77, 0.4);
+  --gold-line-faint: rgba(220, 160, 77, 0.35);
+  --gold-line-hair: rgba(220, 160, 77, 0.18);
+  --gold-tint: rgba(220, 160, 77, 0.15);
+  --gold-halo: rgba(220, 160, 77, 0.28);
+  --bronze-line: rgba(181, 125, 45, 0.35);
+  --bronze-line-strong: rgba(181, 125, 45, 0.5);
+  --bronze-line-open: rgba(181, 125, 45, 0.6);
+  --bronze-faint: rgba(181, 125, 45, 0.3);
+  --field-line: rgba(4, 18, 56, 0.18);
+  --wa-fab: #25d366;
+  --wa-fab-hover: #1fbd5a;
+  --shadow-wa-fab: 0 8px 24px rgba(37, 211, 102, 0.4);
+  --shadow-wa-fab-hover: 0 12px 28px rgba(37, 211, 102, 0.5);
+  --shadow-raised: 0 14px 32px rgba(4, 18, 56, 0.22);
+  --shadow-svc-hover: 0 14px 32px rgba(4, 18, 56, 0.28);
+  --shadow-dropdown: 0 8px 24px rgba(4, 18, 56, 0.12);
+  --shadow-chip: 0 4px 14px rgba(4, 18, 56, 0.12);
+  --shadow-pin: 0 6px 14px rgba(4, 18, 56, 0.35);
+  --rib-metal: linear-gradient(90deg, #9a681d 0%, #b57d2d 30%, #fbbb67 52%, #dca04d 64%, #9a681d 100%);
+  --rib-metal-v: linear-gradient(180deg, #9a681d 0%, #b57d2d 35%, #fbbb67 60%, #dca04d 75%, #9a681d 100%);
+  --rib-band: linear-gradient(90deg, #9a681d, #dca04d, #fbbb67, #dca04d);
+  --rule-bronze: linear-gradient(90deg, rgba(181, 125, 45, 0) 0%, #b57d2d 12%, #b57d2d 40%, rgba(181, 125, 45, 0) 100%);
+  --hero-fade: linear-gradient(90deg, #041238 0%, rgba(4, 18, 56, 0) 100%);
+  --radius-xl: 22px;
+  --radius-card: 16px;
+  --radius-menu: 12px;
+}
+
+[dir='rtl'] { --dir: -1; }
+
 @theme {
-  /* --color-*: …        */
-  /* --font-latin: …     */
-  /* --font-arabic: …    */
-  /* --font-urdu: …      (Nastaliq) */
-  /* --font-bangla: …    */
+  --color-navy-900: #041238;
+  --color-navy-800: #00183f;
+  --color-navy-600: #183363;
+  --color-gold-700: #9a681d;
+  --color-gold-600: #94651f;
+  --color-gold-500: #b57d2d;
+  --color-gold-400: #dca04d;
+  --color-gold-200: #fbbb67;
+  --color-slate-600: #454e57;
+  --color-ivory-100: #f5f0e6;
+  --font-latin: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-arabic: 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+  --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  --font-bangla: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
   /* Breakpoints from design-system tokens (--bp-tablet, --bp-desktop). Use `tablet:` and `desktop:`. */
   --breakpoint-*: initial;
   --breakpoint-tablet: 641px;
   --breakpoint-desktop: 1024px;
 }
 
-/* Per-script font + line-height hooks. Urdu Nastaliq needs a taller line-height (value from design system). */
 @layer base {
-  /* html:lang(en) { font-family: var(--font-latin); }  */
-  /* html:lang(ar) { font-family: var(--font-arabic); } */
-  /* html:lang(ur) { font-family: var(--font-urdu); line-height: TODO; } */
-  /* html:lang(bn) { font-family: var(--font-bangla); } */
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font-latin);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--surface);
+    font-variant-ligatures: no-common-ligatures;
+  }
+  html:lang(ar) body { font-family: var(--font-arabic); }
+  html:lang(ur) body { font-family: var(--font-urdu); line-height: 2.2; }
+  html:lang(bn) body { font-family: var(--font-bangla); line-height: 1.75; }
+  button, input, select, textarea { font-family: inherit; letter-spacing: inherit; font-variant-ligatures: inherit; }
+  a { color: var(--accent); }
+  a:hover { color: var(--ink); }
+  h1, h2, h3, p { margin: 0; }
+  img, svg { display: block; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  /* Latin runs inside RTL pages (phone numbers, codes) keep Latin font and LTR order. */
+  .latin { font-family: var(--font-latin); direction: ltr; unicode-bidi: isolate; }
+}
+
+/*
+ * Type roles from the design system (bundle.css): English values match the prototype; Arabic, Urdu and Bangla
+ * get their own size and leading. Components set size/leading through these classes only.
+ */
+@layer components {
+  .t-display { font-size: 32px; line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; }
+  .t-h1, .h2 { font-size: 28px; line-height: 1.2; font-weight: 800; letter-spacing: -0.01em; }
+  .t-h3 { font-size: 19px; line-height: 1.25; font-weight: 800; letter-spacing: 0; }
+  .t-lead { font-size: 18px; line-height: 1.6; font-weight: 400; letter-spacing: 0; }
+  .t-body { font-size: 16px; line-height: 1.6; font-weight: 400; letter-spacing: 0; }
+  .t-label { font-size: 15px; line-height: 1.4; font-weight: 700; letter-spacing: 0; }
+  .t-caption { font-size: 13px; line-height: 1.5; font-weight: 500; letter-spacing: 0; }
+
+  :lang(ar) .t-display { font-size: 34px; line-height: 1.3; letter-spacing: 0; }
+  :lang(ar) .t-h1, :lang(ar) .h2 { font-size: 30px; line-height: 1.35; letter-spacing: 0; }
+  :lang(ar) .t-h3 { font-size: 20px; line-height: 1.45; font-weight: 700; }
+  :lang(ar) .t-lead { line-height: 1.8; font-weight: 500; }
+  :lang(ar) .t-body { line-height: 1.8; }
+  :lang(ar) .t-caption { line-height: 1.6; }
+
+  @media (min-width: 641px) {
+    .t-display { font-size: 42px; line-height: 1.12; }
+    .t-h1, .h2 { font-size: 38px; line-height: 1.15; }
+    :lang(ar) .t-display { font-size: 44px; line-height: 1.25; }
+    :lang(ar) .t-h1, :lang(ar) .h2 { font-size: 40px; line-height: 1.3; }
+    :lang(ar) .t-h3 { font-size: 22px; }
+  }
+  @media (min-width: 1024px) {
+    .t-display { font-size: 52px; }
+    .t-h3 { font-size: 20px; }
+    :lang(ar) .t-display { font-size: 56px; }
+  }
+}
+
+/* Shared primitives used across sections. Mobile first; tablet from 641px, desktop from 1024px. */
+@layer components {
+  .wrap {
+    box-sizing: border-box;
+    padding-inline: var(--space-5);
+    margin-inline: auto;
+  }
+  @media (min-width: 641px) { .wrap { padding-inline: var(--space-8); } }
+  @media (min-width: 1024px) { .wrap { max-width: var(--container-max); padding-inline: var(--space-10); } }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+    min-height: var(--size-control); padding: 0 22px; box-sizing: border-box;
+    border-radius: var(--radius-md); border: 1.5px solid transparent; cursor: pointer; text-decoration: none;
+    font-size: 15px; font-weight: 700; line-height: 1.4; letter-spacing: 0;
+    transition: background var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+  }
+  @media (min-width: 641px) { .btn { padding: 0 var(--space-6); } }
+  @media (min-width: 1024px) { :lang(ar) .btn { font-size: 16px; } }
+  .btn:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
+  .btn-gold { background: var(--accent-fill); color: var(--on-accent); }
+  .btn-gold:hover { background: var(--accent-fill-hover); color: var(--on-accent); }
+  .btn-ghost { background: transparent; color: var(--white); border-color: var(--ghost-border); }
+  .btn-ghost:hover { background: var(--white); color: var(--navy-900); border-color: var(--white); }
+  .btn-navy { background: var(--navy-900); color: var(--white); }
+  .btn-navy:hover { background: var(--navy-600); color: var(--white); }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; padding: 6px var(--space-4);
+    border-radius: var(--radius-pill); background: var(--navy-900); color: var(--gold-400);
+    text-transform: uppercase; font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em;
+  }
+  .eyebrow.on-dark { background: var(--navy-600); }
+  :lang(ar) .eyebrow { letter-spacing: 0; }
+
+  .h2 { margin: 14px 0 0; color: var(--ink); }
+  @media (min-width: 641px) { .h2 { margin-top: var(--space-4); } }
+
+  /* Gold divider: line + dot near the reading start. `.center` = short centred variant. */
+  .rule { position: relative; height: 16px; width: 45%; margin: 18px 0 0; }
+  @media (min-width: 641px) { .rule { margin-top: var(--space-5); } }
+  @media (min-width: 1024px) { .rule { width: 240px; } }
+  .rule::before {
+    content: ''; position: absolute; inset-inline: 0; top: 6.5px; height: 3px; border-radius: 2px;
+    background: var(--rule-bronze);
+  }
+  :dir(rtl) .rule::before { transform: scaleX(-1); }
+  .rule::after {
+    content: ''; position: absolute; top: 0; inset-inline-start: var(--space-6);
+    width: 16px; height: 16px; border-radius: 50%; background: var(--gold-500);
+  }
+  .rule.center { height: 10px; width: 140px; margin-inline: auto; }
+  @media (min-width: 641px) { .rule.center { width: 160px; } }
+  @media (min-width: 1024px) { .rule.center { width: 180px; } }
+  .rule.center::before { top: 4px; height: 2px; border-radius: 0; background: var(--gold-rule); }
+  .rule.center::after { inset-inline-start: 50%; width: 10px; height: 10px; margin-inline-start: -5px; }
+  .rule.on-dark::after { background: var(--gold-400); }
+
+  /* Diagonal gold ribbon (decorative). Position, size and --rot are set per use; the angle mirrors in RTL. */
+  .rib {
+    position: absolute; height: 12px; border-radius: 2px; pointer-events: none;
+    background: var(--rib-metal);
+    transform: rotate(calc(var(--rot, 0deg) * var(--dir)));
+  }
 }

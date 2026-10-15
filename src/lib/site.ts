@@ -5,6 +5,10 @@ export const SITE_URL = 'https://ruyat.sa';
 
 /** Local format as given by the client. */
 export const PHONE_LOCAL = '0534880040';
+/** Display format (Western digits, all languages). */
+export const PHONE_DISPLAY = '+966 53 488 0040';
+/** tel: link format. */
+export const PHONE_TEL = '+966534880040';
 /** wa.me format: international, no "+", no leading zero. */
 export const WHATSAPP_NUMBER = '966534880040';
 

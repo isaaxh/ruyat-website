@@ -1,0 +1,82 @@
+---
+// Full-screen navy menu below desktop, opened by the header burger.
+import { getMain, localizePath, type Locale } from '../i18n';
+import { navItems, type NavKey } from '../lib/nav';
+import { PHONE_DISPLAY } from '../lib/site';
+
+interface Props {
+  lang: Locale;
+  active?: NavKey;
+}
+const { lang, active } = Astro.props;
+const t = getMain(lang);
+---
+<div id="site-menu" class="menu" aria-hidden="true" data-menu inert>
+  <div class="rib" style="--rot:-35deg"></div>
+  <nav aria-label={t.nav.menu_label} class="menu-nav">
+    {navItems(lang, active).map((n) => (
+      <a class="menu-link" href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>
+    ))}
+  </nav>
+  <a href={localizePath(lang, '/contact/')} class="btn btn-gold menu-cta">{t.nav.contact}</a>
+  <div class="menu-foot"><span class="latin num">{PHONE_DISPLAY}</span> · <span class="latin">{t.footer.website}</span></div>
+</div>
+
+<script>
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  if (menu && burger) {
+    const set = (open: boolean) => {
+      document.documentElement.toggleAttribute('data-menu-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      menu.setAttribute('aria-hidden', String(!open));
+      menu.toggleAttribute('inert', !open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', (open ? burger.dataset.labelClose : burger.dataset.labelOpen) || '');
+    };
+    burger.addEventListener('click', () => set(!document.documentElement.hasAttribute('data-menu-open')));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') set(false);
+    });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && set(false));
+  }
+</script>
+
+<style>
+  .menu {
+    position: fixed; inset: 0; z-index: calc(var(--z-header) - 1);
+    display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;
+    padding: 96px 28px 28px; background: var(--navy-900);
+    opacity: 0; pointer-events: none; transform: translateY(-16px);
+    transition: opacity var(--duration-header-fade) ease, transform var(--duration-header-fade) ease;
+  }
+  :global(html[data-menu-open]) .menu { opacity: 1; pointer-events: auto; transform: none; }
+  .rib { width: 340px; inset-inline-end: -140px; bottom: 120px; opacity: 0.6; }
+  .menu-nav { position: relative; display: flex; flex-direction: column; }
+  .menu-link {
+    display: block; padding: var(--space-3) 0; text-decoration: none; color: var(--on-navy-dim);
+    border-bottom: 1px solid var(--gold-line-hair);
+    font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: 0;
+  }
+  .menu-link:hover, .menu-link:focus-visible { color: var(--white); }
+  .menu-link[aria-current] { color: var(--gold-400); }
+  .menu-link[aria-current]:hover { color: var(--gold-200); }
+  .menu-cta { position: relative; margin-top: var(--space-8); width: 100%; }
+  .menu-foot {
+    position: relative; margin-top: auto; color: var(--on-navy-dim);
+    font-family: var(--font-latin); font-size: 13px; font-weight: 500; line-height: 1.5;
+  }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  @media (min-width: 641px) {
+    .menu { padding: 120px var(--space-8) var(--space-10); }
+    .rib { width: 420px; height: 16px; bottom: 150px; }
+    .menu-link { padding: var(--space-4) 0; font-size: 26px; }
+    .menu-cta { width: auto; margin-top: 36px; min-height: 52px; }
+    .menu-foot { color: var(--on-navy-faint); }
+  }
+  @media (min-width: 1024px) {
+    .menu { display: none; }
+  }
+</style>

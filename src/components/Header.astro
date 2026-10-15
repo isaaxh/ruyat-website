@@ -1,0 +1,150 @@
+---
+// Site header: sits over the hero, hides on scroll down, gains a navy fade once past the hero.
+// Below desktop the nav collapses into the burger menu (MobileMenu).
+import { getMain, localizePath, type Locale } from '../i18n';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import MobileMenu from './MobileMenu.astro';
+import { navItems, type NavKey } from '../lib/nav';
+
+interface Props {
+  lang: Locale;
+  active?: NavKey;
+}
+const { lang, active } = Astro.props;
+const t = getMain(lang);
+const items = navItems(lang, active);
+---
+<header class="site-header" data-section="header" data-align="top" data-header>
+  <div class="fade" aria-hidden="true"></div>
+  <div class="wrap bar">
+    <a class="brand" href={localizePath(lang, '/')} aria-label={t.brand.home_label}>
+      <img src="/logos/ruyat-logo-submark.svg" alt="" width="42" height="48" />
+      <span class="brand-text">
+        <span class="brand-name">{t.brand.name}</span>
+        <span class="brand-tag">{t.brand.tagline}</span>
+      </span>
+    </a>
+    <nav class="links" aria-label={t.nav.main_label}>
+      {items.map((n) => (
+        <a class="nav-link" href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>
+      ))}
+    </nav>
+    <div class="actions">
+      <LanguageSwitcher lang={lang} />
+      <a href={localizePath(lang, '/contact/')} class="btn btn-gold cta">{t.nav.contact}</a>
+      <button
+        type="button"
+        class="burger"
+        aria-label={t.ui.open_menu}
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-burger
+        data-label-open={t.ui.open_menu}
+        data-label-close={t.ui.close_menu}
+      >
+        <span class="bars"><span class="b1"></span><span class="b2"></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<MobileMenu lang={lang} active={active} />
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  if (header) {
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const menuOpen = document.documentElement.hasAttribute('data-menu-open');
+      // Thresholds from the prototype: fade in past the hero, hide after a short scroll down.
+      const fadeAt = desktop.matches ? 560 : 640;
+      const hideAt = desktop.matches ? 160 : 80;
+      if (!menuOpen) {
+        if (y > lastY && y > hideAt) header.dataset.hidden = '';
+        else if (y < lastY) delete header.dataset.hidden;
+      }
+      header.toggleAttribute('data-scrolled', y > fadeAt);
+      if (header.hasAttribute('data-hidden')) header.querySelector('[data-lang-switcher]')?.dispatchEvent(new Event('lang:close'));
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: var(--z-header);
+    margin-bottom: -80px;
+    background: var(--header-shade);
+    transition: transform var(--duration-base) ease;
+  }
+  .site-header[data-hidden] { transform: translateY(-110%); }
+  :global(html[data-menu-open]) .site-header { background: transparent; transform: none; }
+  .fade {
+    position: absolute; inset-inline: 0; top: 0; height: 83px; z-index: -1; pointer-events: none;
+    background: var(--header-fade); opacity: 0; transition: opacity var(--duration-header-fade) ease;
+  }
+  .site-header[data-scrolled]:not([data-hidden]) .fade { opacity: 1; }
+  :global(html[data-menu-open]) .fade { opacity: 0 !important; }
+
+  .bar { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+  .brand img { width: 36px; height: 41px; object-fit: contain; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-name { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: 0.01em; }
+  .brand-tag { font-size: 10.5px; font-weight: 600; color: var(--gold-400); letter-spacing: 0.06em; text-transform: uppercase; }
+  :lang(ar) .brand-text { line-height: 1.3; }
+  :lang(ar) .brand-name { font-size: 18px; letter-spacing: 0; }
+  :lang(ar) .brand-tag { font-size: 12px; letter-spacing: 0; font-weight: 700; }
+
+  .links { display: none; gap: 36px; }
+  .nav-link {
+    padding: 10px 2px; text-decoration: none; color: var(--on-navy-strong);
+    border-bottom: 2px solid transparent; transition: color var(--duration-fast) ease;
+    font-size: 15px; font-weight: 700; line-height: 1.4; letter-spacing: 0;
+  }
+  .nav-link:hover { color: var(--gold-200); }
+  .nav-link[aria-current] { color: var(--gold-400); border-bottom-color: var(--gold-400); }
+
+  .actions { display: flex; align-items: center; gap: var(--space-2); flex: none; }
+  .cta { display: none; }
+  .burger {
+    width: var(--size-tap); height: var(--size-tap); padding: 0; border: none; background: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .bars { position: relative; display: block; width: 24px; height: 16px; }
+  .bars span {
+    position: absolute; inset-inline-start: 0; width: 24px; height: 2px; border-radius: 1px; background: var(--white);
+    transition: top var(--duration-base) ease, transform var(--duration-base) ease;
+  }
+  .b1 { top: 0; }
+  .b2 { top: 14px; }
+  .burger[aria-expanded='true'] .b1 { top: 7px; transform: rotate(45deg); }
+  .burger[aria-expanded='true'] .b2 { top: 7px; transform: rotate(-45deg); }
+
+  @media (min-width: 641px) {
+    .site-header { margin-bottom: -84px; }
+    .fade { height: 87px; }
+    .bar { height: 84px; }
+    .brand { gap: var(--space-3); }
+    .brand img { width: 40px; height: 46px; }
+    .brand-name { font-size: 17px; }
+    .brand-tag { font-size: 11px; }
+    :lang(ar) .brand-name { font-size: 19px; }
+    :lang(ar) .brand-tag { font-size: 12px; }
+    .actions { gap: var(--space-3); }
+  }
+  @media (min-width: 1024px) {
+    .site-header { margin-bottom: calc(-1 * var(--header-height)); }
+    .fade { height: 91px; }
+    .bar { height: var(--header-height); }
+    .brand img { width: 42px; height: 48px; }
+    .brand-name { font-size: 18px; }
+    :lang(ar) .brand-name { font-size: 20px; }
+    .links { display: flex; }
+    .cta { display: inline-flex; }
+    .burger { display: none; }
+  }
+</style>
