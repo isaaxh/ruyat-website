@@ -31,7 +31,7 @@ const year = new Date().getFullYear();
         <div class="label">{f.follow}</div>
         <div class="socs">
           {SOCIAL.map((s, i) => (
-            <a class="soc" href={s.url ?? '#'} aria-label={f.social[i]} target={s.url ? '_blank' : undefined} rel={s.url ? 'noopener' : undefined}>
+            <a class="soc" href={s.url ?? undefined} aria-label={f.social[i]} aria-disabled={s.url ? undefined : 'true'} target={s.url ? '_blank' : undefined} rel={s.url ? 'noopener' : undefined}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={SOCIAL_ICONS[s.key]}></path></svg>
             </a>
           ))}
@@ -50,8 +50,8 @@ const year = new Date().getFullYear();
     <div class="bottom">
       <div class="legal">{fmt(f.copyright, { year })}<br class="m-break" /> {fmt(f.design_by, { credit: f.design_credit })}</div>
       <div class="legal-links">
-        <a href="#">{f.terms}</a>
-        <a href="#">{f.privacy}</a>
+        <a aria-disabled="true">{f.terms}</a>
+        <a aria-disabled="true">{f.privacy}</a>
       </div>
     </div>
   </div>
