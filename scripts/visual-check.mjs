@@ -1,5 +1,6 @@
 // Visual check: screenshots the running dev server and compares each [data-section] against design/screenshots/.
-// Usage: node scripts/visual-check.mjs [--page home] [--vp mobile,tablet,desktop] [--lang en,ar] [--section hero] [--base http://localhost:4321]
+// Usage: node scripts/visual-check.mjs [--page home] [--vp mobile,tablet,desktop] [--lang en,ar] [--section hero] [--range 400] [--base http://localhost:4321]
+// Sections marked data-align="top" are compared at their own position; others are aligned to the best vertical offset within --range px.
 // Output: test-results/visual/<lang>-<page>-<vp>[-<section>].png (mine | reference | diff) and a % report.
 import { chromium } from '@playwright/test';
 import { PNG } from 'pngjs';
@@ -17,7 +18,12 @@ const PAGES = {
   'service-detail': '/services/company-establishment/',
   contact: '/contact/',
 };
-const VIEWPORTS = { mobile: { width: 351, dpr: 2 }, tablet: { width: 834, dpr: 1 }, desktop: { width: 1440, dpr: 1 } };
+// Reference mobile screenshots are a 390px-wide viewport (iPhone 12-14) scaled to 702px, with the hero at its 560px minimum.
+const VIEWPORTS = {
+  mobile: { width: 390, height: 560, dpr: 1.8 },
+  tablet: { width: 834, height: 900, dpr: 1 },
+  desktop: { width: 1440, height: 900, dpr: 1 },
+};
 const pages = (args.page || Object.keys(PAGES).join(',')).split(',');
 const vps = (args.vp || Object.keys(VIEWPORTS).join(',')).split(',');
 const langs = (args.lang || 'en,ar').split(',');
@@ -68,21 +74,38 @@ const bestOffset = (mineSig, y0, h, refSig, refH, range) => {
   return best;
 };
 
+// mine | reference | diff: side by side for tall crops, stacked for wide ones.
 const sideBySide = (a, b, d) => {
   const gap = 12;
-  const out = new PNG({ width: a.width * 3 + gap * 2, height: a.height });
+  const stack = a.width > a.height;
+  const out = stack
+    ? new PNG({ width: a.width, height: a.height * 3 + gap * 2 })
+    : new PNG({ width: a.width * 3 + gap * 2, height: a.height });
   out.data.fill(255);
   [a, b, d].forEach((img, k) => {
-    for (let y = 0; y < img.height; y++)
-      img.data.copy(out.data, (y * out.width + k * (a.width + gap)) * 4, y * img.width * 4, (y + 1) * img.width * 4);
+    for (let y = 0; y < img.height; y++) {
+      const dst = stack ? (k * (a.height + gap) + y) * out.width : y * out.width + k * (a.width + gap);
+      img.data.copy(out.data, dst * 4, y * img.width * 4, (y + 1) * img.width * 4);
+    }
   });
   return out;
 };
 
-// Bring interactive widgets into the state the reference screenshots show.
-async function prepare(page) {
+// State of interactive widgets in each reference screenshot (0-based): hero slide shown.
+const STATE = {
+  'en-home-desktop': { slide: 2 },
+  'en-home-tablet': { slide: 2 },
+  'en-home-mobile': { slide: 0 },
+  'ar-home-desktop': { slide: 2 },
+  'ar-home-tablet': { slide: 2 },
+  'ar-home-mobile': { slide: 0 },
+};
+
+// Bring interactive widgets into the state the reference screenshots show, using the page's own controls.
+async function prepare(page, tag) {
+  const st = { ...STATE[tag], ...(args.slide ? { slide: Number(args.slide) } : {}) };
+  if (st.slide !== undefined) await page.locator(`[data-dot="${st.slide}"]`).click().catch(() => {});
   await page.evaluate(() => document.fonts.ready);
-  await page.evaluate(() => window.__visualState?.());
   await page.waitForTimeout(400);
 }
 
@@ -93,17 +116,17 @@ for (const lang of langs) {
     for (const vp of vps) {
       const ref = refPath(lang, pg, vp);
       if (!fs.existsSync(ref)) continue;
-      const { width, dpr } = VIEWPORTS[vp];
-      const ctx = await browser.newContext({ viewport: { width, height: 900 }, deviceScaleFactor: dpr, reducedMotion: 'reduce' });
+      const { width, height, dpr } = VIEWPORTS[vp];
+      const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: dpr, reducedMotion: 'reduce' });
       const page = await ctx.newPage();
       await page.goto(`${BASE}/${lang}${PAGES[pg]}?visual=1`, { waitUntil: 'networkidle' });
-      await prepare(page);
+      await prepare(page, `${lang}-${pg}-${vp}`);
       const shot = PNG.sync.read(await page.screenshot({ fullPage: true, animations: 'disabled' }));
       const refPng = PNG.sync.read(fs.readFileSync(ref));
       const sections = await page.$$eval('[data-section]', (els) =>
         els.map((e) => {
           const r = e.getBoundingClientRect();
-          return { name: e.dataset.section, y: r.top + window.scrollY, h: r.height };
+          return { name: e.dataset.section, y: r.top + window.scrollY, h: r.height, fixed: e.dataset.align === 'top' };
         }),
       );
       const mineSig = rowSig(shot), refSig = rowSig(refPng);
@@ -112,7 +135,8 @@ for (const lang of langs) {
       for (const s of onlySection ? sections.filter((x) => x.name === onlySection) : [full, ...sections]) {
         const y0 = Math.round(s.y * dpr), h = Math.min(Math.round(s.h * dpr), shot.height - y0);
         if (h <= 0) continue;
-        const dy = s === full ? 0 : bestOffset(mineSig, y0, h, refSig, refPng.height, Math.round(400 * dpr));
+        const range = Math.round(Number(args.range || 400) * dpr);
+        const dy = s === full || s.fixed ? 0 : bestOffset(mineSig, y0, h, refSig, refPng.height, range);
         const a = crop(shot, y0, h), b = crop(refPng, y0 + dy, h);
         if (a.width !== b.width) { report.push({ tag, section: s.name, error: `width ${a.width} vs ${b.width}` }); continue; }
         const diff = new PNG({ width: a.width, height: h });
