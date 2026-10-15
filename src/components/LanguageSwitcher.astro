@@ -39,7 +39,7 @@ const rest = stripLocale(Astro.url.pathname);
     };
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      set(menu.hidden);
+      set(menu.hidden === true);
     });
     document.addEventListener('click', (e) => {
       if (!root.contains(e.target as Node)) set(false);
