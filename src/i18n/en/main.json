@@ -38,11 +38,32 @@
     "dot_label": "Show slide {n}"
   },
   "stats": {
+    "label": "Key numbers",
     "items": [
-      "10 years of experience in e-services",
-      "4 years of experience in company establishment",
-      "150,000 pilgrims served",
-      "400 partner hotels"
+      {
+        "value": 10,
+        "suffix": "+",
+        "unit": "",
+        "label": "Years of experience in e-services"
+      },
+      {
+        "value": 4,
+        "suffix": "+",
+        "unit": "",
+        "label": "Years of experience in company establishment"
+      },
+      {
+        "value": 150,
+        "suffix": "K+",
+        "unit": "",
+        "label": "Pilgrims served"
+      },
+      {
+        "value": 400,
+        "suffix": "+",
+        "unit": "",
+        "label": "Partner hotels"
+      }
     ]
   },
   "about": {
@@ -159,7 +180,8 @@
   },
   "whatsapp": {
     "fab_message": "Hello Ruyat Al Injaz, I'd like to ask about your services.",
-    "form_message": "Hello Ruyat Al Injaz, I'd like to ask about a service.\n\nName: {name}\nPhone: {phone}\nService: {service}\nMessage: {message}"
+    "form_message": "Hello Ruyat Al Injaz, I'd like to ask about a service.\n\nName: {name}\nPhone: {phone}\nService: {service}\nMessage: {message}",
+    "fab_label": "Chat with us on WhatsApp"
   },
   "brand": {
     "name": "Ruyat Al Injaz",

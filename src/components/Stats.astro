@@ -1,0 +1,92 @@
+---
+// Key numbers band under the hero. Numbers count up once when the band scrolls into view.
+import { getMain, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).stats;
+---
+<section class="stats" aria-label={t.label} data-section="stats" data-stats>
+  <div class="wrap grid">
+    {t.items.map((s, i) => (
+      <div class:list={['stat', `s${i + 1}`]}>
+        <div class="num">
+          <span dir="ltr"><span data-count={s.value}>{s.value}</span>{s.suffix}</span>
+          {s.unit && <span> {s.unit}</span>}
+        </div>
+        <div class="cap">{s.label}</div>
+      </div>
+    ))}
+    <span class="line-v" aria-hidden="true"></span>
+    <span class="line-h" aria-hidden="true"></span>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-stats]').forEach((band) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const nums = [...band.querySelectorAll<HTMLElement>('[data-count]')];
+    nums.forEach((n) => (n.textContent = '0'));
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        const start = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min((now - start) / 1400, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          nums.forEach((n) => (n.textContent = String(Math.round(Number(n.dataset.count) * eased))));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.12 },
+    );
+    io.observe(band);
+  });
+</script>
+
+<style>
+  .stats { background: var(--surface-alt); }
+
+  /* Mobile: 2x2 with a cross of bronze hairlines. */
+  .grid {
+    display: grid; grid-template-columns: 1fr 1px 1fr; grid-template-rows: auto 1px auto;
+    column-gap: var(--space-5); row-gap: 26px; padding: var(--space-10) var(--space-6);
+  }
+  .s1 { grid-area: 1 / 1; }
+  .s2 { grid-area: 1 / 3; }
+  .s3 { grid-area: 3 / 1; }
+  .s4 { grid-area: 3 / 3; }
+  .line-v { grid-column: 2; grid-row: 1 / span 3; background: var(--gold-500); opacity: 0.5; }
+  .line-h { grid-column: 1 / span 3; grid-row: 2; background: var(--gold-500); opacity: 0.5; }
+
+  .num { color: var(--gold-700); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .cap { margin-top: var(--space-2); color: var(--ink-muted); }
+  .cap { font-size: 13px; line-height: 1.5; font-weight: 500; }
+  :lang(ar) .cap { line-height: 1.6; }
+  /* Arabic: numbers in Tajawal, smaller, with headroom above for the tall alef of «ألف».
+     Values measured from the Arabic reference screenshots. */
+  :lang(ar) .num { font-size: 28px; padding-top: var(--space-3); }
+  :lang(ar) .cap { margin-top: 2px; }
+
+  /* Tablet: one row of four, dividers between. */
+  @media (min-width: 641px) {
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: none; gap: 0; padding-block: 52px; padding-inline: var(--space-8); }
+    .stat { grid-area: auto; padding: 6px var(--space-5); }
+    .stat + .stat { border-inline-start: 1px solid var(--bronze-line-strong); }
+    .line-v, .line-h { display: none; }
+    .num { font-size: 44px; }
+    .cap { margin-top: var(--space-3); font-size: 16px; line-height: 1.6; font-weight: 400; }
+    :lang(ar) .num { font-size: 32px; padding-top: var(--space-5); }
+    :lang(ar) .cap { margin-top: var(--space-1); line-height: 1.8; }
+  }
+  @media (min-width: 1024px) {
+    .grid { padding-block: var(--space-14); padding-inline: var(--space-10); row-gap: var(--space-8); }
+    .stat { padding: 6px 28px; }
+    .num { font-size: 46px; }
+    .cap { font-size: 13px; line-height: 1.5; font-weight: 500; }
+    :lang(ar) .num { font-size: 34px; }
+    :lang(ar) .cap { line-height: 1.6; }
+  }
+</style>
