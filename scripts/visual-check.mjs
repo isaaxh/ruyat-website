@@ -92,14 +92,14 @@ const sideBySide = (a, b, d) => {
   return out;
 };
 
-// State of interactive widgets in each reference screenshot (0-based): hero slide shown.
+// State of interactive widgets in each reference screenshot (0-based): hero slide and centred testimonial.
 const STATE = {
-  'en-home-desktop': { slide: 2 },
-  'en-home-tablet': { slide: 2 },
-  'en-home-mobile': { slide: 0 },
-  'ar-home-desktop': { slide: 2 },
-  'ar-home-tablet': { slide: 2 },
-  'ar-home-mobile': { slide: 0 },
+  'en-home-desktop': { slide: 2, testimonial: 2 },
+  'en-home-tablet': { slide: 2, testimonial: 2 },
+  'en-home-mobile': { slide: 0, testimonial: 2 },
+  'ar-home-desktop': { slide: 2, testimonial: 2 },
+  'ar-home-tablet': { slide: 2, testimonial: 2 },
+  'ar-home-mobile': { slide: 0, testimonial: 4 },
 };
 
 // Bring interactive widgets into the state the reference screenshots show, using the page's own controls.
@@ -107,6 +107,9 @@ async function prepare(page, tag) {
   if (args.css) await page.addStyleTag({ content: args.css });
   const st = { ...STATE[tag], ...(args.slide ? { slide: Number(args.slide) } : {}) };
   if (st.slide !== undefined) await page.locator(`[data-dot="${st.slide}"]`).click().catch(() => {});
+  const t = args.testimonial !== undefined ? Number(args.testimonial) : st.testimonial;
+  // The "next" button is only visible on mobile; a programmatic click works at every width.
+  for (let i = 0; i < (t || 0); i++) await page.evaluate(() => document.querySelector('[data-next]')?.click());
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(400);
 }

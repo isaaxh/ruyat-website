@@ -6,6 +6,7 @@ import About from '../../components/About.astro';
 import ServicesPreview from '../../components/ServicesPreview.astro';
 import Partners from '../../components/Partners.astro';
 import WhyUs from '../../components/WhyUs.astro';
+import Testimonials from '../../components/Testimonials.astro';
 import { getMain, localeStaticPaths, type Locale } from '../../i18n';
 
 export const getStaticPaths = localeStaticPaths;
@@ -19,4 +20,5 @@ const t = getMain(lang);
   <ServicesPreview lang={lang} />
   <Partners lang={lang} />
   <WhyUs lang={lang} />
+  <Testimonials lang={lang} />
 </BaseLayout>

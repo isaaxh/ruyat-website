@@ -1,0 +1,182 @@
+---
+// Testimonials carousel: the current card in the centre, neighbours scaled down and faded on either side.
+// Autoplays every 4s (off for reduced motion); drag or swipe to move; arrow buttons on mobile.
+import { fmt, getMain, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).testimonials;
+const n = t.items.length;
+// Signed distance of card i from the current card, wrapped to the nearest side.
+const pos = (i: number, cur: number) => {
+  let d = (((i - cur) % n) + n) % n;
+  if (d > n / 2) d -= n;
+  return Math.max(-2, Math.min(2, d));
+};
+---
+<section id="testimonials" class="testimonials" aria-label={t.label} aria-roledescription="carousel" data-section="testimonials" data-reveal>
+  <div class="wrap head">
+    <span class="eyebrow">{t.eyebrow}</span>
+    <h2 class="h2">{t.title}</h2>
+    <div class="rule center"></div>
+  </div>
+  <div class="track" data-carousel>
+    {t.items.map((item, i) => (
+      <figure class="card" data-pos={pos(i, 0)} aria-hidden={i === 0 ? undefined : 'true'}>
+        <div class="stars" role="img" aria-label={fmt(t.stars_label, { n: item.rating })}>
+          {'★'.repeat(item.rating)}<span class="empty">{'★'.repeat(5 - item.rating)}</span>
+        </div>
+        <blockquote class="quote t-body">{t.quote_open}{item.quote}{t.quote_close}</blockquote>
+        <figcaption class="who">
+          <span class="avatar" aria-hidden="true">{item.initials}</span>
+          <span>
+            <span class="name">{item.author}</span>
+            <span class="role">{item.role}</span>
+          </span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+  <div class="arrows">
+    <button type="button" class="arrow" aria-label={t.prev} data-prev>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <button type="button" class="arrow" aria-label={t.next} data-next>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.testimonials').forEach((section) => {
+    const track = section.querySelector<HTMLElement>('[data-carousel]')!;
+    const cards = [...track.querySelectorAll<HTMLElement>('.card')];
+    const n = cards.length;
+    const rtl = getComputedStyle(section).direction === 'rtl';
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let cur = 0;
+    let timer: number | undefined;
+
+    const render = (dragPx = 0) => {
+      cards.forEach((c, i) => {
+        let d = (((i - cur) % n) + n) % n;
+        if (d > n / 2) d -= n;
+        c.dataset.pos = String(Math.max(-2, Math.min(2, d)));
+        c.toggleAttribute('aria-hidden', d !== 0);
+        c.style.setProperty('--drag', `${dragPx}px`);
+      });
+    };
+    const go = (to: number) => {
+      cur = ((to % n) + n) % n;
+      render();
+      start();
+    };
+    const start = () => {
+      window.clearInterval(timer);
+      if (!reduce.matches) timer = window.setInterval(() => { cur = (cur + 1) % n; render(); }, 4000);
+    };
+
+    section.querySelector('[data-prev]')!.addEventListener('click', () => go(cur - 1));
+    section.querySelector('[data-next]')!.addEventListener('click', () => go(cur + 1));
+
+    // Drag / swipe: past 60px moves one card. In RTL the next card sits on the left, so dragging right advances.
+    let startX = 0;
+    let dx = 0;
+    let dragging = false;
+    track.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      startX = e.clientX;
+      dx = 0;
+      track.setPointerCapture(e.pointerId);
+      track.dataset.dragging = '';
+      window.clearInterval(timer);
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      dx = e.clientX - startX;
+      render(dx);
+    });
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+      delete track.dataset.dragging;
+      const forward = rtl ? dx > 60 : dx < -60;
+      const back = rtl ? dx < -60 : dx > 60;
+      go(forward ? cur + 1 : back ? cur - 1 : cur);
+    };
+    track.addEventListener('pointerup', end);
+    track.addEventListener('pointercancel', end);
+    track.addEventListener('pointerleave', end);
+    reduce.addEventListener('change', start);
+    start();
+  });
+</script>
+
+<style>
+  .testimonials { background: var(--surface-alt); padding: var(--space-14) 0; overflow-x: clip; }
+  .head { text-align: center; margin-bottom: var(--space-8); padding-inline: var(--space-6); }
+
+  .track {
+    position: relative; height: 270px; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab;
+    --card-w: 286px; --step: 60%; --far: 120%; --side-scale: 0.86; --far-scale: 0.8; --side-opacity: 0.7;
+  }
+  .track[data-dragging] { cursor: grabbing; }
+  .card {
+    position: absolute; top: 0; left: 50%; width: var(--card-w); margin: 0 0 0 calc(var(--card-w) / -2);
+    box-sizing: border-box; padding: var(--space-6); border-radius: var(--radius-lg);
+    background: var(--white); box-shadow: var(--shadow-card); text-align: start;
+    --x: 0%; --s: 1; --drag: 0px;
+    transform: translateX(calc(var(--x) * var(--dir) + var(--drag))) scale(var(--s));
+    transition: transform 0.45s ease, opacity 0.45s ease;
+  }
+  .track[data-dragging] .card { transition: none; }
+  .card[data-pos='0'] { z-index: 3; opacity: 1; }
+  .card[data-pos='-1'], .card[data-pos='1'] { z-index: 2; opacity: var(--side-opacity); --s: var(--side-scale); }
+  .card[data-pos='-1'] { --x: calc(-1 * var(--step)); }
+  .card[data-pos='1'] { --x: var(--step); }
+  .card[data-pos='-2'], .card[data-pos='2'] { z-index: 1; opacity: 0; pointer-events: none; --s: var(--far-scale); }
+  .card[data-pos='-2'] { --x: calc(-1 * var(--far)); }
+  .card[data-pos='2'] { --x: var(--far); }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+
+  .stars { color: var(--gold-500); font-size: 15px; letter-spacing: 3px; margin-bottom: var(--space-3); font-family: var(--font-latin); }
+  .empty { color: var(--bronze-faint); }
+  .quote { margin: 0 0 18px; color: var(--ink); }
+  .who { display: flex; align-items: center; gap: var(--space-3); }
+  .avatar {
+    width: 40px; height: 40px; flex: none; border-radius: 50%; background: var(--navy-900); color: var(--gold-400);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+  }
+  .name { display: block; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .role { display: block; color: var(--ink-muted); font-size: 13px; font-weight: 500; line-height: 1.5; }
+
+  .arrows { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-5); }
+  .arrow {
+    width: var(--size-tap); height: var(--size-tap); border-radius: 50%; border: 1.5px solid var(--gold-500);
+    background: var(--white); color: var(--navy-900); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  :global([dir='rtl']) .arrow svg { transform: scaleX(-1); }
+
+  @media (min-width: 641px) {
+    .testimonials { padding: var(--space-28) 0 104px; }
+    .head { margin-bottom: var(--space-10); padding-inline: var(--space-8); }
+    .head .rule { margin-top: 22px; }
+    .track {
+      height: 300px; overflow: hidden;
+      --card-w: 400px; --step: 108%; --far: 216%; --side-scale: 0.92; --far-scale: 0.85; --side-opacity: 0.55;
+    }
+    .card { top: 10px; padding: 28px; }
+    .stars { font-size: 16px; letter-spacing: 0; line-height: 1.6; }
+    .quote { margin-bottom: var(--space-5); }
+    .avatar { width: 42px; height: 42px; }
+    .arrows { display: none; }
+  }
+  @media (min-width: 1024px) {
+    .head { padding-inline: var(--space-10); }
+    .track { --side-opacity: 0.6; }
+    .card { padding: 30px; }
+    .stars { letter-spacing: 3px; line-height: normal; margin-bottom: 14px; }
+    .quote { margin-bottom: 22px; }
+    .avatar { width: 44px; height: 44px; font-size: 14px; }
+  }
+</style>
