@@ -28,20 +28,20 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
   <div class="fields" data-fields>
     <div class="pair">
       <div>
-        <label class="label" for={`${id}-name`}>{f.name_label}</label>
+        <label class="label" for={`${id}-name`}>{f.name_label}<span class="req" aria-hidden="true"> *</span></label>
         <input class="input" id={`${id}-name`} name="name" type="text" autocomplete="name" placeholder={f.name_placeholder} required />
       </div>
       <div>
-        <label class="label" for={`${id}-phone`}>{f.phone_label}</label>
+        <label class="label" for={`${id}-phone`}>{f.phone_label}<span class="req" aria-hidden="true"> *</span></label>
         <input class="input" id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" placeholder={f.phone_placeholder} required />
       </div>
     </div>
     <div>
       <label class="label" for={`${id}-service`}>
-        <span class="long">{f.service_label}</span><span class="short">{f.service_label_short}</span>
+        <span class="long">{f.service_label}</span><span class="short">{f.service_label_short}</span><span class="req" aria-hidden="true"> *</span>
       </label>
       <div class="select-wrap">
-        <select class="input select" id={`${id}-service`} name="service">
+        <select class="input select" id={`${id}-service`} name="service" required>
           <option value="" selected={!service}>{f.service_placeholder}</option>
           {contactServiceOptions(lang).map((o) => <option value={o.label} selected={o.value === service}>{o.label}</option>)}
         </select>
@@ -58,7 +58,7 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
       <WhatsAppIcon size={22} />{f.submit}
     </button>
     <p class="consent">
-      {consentBefore}<a href="#">{f.privacy}</a>{consentMid}<a href="#">{f.terms}</a>{consentAfter}
+      {consentBefore}<a aria-disabled="true">{f.privacy}</a>{consentMid}<a aria-disabled="true">{f.terms}</a>{consentAfter}
     </p>
   </div>
   <div class="sent" hidden data-sent role="status">
@@ -82,10 +82,10 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
       e.preventDefault();
       const data = new FormData(form);
       const val = (k: string) => String(data.get(k) ?? '').trim();
-      if (!val('name') || !val('phone')) {
+      if (!val('name') || !val('phone') || !val('service')) {
         error.textContent = form.dataset.required ?? '';
         error.hidden = false;
-        form.querySelector<HTMLInputElement>(val('name') ? '[name=phone]' : '[name=name]')?.focus();
+        form.querySelector<HTMLElement>(!val('name') ? '[name=name]' : !val('phone') ? '[name=phone]' : '[name=service]')?.focus();
         return;
       }
       error.hidden = true;
@@ -107,6 +107,7 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
   .fields[hidden] { display: none; }
   .pair { display: flex; flex-direction: column; gap: 18px; }
   .label { display: block; margin-bottom: var(--space-2); color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .req { color: var(--danger); }
   .long { display: none; }
   .input {
     display: block; width: 100%; box-sizing: border-box; padding: 14px; margin: 0;
@@ -114,7 +115,8 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
     font-size: 16px; font-weight: 400; line-height: 1.6;
   }
   :lang(ar) .input { line-height: 1.6; }
-  .input:focus { border-color: var(--navy-900); box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--navy-900); }
+  .input { transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease; }
+  .input:focus { border-color: var(--gold-400); box-shadow: 0 0 0 4px rgba(220, 160, 77, 0.18); }
   .select-wrap { position: relative; }
   .select { appearance: none; cursor: pointer; padding-inline-end: 40px; color: var(--ink); }
   .select:has(option[value='']:checked) { color: var(--ink-muted); }
