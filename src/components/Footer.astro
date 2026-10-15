@@ -1,0 +1,144 @@
+---
+// Site footer: brand blurb, quick links, social profiles, contact rows, legal line.
+// Mobile stacks brand > contact > social > quick links; tablet is 2x2; desktop is four columns.
+import { fmt, getMain, localizePath, type Locale } from '../i18n';
+import { EMAIL, PHONE_DISPLAY, PHONE_TEL, QUICK_LINKS, SITE_URL, SOCIAL } from '../lib/site';
+import { ICONS, SOCIAL_ICONS } from '../lib/icons';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang);
+const f = t.footer;
+const label = (key: string) => key.split('.').reduce<any>((o, k) => o?.[k], t) as string;
+const year = new Date().getFullYear();
+---
+<footer class="footer" data-section="footer">
+  <div class="rib" style="--rot:-35deg"></div>
+  <div class="wrap inner">
+    <div class="grid">
+      <div class="brand">
+        <img src="/logos/ruyat-logo-secondary-white.svg" alt={t.brand.logo_alt} />
+        <p class="about long t-body">{f.about} <a href={localizePath(lang, '/#about')}>{f.learn_more}</a></p>
+        <p class="about short t-body">{f.about_short}</p>
+      </div>
+      <nav class="col quick" aria-label={f.quick_links}>
+        <div class="label">{f.quick_links}</div>
+        <div class="links">
+          {QUICK_LINKS.map((q) => <a class="link" href={localizePath(lang, q.path)}>{label(q.label)}</a>)}
+        </div>
+      </nav>
+      <div class="col social">
+        <div class="label">{f.follow}</div>
+        <div class="socs">
+          {SOCIAL.map((s, i) => (
+            <a class="soc" href={s.url ?? '#'} aria-label={f.social[i]} target={s.url ? '_blank' : undefined} rel={s.url ? 'noopener' : undefined}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={SOCIAL_ICONS[s.key]}></path></svg>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="col contact">
+        <div class="label"><span class="long">{f.contact}</span><span class="short">{f.get_in_touch}</span></div>
+        <div class="rows">
+          <a class="row r-phone" href={`tel:${PHONE_TEL}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.phone}></path></svg><span class="latin num">{PHONE_DISPLAY}</span></a>
+          <a class="row r-mail" href={`mailto:${EMAIL}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.mail}></path></svg><span class="latin">{EMAIL}</span></a>
+          <div class="row r-address"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.pin}></path></svg><span>{t.contact.address}</span></div>
+          <a class="row r-web" href={SITE_URL}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.globe}></path></svg><span class="latin">{f.website}</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="legal">{fmt(f.copyright, { year })}<br class="m-break" /> {fmt(f.design_by, { credit: f.design_credit })}</div>
+      <div class="legal-links">
+        <a href="#">{f.terms}</a>
+        <a href="#">{f.privacy}</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { position: relative; overflow: hidden; background: var(--navy-900); color: var(--white); padding: var(--space-12) 0 28px; }
+  .rib { width: 260px; inset-inline-end: -110px; top: 30px; opacity: 0.55; }
+  .inner { position: relative; padding-inline: var(--space-6); }
+  .grid { display: flex; flex-direction: column; }
+  .brand img { position: relative; width: 150px; margin-bottom: 18px; }
+  .about { margin: 0 0 28px; color: var(--on-navy-faint); }
+  .about a { color: var(--gold-400); text-decoration: underline; }
+  .about.long, .label .long { display: none; }
+
+  .label { color: var(--gold-400); margin-bottom: 14px; }
+  .label { font-size: 19px; font-weight: 800; line-height: 1.25; }
+  :lang(ar) .label { font-size: 20px; font-weight: 700; line-height: 1.45; }
+
+  /* Mobile order: brand, contact, social, quick links. */
+  .contact { order: 1; }
+  .social { order: 2; }
+  .quick { order: 3; border-top: 1px solid var(--on-navy-line); padding-top: var(--space-6); margin-bottom: var(--space-6); }
+
+  .rows { display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px; }
+  .r-address { order: -1; }
+  .row {
+    display: flex; gap: var(--space-3); align-items: flex-start; color: var(--on-navy-soft); text-decoration: none;
+    font-size: 13px; font-weight: 500; line-height: 1.5;
+  }
+  :lang(ar) .row { line-height: 1.6; }
+  .row:hover { color: var(--white); }
+  .row svg { flex: none; width: 18px; height: 18px; margin-top: 1px; fill: none; stroke: var(--gold-400); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .socs { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: 30px; }
+  .soc {
+    width: var(--size-tap); height: var(--size-tap); flex: none; border-radius: 50%; border: 1px solid var(--gold-line);
+    display: flex; align-items: center; justify-content: center; color: var(--gold-400); text-decoration: none;
+  }
+  .soc:hover { color: var(--gold-200); border-color: var(--gold-400); }
+
+  .links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; column-gap: var(--space-3); }
+  .link {
+    color: var(--on-navy-soft); text-decoration: none; padding: 6px 0;
+    font-size: 15px; font-weight: 700; line-height: 1.4;
+  }
+  .link:hover { color: var(--white); }
+
+  .bottom { border-top: 1px solid var(--on-navy-line); padding-top: var(--space-5); font-size: 13px; font-weight: 500; line-height: 1.5; }
+  .legal { color: rgba(255, 255, 255, 0.7); }
+  .legal-links { display: none; }
+  .legal-links a { color: var(--on-navy-faint); text-decoration: underline; }
+
+  @media (min-width: 641px) {
+    .footer { padding: 72px 0 var(--space-8); }
+    .rib { width: 340px; inset-inline-end: -120px; top: var(--space-10); }
+    .inner { padding-inline: var(--space-8); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-10); padding-bottom: var(--space-12); }
+    .brand img { width: 170px; }
+    .about { margin: 0; max-width: 420px; }
+    .about.long, .label .long { display: block; }
+    .label .long { display: inline; }
+    .about.short, .label .short, .m-break { display: none; }
+    .label { margin-bottom: 18px; }
+    :lang(ar) .label { font-size: 22px; }
+    .contact, .social, .quick { order: 0; }
+    .quick { border: 0; padding: 0; margin: 0; }
+    .rows { gap: var(--space-1); margin: 0; }
+    .r-address { order: 0; }
+    .row { padding: 5px 0; }
+    :lang(ar) .row { line-height: 1.5; }
+    .row svg { margin-top: 2px; }
+    .socs { gap: 10px; margin: 0; }
+    .links { row-gap: 6px; column-gap: var(--space-4); }
+    .bottom { padding-top: var(--space-6); display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+    .legal-links { display: flex; gap: var(--space-5); }
+  }
+
+  @media (min-width: 1024px) {
+    .footer { padding: 80px 0 var(--space-8); }
+    .rib { width: 420px; height: 14px; inset-inline-end: -130px; top: 44px; }
+    .inner { padding-inline: var(--space-10); }
+    .grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: var(--space-12); }
+    .brand img { width: 180px; margin-bottom: 22px; }
+    .label { font-size: 20px; }
+    .rows { gap: 2px; }
+    .row svg { margin-top: 1px; }
+  }
+</style>

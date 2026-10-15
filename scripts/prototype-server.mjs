@@ -15,9 +15,9 @@ const BLOBS = {
   'a925c67c': A('Logos/ruyat-logo-primary-white.svg'),
   '91d18464': A('Logos/ruyat-logo-primary-white.svg'),
   'ec04a0ff': A('Logos/ruyat-logo-primary-white.svg'),
-  '1cdc958d': A('Logos/ruyat-logo-primary-white.svg'),
-  '6bf88ac0': A('Logos/ruyat-logo-primary-white.svg'),
-  'f0c7c907': A('Logos/ruyat-logo-primary-white.svg'),
+  '1cdc958d': A('Logos/ruyat-logo-secondary-white.svg'),
+  '6bf88ac0': A('Logos/ruyat-logo-secondary-white.svg'),
+  'f0c7c907': A('Logos/ruyat-logo-secondary-white.svg'),
   // partners
   '9da74921': A('Partners/al-faisal/alfaisal-logo-ar.svg'),
   '9d3316cb': A('Logos/ruyat-logo-secondary-white.svg'),

@@ -36,11 +36,11 @@ export const SOCIAL = [
   { key: 'youtube', url: null }, // TODO
 ] as const;
 
-/** Footer quick links. Labels: nav.home, nav.about, nav.services, nav.contact, faq.heading. Paths are locale-less. */
+/** Footer quick links. Labels: nav.home, nav.about, nav.services, nav.contact, nav.faq. Paths are locale-less. */
 export const QUICK_LINKS = [
   { label: 'nav.home', path: '/' },
   { label: 'nav.about', path: '/#about' },
   { label: 'nav.services', path: '/services/' },
   { label: 'nav.contact', path: '/contact/' },
-  { label: 'faq.heading', path: '/#faq' },
+  { label: 'nav.faq', path: '/#faq' },
 ] as const;

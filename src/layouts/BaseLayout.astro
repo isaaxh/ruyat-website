@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { LOCALES, DEFAULT_LOCALE, dirFor, stripLocale, localizePath, getMain, type Locale } from '../i18n';
 import Header from '../components/Header.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import Footer from '../components/Footer.astro';
 import type { NavKey } from '../lib/nav';
 
 interface Props {
@@ -52,7 +53,7 @@ const hreflang = (l: Locale) => getMain(l).meta.hreflang;
     <main>
       <slot />
     </main>
-    <!-- TODO: Footer from prototype -->
+    <Footer lang={lang} />
     <WhatsAppFab lang={lang} />
     <script>
       // Reveal [data-reveal] sections once they scroll into view.

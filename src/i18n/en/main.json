@@ -232,9 +232,17 @@
     }
   },
   "footer": {
-    "address": "2155, Al Shoqiya, 7432, Saudi Arabia, Makkah 24351",
-    "phone": "0534880040",
-    "email": "info@ruyat.sa",
+    "about": "Ruyat Al Injaz is your trusted partner in business setup, government services, and Umrah & Hajj coordination.",
+    "about_short": "Your trusted partner in business setup, government services, and Umrah & Hajj coordination.",
+    "learn_more": "Learn more",
+    "quick_links": "Quick Links",
+    "follow": "Follow Us",
+    "contact": "Contact",
+    "get_in_touch": "Get in touch",
+    "copyright": "© {year} Ruyat Al Injaz Business Services. All rights reserved.",
+    "design_by": "Design by {credit}",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
     "website": "Ruyat.sa",
     "social": [
       "WhatsApp",
