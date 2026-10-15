@@ -45,6 +45,13 @@ const crop = (png, y, h) => {
   return out;
 };
 
+// Fill a CSS-px rect (relative to the crop) with a flat colour.
+const paint = (png, m, dpr) => {
+  const x0 = Math.max(0, Math.round(m.x * dpr)), y0 = Math.max(0, Math.round(m.y * dpr));
+  const x1 = Math.min(png.width, Math.round((m.x + m.w) * dpr)), y1 = Math.min(png.height, Math.round((m.y + m.h) * dpr));
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) png.data.set([255, 0, 255, 255], (y * png.width + x) * 4);
+};
+
 // Row signature: mean RGB per row, used to find the vertical offset of a section in the reference.
 const rowSig = (png) => {
   const sig = new Float32Array(png.height * 3);
@@ -132,7 +139,12 @@ for (const lang of langs) {
       const sections = await page.$$eval('[data-section]', (els) =>
         els.map((e) => {
           const r = e.getBoundingClientRect();
-          return { name: e.dataset.section, y: r.top + window.scrollY, h: r.height, fixed: e.dataset.align === 'top' };
+          // Regions that intentionally differ from the reference (e.g. the live map) are masked in both images.
+          const masks = [...e.querySelectorAll('[data-visual-mask]')].map((m) => {
+            const b = m.getBoundingClientRect();
+            return { x: b.left, y: b.top - r.top, w: b.width, h: b.height };
+          });
+          return { name: e.dataset.section, y: r.top + window.scrollY, h: r.height, fixed: e.dataset.align === 'top', masks };
         }),
       );
       const mineSig = rowSig(shot), refSig = rowSig(refPng);
@@ -144,6 +156,7 @@ for (const lang of langs) {
         const range = Math.round(Number(args.range || 400) * dpr);
         const dy = s === full || s.fixed ? 0 : bestOffset(mineSig, y0, h, refSig, refPng.height, range);
         const a = crop(shot, y0, h), b = crop(refPng, y0 + dy, h);
+        for (const m of s.masks || []) for (const img of [a, b]) paint(img, m, dpr);
         if (a.width !== b.width) { report.push({ tag, section: s.name, error: `width ${a.width} vs ${b.width}` }); continue; }
         const diff = new PNG({ width: a.width, height: h });
         const bad = pixelmatch(a.data, b.data, diff.data, a.width, h, { threshold: 0.15, includeAA: false });
