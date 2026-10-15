@@ -2,7 +2,7 @@
 // Navy title band of a service detail page: back link and breadcrumb, category pill, title, intro, CTAs and the icon visual.
 import { getMain, getServices, localizePath, type Locale, type Service } from '../../../i18n';
 import { SERVICE_ICONS } from '../../../lib/serviceIcons';
-import { PHONE_DISPLAY, PHONE_TEL } from '../../../lib/site';
+import { PHONE_TEL } from '../../../lib/site';
 
 interface Props {
   lang: Locale;
@@ -11,7 +11,6 @@ interface Props {
 const { lang, service } = Astro.props;
 const t = getMain(lang);
 const p = getServices(lang).service_detail_page;
-const [callBefore, callAfter = ''] = p.call_label.split('{phone}');
 ---
 <section class="svc-hero" data-section="service-hero">
   <div class="wrap top">
@@ -32,7 +31,7 @@ const [callBefore, callAfter = ''] = p.call_label.split('{phone}');
       <p class="intro t-lead">{service.short_description}</p>
       <div class="ctas">
         <a class="btn btn-gold" href={localizePath(lang, '/contact/')}>{service.cta}</a>
-        <a class="btn btn-ghost call" href={`tel:${PHONE_TEL}`}>{callBefore}<span class="latin">{PHONE_DISPLAY}</span>{callAfter}</a>
+        <a class="btn btn-ghost call" href={`tel:${PHONE_TEL}`}>{p.call_label}</a>
       </div>
     </div>
     <div class="visual">
