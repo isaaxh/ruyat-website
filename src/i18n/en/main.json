@@ -94,7 +94,10 @@
       "Trusted License Issuance",
       "Lease Contracts",
       "Premium Residency Application"
-    ]
+    ],
+    "eyebrow": "Services",
+    "title": "What we handle",
+    "view_all": "View All"
   },
   "why_us": {
     "heading": "Why Us",

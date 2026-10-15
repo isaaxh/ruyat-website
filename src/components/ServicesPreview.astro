@@ -1,0 +1,42 @@
+---
+// Home "What we handle": the first six services as cards, with a link to all services.
+import { getMain, getServices, localizePath, type Locale } from '../i18n';
+import ServiceCard from './services/ServiceCard.astro';
+
+interface Props { lang: Locale; count?: number }
+const { lang, count = 6 } = Astro.props;
+const t = getMain(lang).services;
+const services = getServices(lang).services.slice(0, count);
+---
+<section id="services" class="wrap services" data-section="services">
+  <div class="head">
+    <div>
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="h2">{t.title}</h2>
+    </div>
+    <a class="view-all" href={localizePath(lang, '/services/')}>{t.view_all}</a>
+  </div>
+  <div class="grid">
+    {services.map((s, i) => <ServiceCard lang={lang} service={s} index={i} />)}
+  </div>
+</section>
+
+<style>
+  .services { padding: 0 var(--space-6) var(--space-16); }
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-6); }
+  .view-all {
+    color: var(--gold-700); text-decoration: underline; text-underline-offset: 4px; padding: var(--space-3) 0; flex: none;
+    font-size: 15px; font-weight: 700; line-height: 1.4;
+  }
+  .grid { display: flex; flex-direction: column; gap: 14px; }
+
+  @media (min-width: 641px) {
+    .services { padding: 0 var(--space-8) var(--space-28); }
+    .head { margin-bottom: 36px; flex-wrap: wrap; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+  }
+  @media (min-width: 1024px) {
+    .services { padding-inline: var(--space-10); }
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  }
+</style>

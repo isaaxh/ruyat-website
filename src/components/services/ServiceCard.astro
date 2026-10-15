@@ -1,0 +1,81 @@
+---
+// Navy service card: icon, arrow, title and short description over gold ribbons. Links to the service detail page.
+import { localizePath, type Locale, type Service } from '../../i18n';
+import { SERVICE_ICONS } from '../../lib/serviceIcons';
+
+interface Props {
+  lang: Locale;
+  service: Service;
+  /** Stagger index for the reveal animation. */
+  index?: number;
+}
+const { lang, service, index = 0 } = Astro.props;
+---
+<a class="svc-card" href={localizePath(lang, `/services/${service.id}/`)} data-reveal style={`--reveal-delay:${(index % 3) * 0.1}s`}>
+  <span class="rib r1" style="--rot:-35deg"></span>
+  <span class="rib r2" style="--rot:-35deg"></span>
+  <svg class="svc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={SERVICE_ICONS[service.id]}></path></svg>
+  <span class="svc-arrow">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>
+  </span>
+  <span class="svc-text">
+    <span class="svc-title t-h3">{service.title}</span>
+    <span class="svc-desc">{service.short_description}</span>
+  </span>
+</a>
+
+<style>
+  .svc-card {
+    position: relative; display: block; width: 100%; height: 210px; box-sizing: border-box;
+    border-radius: var(--radius-lg); overflow: hidden; background: var(--navy-900);
+    text-align: start; text-decoration: none; color: var(--white);
+    transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.25s ease, background 0.25s ease;
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .svc-card:hover { color: var(--white); }
+  .svc-card:focus-visible { outline: 2px solid var(--navy-900); outline-offset: 3px; }
+  .r1 { width: 260px; inset-inline-end: -70px; top: 96px; opacity: 0.85; }
+  .r2 { width: 260px; inset-inline-end: -50px; top: 124px; opacity: 0.35; }
+  .svc-icon {
+    position: absolute; top: 18px; inset-inline-end: 18px; width: 48px; height: 48px; padding: var(--space-3); box-sizing: content-box;
+    background: var(--navy-900); border: 1px solid var(--gold-line-soft); border-radius: var(--radius-lg);
+    fill: none; stroke: var(--gold-400); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .svc-arrow {
+    position: absolute; top: 22px; inset-inline-start: 22px; width: 36px; height: 36px; box-sizing: border-box;
+    border-radius: 50%; border: 1px solid var(--gold-line); color: var(--gold-400);
+    display: flex; align-items: center; justify-content: center; transition: background var(--duration-fast) ease;
+  }
+  :global([dir='rtl']) .svc-arrow svg { transform: scaleX(-1); }
+  .svc-text { position: absolute; inset-inline: 22px; bottom: var(--space-5); color: var(--white); }
+  .svc-title { display: block; }
+  .svc-desc {
+    display: block; margin-top: 6px; color: var(--on-navy-muted);
+    font-size: 13px; font-weight: 500; line-height: 1.5;
+  }
+  :lang(ar) .svc-desc { line-height: 1.6; }
+
+  @media (min-width: 641px) {
+    .svc-card { height: 250px; }
+    .svc-card:hover { background: var(--navy-800); }
+    .r1 { width: 300px; inset-inline-end: -80px; top: 132px; }
+    .r2 { width: 300px; inset-inline-end: -60px; top: 162px; }
+    .svc-icon { top: var(--space-6); inset-inline-end: var(--space-6); width: 64px; height: 64px; padding: 0; border: 0; border-radius: 0; background: none; stroke-width: 1.3; }
+    .svc-arrow { top: var(--space-6); inset-inline-start: var(--space-6); width: 38px; height: 38px; }
+    .svc-text { inset-inline: var(--space-6); bottom: 22px; }
+  }
+  @media (min-width: 1024px) {
+    .svc-card:hover { background: var(--navy-900); box-shadow: var(--shadow-svc-hover); }
+    .svc-card:hover .svc-arrow { background: var(--gold-tint); }
+    .r1 { top: 118px; }
+    .r2 { inset-inline-end: -58px; top: 148px; }
+    /* The Arabic desktop reference draws the ribbons lower. */
+    :lang(ar) .r1 { top: 146px; }
+    :lang(ar) .r2 { top: 176px; }
+    .svc-icon {
+      top: 22px; inset-inline-end: 22px; width: 52px; height: 52px; padding: 13px;
+      border: 1px solid var(--gold-line-soft); border-radius: var(--radius-lg); background: var(--navy-900); stroke-width: 1.4;
+    }
+    .svc-arrow { width: 40px; height: 40px; }
+  }
+</style>

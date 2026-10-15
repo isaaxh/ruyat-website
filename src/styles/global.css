@@ -135,7 +135,7 @@
 
 /* Scroll reveal: sections marked data-reveal fade up once in view (script in BaseLayout). No JS or reduced motion: always visible. */
 @media (prefers-reduced-motion: no-preference) {
-  html.js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity var(--duration-slow) ease, transform var(--duration-slow) ease; }
+  html.js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity var(--duration-slow) ease var(--reveal-delay, 0s), transform var(--duration-slow) ease var(--reveal-delay, 0s); }
   html.js [data-reveal][data-revealed] { opacity: 1; transform: none; }
 }
 
