@@ -1,12 +1,17 @@
 ---
-// Phone / email / address rows with navy icon discs.
+// Phone / email / (website) / address rows with navy icon discs.
 import { getMain, type Locale } from '../../i18n';
-import { EMAIL, PHONE_DISPLAY, PHONE_TEL } from '../../lib/site';
+import { EMAIL, PHONE_DISPLAY, PHONE_TEL, SITE_URL } from '../../lib/site';
 import { ICONS } from '../../lib/icons';
 
-interface Props { lang: Locale }
-const { lang } = Astro.props;
-const t = getMain(lang).contact;
+interface Props {
+  lang: Locale;
+  /** Add the website row (contact page). */
+  website?: boolean;
+}
+const { lang, website = false } = Astro.props;
+const m = getMain(lang);
+const t = m.contact;
 ---
 <div class="details">
   <a class="row" href={`tel:${PHONE_TEL}`}>
@@ -17,6 +22,12 @@ const t = getMain(lang).contact;
     <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.mail}></path></svg></span>
     <span><span class="k">{t.email_label}</span><span class="v latin">{EMAIL}</span></span>
   </a>
+  {website && (
+    <a class="row" href={SITE_URL}>
+      <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.globe}></path></svg></span>
+      <span><span class="k">{m.contact_page.website_label}</span><span class="v latin">{m.footer.website}</span></span>
+    </a>
+  )}
   <div class="row last">
     <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.pin}></path></svg></span>
     <span><span class="k">{t.address_label}</span><span class="v">{t.address}</span></span>

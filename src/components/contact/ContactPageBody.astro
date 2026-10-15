@@ -1,0 +1,50 @@
+---
+// Contact page body: WhatsApp inquiry form (in a card from tablet) beside or above the other ways to reach us and the office map.
+import { getMain, type Locale } from '../../i18n';
+import InquiryForm from './InquiryForm.astro';
+import ContactDetails from './ContactDetails.astro';
+import OfficeMap from './OfficeMap.astro';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const p = getMain(lang).contact_page;
+---
+<section class="wrap contact-body" data-section="contact-body">
+  <div class="form-card">
+    <h2 class="form-title">{p.form_title}</h2>
+    <InquiryForm lang={lang} id="contact-inq" page />
+  </div>
+  <div class="reach">
+    <div class="label">{p.reach_label}</div>
+    <ContactDetails lang={lang} website />
+    <div class="label find">{p.find_us}</div>
+    <OfficeMap lang={lang} class="office-map" />
+  </div>
+</section>
+
+<style>
+  .contact-body { display: flex; flex-direction: column; gap: var(--space-10); padding-top: var(--space-8); padding-bottom: var(--space-12); padding-inline: var(--space-6); }
+  .form-title { display: none; }
+  .label {
+    margin-bottom: var(--space-3); color: var(--gold-700); text-transform: uppercase;
+    font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em;
+  }
+  :lang(ar) .label { font-size: 15px; letter-spacing: 0; }
+  .find { margin-top: var(--space-8); }
+  .reach :global(.office-map) { height: 230px; }
+
+  @media (min-width: 641px) {
+    .contact-body { gap: var(--space-12); padding-top: var(--space-14); padding-bottom: var(--space-28); padding-inline: var(--space-8); }
+    .form-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: var(--space-10); box-shadow: var(--shadow-card);
+    }
+    .form-title { display: block; margin-bottom: var(--space-6); color: var(--ink); font-size: 26px; font-weight: 700; line-height: 1.3; }
+    .find { display: none; }
+    .reach :global(.office-map) { margin-top: 28px; height: 240px; }
+  }
+  @media (min-width: 1024px) {
+    .contact-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-18); align-items: start; padding-top: var(--space-16); padding-inline: var(--space-10); }
+    .form-card { border: 0; border-top: 4px solid var(--gold-500); }
+  }
+</style>

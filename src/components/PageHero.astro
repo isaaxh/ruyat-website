@@ -43,6 +43,8 @@ const t = getMain(lang);
   .title { margin: 15px 0 0; color: var(--white); }
   .page-hero .rule { margin-top: 15px; }
   .sub { margin: var(--space-4) 0 0; max-width: 620px; color: var(--on-navy-text); font-size: 16px; }
+  /* The Arabic phone references set the intro in the regular weight. */
+  :lang(ar) .sub { font-weight: 400; }
 
   @media (min-width: 641px) {
     .page-hero { padding: 148px 0 64px; }
@@ -50,6 +52,7 @@ const t = getMain(lang);
     .r1 { inset-inline-end: -110px; top: 122px; }
     .r2 { inset-inline-end: -85px; top: 169px; }
     .sub { margin-top: var(--space-5); font-size: 18px; }
+    :lang(ar) .sub { font-weight: 500; }
     .title { margin-top: 18px; }
     .page-hero .rule { margin-top: var(--space-5); width: 306px; }
     .inner { padding-inline: var(--space-8); }

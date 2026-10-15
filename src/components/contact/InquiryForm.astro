@@ -9,15 +9,17 @@ interface Props {
   id?: string;
   /** Pre-selected service id (service detail pages). */
   service?: string;
+  /** Contact page variant: short service label at every width and a taller message box. */
+  page?: boolean;
 }
-const { lang, id = 'inq', service } = Astro.props;
+const { lang, id = 'inq', service, page = false } = Astro.props;
 const t = getMain(lang);
 const f = t.contact.form;
 const MAX = 320;
 const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\{terms\}/);
 ---
 <form
-  class="inquiry"
+  class:list={['inquiry', { page }]}
   data-inquiry
   data-template={t.whatsapp.form_message}
   data-required={f.required}
@@ -120,8 +122,11 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
   /* Inline-block like the prototype's textarea: keeps the line-box space below it. */
   .textarea { display: inline-block; vertical-align: baseline; resize: vertical; height: calc(4 * 1.6em + 30px); }
   /* The Arabic mobile reference shows the full five rows. */
-  :lang(ar) .textarea { height: auto; }
+  :lang(ar) .textarea, .page .textarea { height: auto; }
+  .page .fields, .page .pair { gap: var(--space-5); }
+  .page:lang(ar) .input { line-height: 1.8; }
   .count { display: none; margin-top: 6px; color: var(--ink-muted); text-align: end; font-size: 13px; font-weight: 500; line-height: 1.5; }
+  .page .count { display: block; }
   .error { margin: 0; color: var(--danger); font-size: 13px; font-weight: 500; }
   .send { width: 100%; min-height: 52px; border: none; }
   .consent { margin: 0; color: var(--ink-muted); font-size: 13px; font-weight: 500; line-height: 1.5; }
@@ -139,13 +144,16 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
 
   @media (min-width: 641px) {
     :lang(ar) .input { line-height: 1.8; }
-    .fields { gap: 22px; }
+    .fields, .page .fields { gap: 22px; }
     .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
     .long { display: inline; }
     .short { display: none; }
     .textarea { height: auto; }
     .count { display: block; }
     .send { min-height: 54px; }
+    .page .long { display: none; }
+    .page .short { display: inline; }
+    .page .textarea { height: calc(6lh + 30px); }
   }
   @media (min-width: 1024px) {
     .sent { padding: 56px var(--space-3); }
