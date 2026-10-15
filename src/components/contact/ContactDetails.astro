@@ -1,0 +1,41 @@
+---
+// Phone / email / address rows with navy icon discs.
+import { getMain, type Locale } from '../../i18n';
+import { EMAIL, PHONE_DISPLAY, PHONE_TEL } from '../../lib/site';
+import { ICONS } from '../../lib/icons';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).contact;
+---
+<div class="details">
+  <a class="row" href={`tel:${PHONE_TEL}`}>
+    <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.phone}></path></svg></span>
+    <span><span class="k">{t.phone_label}</span><span class="v latin num">{PHONE_DISPLAY}</span></span>
+  </a>
+  <a class="row" href={`mailto:${EMAIL}`}>
+    <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.mail}></path></svg></span>
+    <span><span class="k">{t.email_label}</span><span class="v latin">{EMAIL}</span></span>
+  </a>
+  <div class="row last">
+    <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.pin}></path></svg></span>
+    <span><span class="k">{t.address_label}</span><span class="v">{t.address}</span></span>
+  </div>
+</div>
+
+<style>
+  .row {
+    display: flex; align-items: center; gap: 14px; padding: var(--space-4) 0;
+    border-top: 1px solid var(--bronze-line); text-decoration: none;
+  }
+  .row.last { border-bottom: 1px solid var(--bronze-line); }
+  .disc {
+    width: var(--size-tap); height: var(--size-tap); flex: none; border-radius: 50%; background: var(--navy-900);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .disc svg { width: 18px; height: 18px; fill: none; stroke: var(--gold-400); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .k { display: block; color: var(--ink-muted); font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em; }
+  :lang(ar) .k { letter-spacing: 0; font-size: 14px; }
+  .v { display: block; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+</style>

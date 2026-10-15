@@ -1,0 +1,76 @@
+---
+// Home "Got a question?": WhatsApp inquiry form plus contact details and office map.
+// Mobile: form only, in an ivory card. Tablet: intro, form card, then details + map. Desktop: intro, details and map beside the form.
+import { getMain, type Locale } from '../i18n';
+import InquiryForm from './contact/InquiryForm.astro';
+import ContactDetails from './contact/ContactDetails.astro';
+import OfficeMap from './contact/OfficeMap.astro';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = getMain(lang).contact;
+---
+<section id="contact" class="contact" data-section="contact">
+  <div class="wrap panel" data-reveal>
+    <div class="head">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="h2">{t.title}</h2>
+      <div class="rule"></div>
+      <p class="intro t-body">{t.intro}</p>
+    </div>
+    <div class="form-card">
+      <InquiryForm lang={lang} id="home-inq" />
+    </div>
+    <div class="reach">
+      {t.reach_label && <div class="reach-label">{t.reach_label}</div>}
+      <ContactDetails lang={lang} />
+      <OfficeMap lang={lang} class="office-map" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact { padding: 0 var(--space-6) var(--space-16); }
+  .panel { background: var(--surface-alt); border-radius: var(--radius-lg); padding: 28px var(--space-5); }
+  .head .rule { display: none; }
+  .intro { margin: var(--space-3) 0 var(--space-6); color: var(--ink-muted); }
+  .reach { display: none; }
+
+  @media (min-width: 641px) {
+    .contact { background: var(--surface-alt); padding: var(--space-28) 0; }
+    .panel {
+      background: none; border-radius: 0; padding-block: 0; padding-inline: var(--space-8);
+      display: flex; flex-direction: column; gap: var(--space-10);
+    }
+    .head .h2 { margin-bottom: 18px; }
+    .intro { margin: 0; }
+    .form-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 36px; box-shadow: var(--shadow-card);
+    }
+    .reach { display: block; }
+    .reach-label {
+      margin-bottom: var(--space-2); color: var(--gold-700); text-transform: uppercase;
+      font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em;
+    }
+    .reach :global(.office-map) { margin-top: 28px; height: 240px; }
+    .reach :global(.office-map .chip) { display: none; }
+  }
+
+  @media (min-width: 1024px) {
+    .panel {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr;
+      grid-template-areas: 'head form' 'reach form'; column-gap: var(--space-18); row-gap: 0; align-items: start;
+      padding-inline: var(--space-10);
+    }
+    .head { grid-area: head; }
+    .head .h2 { margin-bottom: 0; }
+    .head .rule { display: block; }
+    .intro { margin: 22px 0 var(--space-8); }
+    .form-card { grid-area: form; border: 0; padding: var(--space-10); }
+    .reach { grid-area: reach; }
+    .reach-label { display: none; }
+    .reach :global(.office-map) { height: 220px; }
+    .reach :global(.office-map .chip) { display: flex; }
+  }
+</style>

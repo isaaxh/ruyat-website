@@ -43,6 +43,7 @@
   --rib-band: linear-gradient(90deg, #9a681d, #dca04d, #fbbb67, #dca04d);
   --rule-bronze: linear-gradient(90deg, rgba(181, 125, 45, 0) 0%, #b57d2d 12%, #b57d2d 40%, rgba(181, 125, 45, 0) 100%);
   --hero-fade: linear-gradient(90deg, #041238 0%, rgba(4, 18, 56, 0) 100%);
+  --map-paper: #ece5d6;
   --radius-xl: 22px;
   --radius-card: 16px;
   --radius-menu: 12px;

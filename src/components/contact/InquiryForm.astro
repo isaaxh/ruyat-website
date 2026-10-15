@@ -1,0 +1,154 @@
+---
+// WhatsApp inquiry form. Builds the page-language message from whatsapp.form_message and opens wa.me (no backend).
+import { contactServiceOptions, fmt, getMain, type Locale } from '../../i18n';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+
+interface Props {
+  lang: Locale;
+  /** Unique prefix for field ids when the form appears more than once. */
+  id?: string;
+  /** Pre-selected service id (service detail pages). */
+  service?: string;
+}
+const { lang, id = 'inq', service } = Astro.props;
+const t = getMain(lang);
+const f = t.contact.form;
+const MAX = 320;
+const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\{terms\}/);
+---
+<form
+  class="inquiry"
+  data-inquiry
+  data-template={t.whatsapp.form_message}
+  data-required={f.required}
+  novalidate
+>
+  <div class="fields" data-fields>
+    <div class="pair">
+      <div>
+        <label class="label" for={`${id}-name`}>{f.name_label}</label>
+        <input class="input" id={`${id}-name`} name="name" type="text" autocomplete="name" placeholder={f.name_placeholder} required />
+      </div>
+      <div>
+        <label class="label" for={`${id}-phone`}>{f.phone_label}</label>
+        <input class="input" id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" placeholder={f.phone_placeholder} required />
+      </div>
+    </div>
+    <div>
+      <label class="label" for={`${id}-service`}>
+        <span class="long">{f.service_label}</span><span class="short">{f.service_label_short}</span>
+      </label>
+      <div class="select-wrap">
+        <select class="input select" id={`${id}-service`} name="service">
+          <option value="" selected={!service}>{f.service_placeholder}</option>
+          {contactServiceOptions(lang).map((o) => <option value={o.label} selected={o.value === service}>{o.label}</option>)}
+        </select>
+        <svg class="chev" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+    </div>
+    <div>
+      <label class="label" for={`${id}-message`}>{f.message_label}</label>
+      <textarea class="input textarea" id={`${id}-message`} name="message" rows="5" maxlength={MAX} placeholder={f.message_placeholder} data-message></textarea>
+      <div class="count" aria-live="polite"><span class="latin"><span data-count>0</span> / {MAX}</span></div>
+    </div>
+    <p class="error" role="alert" hidden data-error></p>
+    <button type="submit" class="btn btn-navy send">
+      <WhatsAppIcon size={22} />{f.submit}
+    </button>
+    <p class="consent">
+      {consentBefore}<a href="#">{f.privacy}</a>{consentMid}<a href="#">{f.terms}</a>{consentAfter}
+    </p>
+  </div>
+  <div class="sent" hidden data-sent role="status">
+    <div class="tick">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </div>
+    <div class="sent-title">{f.sent_title}</div>
+    <div class="sent-body t-body">{f.sent_body}</div>
+  </div>
+</form>
+
+<script>
+  import { buildInquiryMessage, buildWhatsAppUrl } from '../../lib/whatsapp';
+
+  document.querySelectorAll<HTMLFormElement>('[data-inquiry]').forEach((form) => {
+    const message = form.querySelector<HTMLTextAreaElement>('[data-message]')!;
+    const count = form.querySelector<HTMLElement>('[data-count]')!;
+    const error = form.querySelector<HTMLElement>('[data-error]')!;
+    message.addEventListener('input', () => (count.textContent = String(message.value.length)));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const val = (k: string) => String(data.get(k) ?? '').trim();
+      if (!val('name') || !val('phone')) {
+        error.textContent = form.dataset.required ?? '';
+        error.hidden = false;
+        form.querySelector<HTMLInputElement>(val('name') ? '[name=phone]' : '[name=name]')?.focus();
+        return;
+      }
+      error.hidden = true;
+      const text = buildInquiryMessage(form.dataset.template ?? '', {
+        name: val('name'),
+        phone: val('phone'),
+        service: val('service'),
+        message: val('message'),
+      });
+      window.open(buildWhatsAppUrl(text), '_blank', 'noopener');
+      form.querySelector<HTMLElement>('[data-fields]')!.hidden = true;
+      form.querySelector<HTMLElement>('[data-sent]')!.hidden = false;
+    });
+  });
+</script>
+
+<style>
+  .fields { display: flex; flex-direction: column; gap: 18px; }
+  .fields[hidden] { display: none; }
+  .pair { display: flex; flex-direction: column; gap: 18px; }
+  .label { display: block; margin-bottom: var(--space-2); color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .long { display: none; }
+  .input {
+    display: block; width: 100%; box-sizing: border-box; padding: 14px; margin: 0;
+    border: 1px solid var(--field-line); border-radius: var(--radius-md); background: var(--white); color: var(--ink); outline: none;
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+  }
+  :lang(ar) .input { line-height: 1.6; }
+  .input:focus { border-color: var(--navy-900); box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--navy-900); }
+  .select-wrap { position: relative; }
+  .select { appearance: none; cursor: pointer; padding-inline-end: 40px; color: var(--ink); }
+  .select:has(option[value='']:checked) { color: var(--ink-muted); }
+  .chev { position: absolute; inset-inline-end: 14px; top: 50%; margin-top: -4px; color: var(--gold-700); pointer-events: none; }
+  /* Inline-block like the prototype's textarea: keeps the line-box space below it. */
+  .textarea { display: inline-block; vertical-align: baseline; resize: vertical; height: calc(4 * 1.6em + 30px); }
+  /* The Arabic mobile reference shows the full five rows. */
+  :lang(ar) .textarea { height: auto; }
+  .count { display: none; margin-top: 6px; color: var(--ink-muted); text-align: end; font-size: 13px; font-weight: 500; line-height: 1.5; }
+  .error { margin: 0; color: var(--danger); font-size: 13px; font-weight: 500; }
+  .send { width: 100%; min-height: 52px; border: none; }
+  .consent { margin: 0; color: var(--ink-muted); font-size: 13px; font-weight: 500; line-height: 1.5; }
+  .consent a { color: var(--accent); text-decoration: underline; }
+  :lang(ar) .consent { line-height: 1.6; }
+
+  .sent { text-align: center; padding: var(--space-12) var(--space-3); }
+  .sent[hidden] { display: none; }
+  .tick {
+    width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%; background: var(--navy-900); color: var(--gold-400);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sent-title { margin-bottom: var(--space-2); color: var(--ink); font-size: 26px; font-weight: 700; line-height: 1.3; }
+  .sent-body { color: var(--ink-muted); }
+
+  @media (min-width: 641px) {
+    :lang(ar) .input { line-height: 1.8; }
+    .fields { gap: 22px; }
+    .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+    .long { display: inline; }
+    .short { display: none; }
+    .textarea { height: auto; }
+    .count { display: block; }
+    .send { min-height: 54px; }
+  }
+  @media (min-width: 1024px) {
+    .sent { padding: 56px var(--space-3); }
+    .tick { width: 60px; height: 60px; }
+  }
+</style>

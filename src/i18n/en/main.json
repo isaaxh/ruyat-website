@@ -197,7 +197,39 @@
   },
   "contact": {
     "heading": "Contact Us",
-    "submit": "Submit"
+    "eyebrow": "Contact Us",
+    "title": "Got a question?",
+    "intro": "Fill out the form and our team will get back to you shortly to help with your business or pilgrimage needs.",
+    "reach_label": "Other ways to reach us",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "address_label": "Address",
+    "address": "2155, Al Shoqiyah, 7432, Saudi Arabia, Makkah 24351",
+    "form": {
+      "name_label": "Full Name",
+      "name_placeholder": "Enter your full name",
+      "phone_label": "Phone",
+      "phone_placeholder": "+966 5X XXX XXXX",
+      "service_label": "Select Service",
+      "service_label_short": "Service",
+      "service_placeholder": "Select a service",
+      "message_label": "Message",
+      "message_placeholder": "Tell us more about what you need...",
+      "submit": "Send on WhatsApp",
+      "consent": "By clicking “Send on WhatsApp” you agree to our {privacy} and {terms}.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions",
+      "sent_title": "Message sent",
+      "sent_body": "Thanks for reaching out. Our team will get back to you shortly.",
+      "required": "Please fill in your name and phone number."
+    },
+    "map": {
+      "label": "Map showing Ruyat Al Injaz office in Al Shawqiyah, Makkah",
+      "title": "Ruyat Al Injaz office on Google Maps",
+      "place": "Al Shawqiyah, Makkah",
+      "street": "Abi Raja Al-Utaridi St.",
+      "directions": "Directions"
+    }
   },
   "footer": {
     "address": "2155, Al Shoqiya, 7432, Saudi Arabia, Makkah 24351",
