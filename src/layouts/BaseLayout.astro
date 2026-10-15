@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import { LOCALES, DEFAULT_LOCALE, dirFor, stripLocale, localizePath, getMain, type Locale } from '../i18n';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description?: string;
+}
+const { lang, title, description } = Astro.props;
+const dir = dirFor(lang);
+const rest = stripLocale(Astro.url.pathname);
+const abs = (l: Locale) => new URL(localizePath(l, rest), Astro.site).href;
+const hreflang = (l: Locale) => getMain(l).meta.hreflang;
+---
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={abs(lang)} />
+    {LOCALES.map((l) => <link rel="alternate" hreflang={hreflang(l)} href={abs(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(DEFAULT_LOCALE)} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:locale" content={lang} />
+    <meta property="og:url" content={abs(lang)} />
+    <link rel="icon" type="image/svg+xml" href="/logos/ruyat-logo-submark.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <!-- TODO: Header / Nav from prototype -->
+    <LanguageSwitcher lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <!-- TODO: Footer from prototype -->
+  </body>
+</html>

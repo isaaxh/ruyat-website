@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getMain, getServices, localeStaticPaths, localizePath, categoryKey, fmt, type Locale } from '../../../i18n';
+
+export const getStaticPaths = localeStaticPaths;
+const lang = Astro.params.lang as Locale;
+const s = getServices(lang);
+const p = s.all_services_page;
+---
+<BaseLayout lang={lang} title={`${p.title} | ${getMain(lang).meta.site_name}`} description={p.subtitle}>
+  <h1>{p.title}</h1>
+  <p>{p.subtitle}</p>
+  <!-- TODO: filter tabs + dynamic count (p.filter_tabs, p.count_label) styled from prototype -->
+  <p data-count>{fmt(p.count_label, { count: s.services.length })}</p>
+  <ul>
+    {s.services.map((svc) => (
+      <li data-category={categoryKey(svc.id)}>
+        <a href={localizePath(lang, `/services/${svc.id}/`)}>{svc.title}</a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

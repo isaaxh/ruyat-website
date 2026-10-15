@@ -1,0 +1,315 @@
+{
+  "v": 3,
+  "assetGroups": {
+    "Applications": {
+      "files": {
+        "desk-nameplate.jpg": {
+          "blob": "ab631c550849340f0e55988f35ea966b",
+          "name": "desk-nameplate.jpg",
+          "size": 98184,
+          "type": "image/jpeg"
+        },
+        "door-signs.jpg": {
+          "blob": "008c7b1d0ff8c83f91ba58a1cf2152a4",
+          "name": "door-signs.jpg",
+          "size": 195736,
+          "type": "image/jpeg"
+        },
+        "floor-sign.jpg": {
+          "blob": "e9ba933d1e7f6d820686b7bd9f8788fd",
+          "name": "floor-sign.jpg",
+          "size": 159606,
+          "type": "image/jpeg"
+        },
+        "letterhead.jpg": {
+          "blob": "04685f5a40f04745d774eae48bdb771c",
+          "name": "letterhead.jpg",
+          "size": 57556,
+          "type": "image/jpeg"
+        },
+        "reception-totem.jpg": {
+          "blob": "2b858ddce9072fce01c58f9b28b7b689",
+          "name": "reception-totem.jpg",
+          "size": 139286,
+          "type": "image/jpeg"
+        },
+        "rollup-banner.jpg": {
+          "blob": "c03a62095f35c396b9b85b0c701eac4c",
+          "name": "rollup-banner.jpg",
+          "size": 81483,
+          "type": "image/jpeg"
+        },
+        "social-services.jpg": {
+          "blob": "0ad35ca6015582b5317b1f0f614947a2",
+          "name": "social-services.jpg",
+          "size": 104655,
+          "type": "image/jpeg"
+        },
+        "social-skyline.jpg": {
+          "blob": "dc6312e02a400a1a0f4a0ed14144579f",
+          "name": "social-skyline.jpg",
+          "size": 176815,
+          "type": "image/jpeg"
+        }
+      },
+      "name": "Applications",
+      "order": [
+        "reception-totem.jpg",
+        "door-signs.jpg",
+        "desk-nameplate.jpg",
+        "floor-sign.jpg",
+        "letterhead.jpg",
+        "rollup-banner.jpg",
+        "social-services.jpg",
+        "social-skyline.jpg"
+      ],
+      "tile": "m"
+    },
+    "Logos": {
+      "files": {
+        "ruyat-lockup-on-dark.png": {
+          "blob": "6bb699247a32b2616f6a2a0f62d36994",
+          "name": "ruyat-lockup-on-dark.png",
+          "size": 506662,
+          "type": "image/png"
+        },
+        "ruyat-lockup-on-light.png": {
+          "blob": "217323d48504641837615c451a488362",
+          "name": "ruyat-lockup-on-light.png",
+          "size": 525704,
+          "type": "image/png"
+        },
+        "ruyat-lockup-tagline-on-dark.png": {
+          "blob": "f25816567a6c291f745f2a5a77311229",
+          "name": "ruyat-lockup-tagline-on-dark.png",
+          "size": 578274,
+          "type": "image/png"
+        },
+        "ruyat-lockup-tagline-on-light.png": {
+          "blob": "40dc751b9e53269bb7ba3d08fbed2795",
+          "name": "ruyat-lockup-tagline-on-light.png",
+          "size": 613238,
+          "type": "image/png"
+        },
+        "ruyat-mark-gold.png": {
+          "blob": "d914bda47761b05dea16dc27dfdd5db9",
+          "name": "ruyat-mark-gold.png",
+          "size": 629029,
+          "type": "image/png"
+        }
+      },
+      "name": "Logos",
+      "order": [
+        "ruyat-lockup-on-light.png",
+        "ruyat-lockup-on-dark.png",
+        "ruyat-mark-gold.png",
+        "ruyat-lockup-tagline-on-light.png",
+        "ruyat-lockup-tagline-on-dark.png"
+      ],
+      "tile": "l"
+    },
+    "Hero": {
+      "name": "Hero",
+      "tile": "m",
+      "order": [
+        "hero-skyline.jpg",
+        "hero-business-handshake.jpg",
+        "hero-umrah-kaaba.jpg"
+      ],
+      "files": {
+        "hero-skyline.jpg": {
+          "blob": "dc6312e02a400a1a0f4a0ed14144579f",
+          "name": "hero-skyline.jpg",
+          "size": 176815,
+          "type": "image/jpeg"
+        },
+        "hero-business-handshake.jpg": {
+          "blob": "2263f6bf21eb078c4d22fd148a1a0c86",
+          "name": "hero-business-handshake.jpg",
+          "size": 172168,
+          "type": "image/jpeg"
+        },
+        "hero-umrah-kaaba.jpg": {
+          "blob": "6be98e4651ff627f88496dbf57b49dcb",
+          "name": "hero-umrah-kaaba.jpg",
+          "size": 356099,
+          "type": "image/jpeg"
+        }
+      }
+    },
+    "Partners": {
+      "name": "Partners",
+      "tile": "m",
+      "order": [
+        "al-faisal/alfaisal-logo-ar.svg",
+        "al-faisal/alfaisal-logo-ar.png",
+        "al-faisal/alfaisal-logo-ar.pdf",
+        "al-faisal/alfaisal-logo-en.svg",
+        "al-faisal/alfaisal-logo-en.png",
+        "al-faisal/alfaisal-logo-en.pdf",
+        "al-faisal/alfaisal-fl-monogram.svg",
+        "al-faisal/alfaisal-fl.png",
+        "ruyat-shams/ruyat-shams-1-full.svg",
+        "ruyat-shams/ruyat-shams-1-full.png",
+        "ruyat-shams/ruyat-shams-1-full.pdf",
+        "ruyat-shams/ruyat-shams-2-name.svg",
+        "ruyat-shams/ruyat-shams-2-name.png",
+        "ruyat-shams/ruyat-shams-2-name.pdf",
+        "ruyat-shams/ruyat-shams-3-tagline-horizontal.svg",
+        "ruyat-shams/ruyat-shams-3-tagline-horizontal.png",
+        "ruyat-shams/ruyat-shams-3-tagline-horizontal.pdf",
+        "ruyat-shams/ruyat-shams-4-icon.svg",
+        "ruyat-shams/ruyat-shams-4-icon.png",
+        "ruyat-shams/ruyat-shams-4-icon.pdf"
+      ],
+      "files": {
+        "al-faisal/alfaisal-logo-ar.svg": {
+          "name": "al-faisal/alfaisal-logo-ar.svg",
+          "blob": "97baee25d88af115c933867fb3fd793c",
+          "size": 135032,
+          "type": "image/svg+xml"
+        },
+        "al-faisal/alfaisal-logo-ar.png": {
+          "name": "al-faisal/alfaisal-logo-ar.png",
+          "blob": "43c0dc84931ca235e72b29ebb931845e",
+          "size": 664151,
+          "type": "image/png"
+        },
+        "al-faisal/alfaisal-logo-ar.pdf": {
+          "name": "al-faisal/alfaisal-logo-ar.pdf",
+          "blob": "74a054472c706bd8980ef369374afde8",
+          "size": 68972,
+          "type": "application/pdf"
+        },
+        "al-faisal/alfaisal-logo-en.svg": {
+          "name": "al-faisal/alfaisal-logo-en.svg",
+          "blob": "2d949b45c96901991346deba8126dc85",
+          "size": 139035,
+          "type": "image/svg+xml"
+        },
+        "al-faisal/alfaisal-logo-en.png": {
+          "name": "al-faisal/alfaisal-logo-en.png",
+          "blob": "af46c23bab8ed5baa5b70abeeebcf89e",
+          "size": 627118,
+          "type": "image/png"
+        },
+        "al-faisal/alfaisal-logo-en.pdf": {
+          "name": "al-faisal/alfaisal-logo-en.pdf",
+          "blob": "060a308d0456d43a2309e028dbce595d",
+          "size": 67951,
+          "type": "application/pdf"
+        },
+        "al-faisal/alfaisal-fl-monogram.svg": {
+          "name": "al-faisal/alfaisal-fl-monogram.svg",
+          "blob": "efbfa364ed3841e75b21801f1eb1d562",
+          "size": 117775,
+          "type": "image/svg+xml"
+        },
+        "al-faisal/alfaisal-fl.png": {
+          "name": "al-faisal/alfaisal-fl.png",
+          "blob": "b11f762b3860d276d427d0ca1b81841f",
+          "size": 1232680,
+          "type": "image/png"
+        },
+        "ruyat-shams/ruyat-shams-1-full.svg": {
+          "name": "ruyat-shams/ruyat-shams-1-full.svg",
+          "blob": "d7ef4914b1821bb17b2361558d6160ab",
+          "size": 44450,
+          "type": "image/svg+xml"
+        },
+        "ruyat-shams/ruyat-shams-1-full.png": {
+          "name": "ruyat-shams/ruyat-shams-1-full.png",
+          "blob": "8fff600760d1ec0ea42011f95fbdc34a",
+          "size": 135817,
+          "type": "image/png"
+        },
+        "ruyat-shams/ruyat-shams-1-full.pdf": {
+          "name": "ruyat-shams/ruyat-shams-1-full.pdf",
+          "blob": "ddb6126424e15b688b0f2cf0717ea61a",
+          "size": 20018,
+          "type": "application/pdf"
+        },
+        "ruyat-shams/ruyat-shams-2-name.svg": {
+          "name": "ruyat-shams/ruyat-shams-2-name.svg",
+          "blob": "328dd76e25c1e7c9110a3d330576437e",
+          "size": 19113,
+          "type": "image/svg+xml"
+        },
+        "ruyat-shams/ruyat-shams-2-name.png": {
+          "name": "ruyat-shams/ruyat-shams-2-name.png",
+          "blob": "68f150ee38627dfd7ee827720a2c5f4a",
+          "size": 99017,
+          "type": "image/png"
+        },
+        "ruyat-shams/ruyat-shams-2-name.pdf": {
+          "name": "ruyat-shams/ruyat-shams-2-name.pdf",
+          "blob": "ecc34024622e0a38a1b12d8a5928f717",
+          "size": 9422,
+          "type": "application/pdf"
+        },
+        "ruyat-shams/ruyat-shams-3-tagline-horizontal.svg": {
+          "name": "ruyat-shams/ruyat-shams-3-tagline-horizontal.svg",
+          "blob": "d53a671a337d6fe102d92f2ccd3114b8",
+          "size": 43168,
+          "type": "image/svg+xml"
+        },
+        "ruyat-shams/ruyat-shams-3-tagline-horizontal.png": {
+          "name": "ruyat-shams/ruyat-shams-3-tagline-horizontal.png",
+          "blob": "6400dff9c91fdd17a0c4bdc98a2fda96",
+          "size": 93188,
+          "type": "image/png"
+        },
+        "ruyat-shams/ruyat-shams-3-tagline-horizontal.pdf": {
+          "name": "ruyat-shams/ruyat-shams-3-tagline-horizontal.pdf",
+          "blob": "93509cbc1b9c5ad6aaade583baa51fd5",
+          "size": 19864,
+          "type": "application/pdf"
+        },
+        "ruyat-shams/ruyat-shams-4-icon.svg": {
+          "name": "ruyat-shams/ruyat-shams-4-icon.svg",
+          "blob": "ac6e057a6f7c6fce32a9745eec869dab",
+          "size": 1048,
+          "type": "image/svg+xml"
+        },
+        "ruyat-shams/ruyat-shams-4-icon.png": {
+          "name": "ruyat-shams/ruyat-shams-4-icon.png",
+          "blob": "62780482b546d58e831cd0baa6786492",
+          "size": 80619,
+          "type": "image/png"
+        },
+        "ruyat-shams/ruyat-shams-4-icon.pdf": {
+          "name": "ruyat-shams/ruyat-shams-4-icon.pdf",
+          "blob": "1ab7a89163aa9e771b4732b22580af84",
+          "size": 1472,
+          "type": "application/pdf"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "createdOnFiles": {
+    "at": "2026-10-12T12:45:00Z",
+    "v": 1
+  },
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "groups": [
+    "Logos",
+    "Hero",
+    "Applications",
+    "Partners"
+  ],
+  "lastChange": {
+    "by": "Isaac",
+    "at": "2026-10-15T15:10:00Z",
+    "via": "Claude",
+    "note": "Partners: full Al Faisal Group and Ruyat Shams logo sets added (SVG, PNG, PDF)."
+  },
+  "layout": "files",
+  "libraries": [],
+  "namespace": "RuyatAlInjaz",
+  "sections": {},
+  "title": "Ruyat Al Injaz"
+}

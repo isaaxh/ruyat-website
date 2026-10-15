@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "lang": "en",
+    "dir": "ltr",
+    "name": "English",
+    "hreflang": "en",
+    "site_name": "Ruyat",
+    "title": "Ruyat | Business Services & Umrah and Hajj Coordination",
+    "description": "Your trusted partner in business solutions — from company formation to government liaison — and complete Umrah and Hajj coordination from visa to return."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "slides": [
+      {
+        "title": "Toward accomplishing your work with trust and professionalism",
+        "subtitle": "Speed, credibility, experience"
+      },
+      {
+        "title": "Your trusted partner in business solutions and services",
+        "subtitle": "From company formation to government liaison, we handle it all"
+      },
+      {
+        "title": "Proudly Serving the Guests of the Most Merciful",
+        "subtitle": "Complete Umrah and Hajj coordination from visa to return"
+      }
+    ]
+  },
+  "stats": {
+    "items": [
+      "10 years of experience in e-services",
+      "4 years of experience in company establishment",
+      "150,000 pilgrims served",
+      "400 partner hotels"
+    ]
+  },
+  "about": {
+    "heading": "About Us",
+    "body": "Ruyat is your trusted partner in business solutions, backed by 10+ years of experience in e-services and 4+ years in company establishment. From idea to achievement, we help clients navigate their business needs with speed, credibility, and expertise. We also proudly serve the guests of the Most Merciful, offering complete Umrah and Hajj coordination — from visa processing to hotels, transport, and catering — so every pilgrim's journey is seamless from start to finish."
+  },
+  "services": {
+    "heading": "Services",
+    "items": [
+      "Company Establishment Services (100% foreign ownership)",
+      "Ministry of Investment Services",
+      "Ministry of Foreign Affairs Services",
+      "Ministry of Tourism Services",
+      "Umrah Services",
+      "Hotel Booking Services",
+      "Transportation Services",
+      "Municipality Services",
+      "Commercial Records Services",
+      "Zakat & Tax Services",
+      "Administrative & Commercial Follow-up",
+      "Catering Services",
+      "Trusted License Issuance",
+      "Lease Contracts",
+      "Premium Residency Application"
+    ]
+  },
+  "why_us": {
+    "heading": "Why Us",
+    "items": [
+      "Speed",
+      "Credibility",
+      "Experience",
+      "Trust"
+    ]
+  },
+  "testimonials": {
+    "heading": "Testimonials",
+    "items": [
+      {
+        "quote": "Ruyat made setting up our company seamless from day one. Fast, professional, and reliable.",
+        "author": "Abdullah Al-Qahtani",
+        "role": "Business Owner",
+        "rating": 5
+      },
+      {
+        "quote": "Their Umrah coordination was flawless — hotels, transport, everything handled with care.",
+        "author": "Fatimah Al-Zahrani",
+        "role": "Group Organizer",
+        "rating": 5
+      },
+      {
+        "quote": "Excellent government liaison support. They handled our licensing faster than we expected.",
+        "author": "Mohammed Al-Otaibi",
+        "role": "CEO",
+        "rating": 4
+      },
+      {
+        "quote": "As a first-time investor in Saudi Arabia, their team guided me through every step with patience.",
+        "author": "Noura Al-Harbi",
+        "role": "Investor",
+        "rating": 5
+      },
+      {
+        "quote": "Professional Hajj services — well organized, attentive, and stress-free for our entire group.",
+        "author": "Khalid Al-Dosari",
+        "role": "Travel Coordinator",
+        "rating": 5
+      }
+    ]
+  },
+  "faq": {
+    "heading": "FAQ",
+    "items": [
+      {
+        "question": "What services does Ruyat provide?",
+        "answer": "We offer company establishment, government liaison services, Umrah and Hajj coordination, licensing, residency applications, and full business support solutions."
+      },
+      {
+        "question": "Can foreign investors fully own a company through your services?",
+        "answer": "Yes, we assist with company establishment under 100% foreign ownership in line with Saudi investment regulations."
+      },
+      {
+        "question": "Do you handle Umrah and Hajj arrangements for groups?",
+        "answer": "Yes, we coordinate visas, hotels, transportation, and catering for both individual pilgrims and large groups."
+      },
+      {
+        "question": "How long does company registration typically take?",
+        "answer": "Timelines vary by license type, but our team works to complete registration as quickly and efficiently as possible."
+      },
+      {
+        "question": "Do you offer ongoing administrative support after setup?",
+        "answer": "Yes, we provide continuous administrative and commercial follow-up, including tax, Zakat, and commercial record services."
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Contact Us",
+    "submit": "Submit"
+  },
+  "footer": {
+    "address": "2155, Al Shoqiya, 7432, Saudi Arabia, Makkah 24351",
+    "phone": "0534880040",
+    "email": "info@ruyat.sa",
+    "website": "Ruyat.sa",
+    "social": [
+      "WhatsApp",
+      "Instagram",
+      "TikTok",
+      "X",
+      "Snapchat",
+      "YouTube"
+    ],
+    "design_credit": "Ishaq Hussain"
+  },
+  "whatsapp": {
+    "fab_message": "Hello Ruyat Al Injaz, I'd like to ask about your services.",
+    "form_message": "Hello Ruyat Al Injaz, I'd like to ask about a service.\n\nName: {name}\nPhone: {phone}\nService: {service}\nMessage: {message}"
+  }
+}

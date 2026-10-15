@@ -1,0 +1,45 @@
+<!-- @dsCard height=288 -->
+<div class="cv">
+  <svg class="art" viewBox="0 0 960 288" width="960" height="288" aria-hidden="true">
+    <!--
+      blocks: navy-900 slab 160×270 (space-16·2.5), gold-500 200×128, gold-400 96×104, navy-600 96×64, ivory-100 88×96 — weighted to navy + gold, the brand's two colours.
+      arrangement: one tall navy slab with satellites, gold blocks bleeding off the right and bottom edges, echoing the totem's offset cubes.
+      pattern: literal motif — the diagonal gold ribbons that cross every navy field on the roll-up, posts and signs; three gold-400 bands clipped to the slab.
+      scales: gaps space-4 (16px), band width space-2 (8px) at pitch space-8 (32px), corners radius-lg (18px).
+    -->
+    <defs><clipPath id="slabclip"><rect x="600" y="-18" width="160" height="270" rx="18"/></clipPath></defs>
+    <rect class="b tint" x="480" y="136" width="104" height="96"/>
+    <rect class="b slab" x="600" y="-18" width="160" height="270"/>
+    <g clip-path="url(#slabclip)">
+      <rect class="ribbon" x="560" y="150" width="280" height="8" transform="rotate(-32 700 154)"/>
+      <rect class="ribbon" x="560" y="182" width="280" height="8" transform="rotate(-32 700 186)"/>
+      <rect class="ribbon" x="560" y="214" width="280" height="8" transform="rotate(-32 700 218)"/>
+    </g>
+    <rect class="b gold" x="776" y="40" width="200" height="128"/>
+    <rect class="b bright" x="776" y="184" width="96" height="120"/>
+    <rect class="b navy2" x="888" y="184" width="96" height="64"/>
+  </svg>
+  <div class="txt">
+    <div class="name">Ruyat<br>Al Injaz</div>
+    <div class="tag">من الفكرة .. إلى الإنجاز</div>
+  </div>
+</div>
+<style>
+  html, body { margin: 0; background: var(--surface); }
+  .cv { position: relative; width: 960px; height: 288px; overflow: hidden; background: var(--surface); }
+  .art { position: absolute; inset: 0; }
+  .b { rx: var(--radius-lg); }
+  .slab { fill: var(--navy-900); }
+  [data-theme="dark"] .slab { fill: var(--navy-600); }
+  .gold { fill: var(--gold-500); }
+  .bright { fill: var(--gold-400); }
+  .navy2 { fill: var(--navy-600); }
+  [data-theme="dark"] .navy2 { fill: var(--ivory-100); }
+  .tint { fill: var(--ivory-100); }
+  [data-theme="dark"] .tint { fill: var(--gold-700); }
+  .ribbon { fill: var(--gold-400); }
+  .txt { position: absolute; left: 40px; bottom: 32px; max-width: 420px; }
+  .name { font-family: var(--font-sans); font-weight: 800; font-size: 84px; line-height: .95; color: var(--ink); letter-spacing: -0.5px; }
+  .tag { margin-top: 16px; font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink-muted); direction: rtl; text-align: left; }
+</style>
+<script></script>

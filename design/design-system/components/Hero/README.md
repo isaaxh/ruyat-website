@@ -1,0 +1,9 @@
+# Hero
+
+The home page's opening slider: navy, a photo per slide (beside the text on desktop, full-bleed under a scrim on tablet and mobile), headline, sub-line, two buttons and gold dot indicators.
+
+- **Markup:** `section.ra-hero.ra-navy` (`aria-roledescription="carousel"`, `aria-label`) › one `.ra-hero__slide` per slide (`is-active` on the shown one; the others `aria-hidden="true"`), each with `.ra-hero__media > img` (decorative `alt=""`) and `.ra-hero__content` (`h1.ra-display.ra-hero__title`, `p.ra-lead.ra-hero__lead`, `.ra-hero__actions`); then `.ra-hero__dots` of `button.ra-hero__dot` (`aria-label="Show slide 2"`, `aria-current` on the active one).
+- **Slides**, in order, from the **Hero** asset group: (1) `hero-skyline.jpg`, object-position 62% centre: "Toward accomplishing your work with trust and professionalism" / "Speed, credibility, experience"; (2) `hero-business-handshake.jpg`, 50% centre: "Your trusted partner in business solutions and services" / "From company formation to government liaison, we handle it all"; (3) `hero-umrah-kaaba.jpg`, 50% centre: "Proudly serving the Guests of the Most Merciful" / "Complete Umrah and Hajj coordination from visa to return". A fallback slide with no photo uses the gold mark as a watermark (`ra-hero__mark`, `opacity-watermark`) and two `ra-ribbon`s.
+- **Sizes:** 100svh (min 560px) on mobile, 820px on tablet, `hero-height` (720px) on desktop. Headline `display` (32 / 42 / 52px English). Buttons: `--primary` "Get in Touch" + `--ghost` "Our Services".
+- **Motion:** cross-fade `duration-slide`, each slide holds `hero-interval` (4.5s) with a slow 1.06 zoom; pause on hover, on focus inside and when the tab is hidden; no auto-advance or zoom under reduced motion.
+- **Don't** put text on a photo without the scrim, or change the order of the slides between languages.

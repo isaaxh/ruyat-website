@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens.
+ * TODO: map from design/design-system/ (colors, type scale, spacing, radii, shadows, motion, breakpoints).
+ * Do not add values here that are not in the design system.
+ */
+@theme {
+  /* --color-*: …        */
+  /* --font-latin: …     */
+  /* --font-arabic: …    */
+  /* --font-urdu: …      (Nastaliq) */
+  /* --font-bangla: …    */
+  /* Breakpoints from design-system tokens (--bp-tablet, --bp-desktop). Use `tablet:` and `desktop:`. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 641px;
+  --breakpoint-desktop: 1024px;
+}
+
+/* Per-script font + line-height hooks. Urdu Nastaliq needs a taller line-height (value from design system). */
+@layer base {
+  /* html:lang(en) { font-family: var(--font-latin); }  */
+  /* html:lang(ar) { font-family: var(--font-arabic); } */
+  /* html:lang(ur) { font-family: var(--font-urdu); line-height: TODO; } */
+  /* html:lang(bn) { font-family: var(--font-bangla); } */
+}

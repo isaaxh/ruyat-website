@@ -1,0 +1,20 @@
+# build
+dist/
+.astro/
+node_modules/
+
+# env
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+
+# raw client source material (large videos, zips, drafts) — kept locally, not in the repo
+media/
+
+# playwright
+test-results/
+playwright-report/

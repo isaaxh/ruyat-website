@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "lang": "en",
+    "dir": "ltr"
+  },
+  "all_services_page": {
+    "eyebrow": "Services",
+    "title": "All Services",
+    "subtitle": "Everything we handle for you — from setting up your business to planning your Umrah.",
+    "filter_tabs": ["All", "Business Setup", "Government", "Umrah & Hajj"],
+    "count_label": "{count} services"
+  },
+  "service_detail_page": {
+    "back_button": "Back to All Services",
+    "whats_included_label": "What's included",
+    "how_it_works_label": "How it works",
+    "related_services_label": "Related services",
+    "cta": "Get in Touch"
+  },
+  "services": [
+    {
+      "id": "company-establishment",
+      "category": "Business Setup",
+      "title": "Company Establishment",
+      "short_description": "Set up your company in Saudi Arabia with 100% foreign ownership.",
+      "full_description": "Starting a business in Saudi Arabia involves multiple regulatory steps — we handle the entire process on your behalf, so you can focus on your business instead of paperwork. From initial licensing to final registration, our team ensures full compliance with Saudi investment regulations.",
+      "whats_included": ["100% foreign ownership setup", "Commercial registration", "Initial licensing and approvals", "Coordination with relevant ministries", "Document preparation and submission"],
+      "how_it_works": ["Submit your business details", "We prepare and file documentation", "We coordinate approvals with government entities", "Your company is officially registered"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "investment-services",
+      "category": "Government",
+      "title": "Investment Services",
+      "short_description": "Ministry of Investment licenses and approvals, handled end to end.",
+      "full_description": "Navigating Saudi Arabia's investment regulations can be complex for foreign entities. We manage your Ministry of Investment license application from start to finish, ensuring every requirement is met the first time.",
+      "whats_included": ["Investment license application", "Document review and preparation", "Direct coordination with the Ministry of Investment", "Status tracking and updates"],
+      "how_it_works": ["Share your investment plans", "We prepare your application", "We submit and follow up with the ministry", "You receive your approved license"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "foreign-affairs-services",
+      "category": "Government",
+      "title": "Foreign Affairs Services",
+      "short_description": "Ministry of Foreign Affairs coordination for your business and visitors.",
+      "full_description": "We liaise directly with the Ministry of Foreign Affairs on your behalf, handling the paperwork and approvals needed for international business activity and visitor coordination.",
+      "whats_included": ["Document authentication and attestation", "Visa-related coordination", "Communication with the ministry on your behalf"],
+      "how_it_works": ["Tell us what you need processed", "We prepare the required documentation", "We coordinate with the ministry", "You receive confirmation"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "tourism-services",
+      "category": "Government",
+      "title": "Tourism Services",
+      "short_description": "Ministry of Tourism licensing and approvals for tourism-related ventures.",
+      "full_description": "If your business operates in the tourism sector, we manage your Ministry of Tourism licensing requirements so you can launch and operate with full compliance.",
+      "whats_included": ["Tourism license application", "Regulatory compliance review", "Ministry coordination and follow-up"],
+      "how_it_works": ["Share your venture details", "We assess licensing requirements", "We submit and manage your application", "You receive your tourism license"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "umrah-services",
+      "category": "Umrah & Hajj",
+      "title": "Umrah Services",
+      "short_description": "Complete Umrah coordination, from visa to return.",
+      "full_description": "We manage every step of your Umrah journey — visa processing, accommodation, transport, and on-the-ground support — so pilgrims can focus entirely on their spiritual journey.",
+      "whats_included": ["Umrah visa processing", "Hotel coordination", "Ground transportation", "24-hour support during your stay"],
+      "how_it_works": ["Share your travel dates and group size", "We process visas and book accommodation", "We arrange transport and logistics", "You travel with full support throughout"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "hotel-booking",
+      "category": "Umrah & Hajj",
+      "title": "Hotel Booking",
+      "short_description": "Trusted hotel partners near the Haramain, booked and confirmed for you.",
+      "full_description": "Choose from our network of 400+ partner hotels, ranging from economy to 5-star, all located for easy access to the holy sites in Makkah and Madinah.",
+      "whats_included": ["Hotel selection based on budget and preference", "Confirmed bookings", "Proximity to the Haramain", "Group and individual reservations"],
+      "how_it_works": ["Tell us your preferences and budget", "We recommend suitable hotels", "We confirm your booking", "You receive your reservation details"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "transportation",
+      "category": "Umrah & Hajj",
+      "title": "Transportation",
+      "short_description": "Safe, comfortable ground transport between airports, hotels, and holy sites.",
+      "full_description": "Our modern fleet and trusted drivers ensure smooth, reliable transportation throughout your journey — from airport pickup to transfers between Makkah and Madinah.",
+      "whats_included": ["Airport transfers", "Inter-city transport (Makkah–Madinah)", "Transport to holy sites", "Group and private vehicle options"],
+      "how_it_works": ["Share your itinerary", "We schedule your transport", "Drivers meet you at each stage", "You travel safely throughout your trip"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "municipality-services",
+      "category": "Government",
+      "title": "Municipality Services",
+      "short_description": "Municipal permits and approvals, managed on your behalf.",
+      "full_description": "From business permits to facility approvals, we handle your municipality-level requirements so your operations stay compliant with local regulations.",
+      "whats_included": ["Municipal permit applications", "Facility compliance checks", "Ongoing renewal management"],
+      "how_it_works": ["Share your permit needs", "We prepare and submit your application", "We follow up with the municipality", "You receive your approved permit"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "commercial-records",
+      "category": "Government",
+      "title": "Commercial Records",
+      "short_description": "Commercial registration and record-keeping, kept accurate and up to date.",
+      "full_description": "We manage your commercial registration and ensure your business records remain accurate, current, and compliant with Saudi commercial law.",
+      "whats_included": ["Commercial registration setup", "Record updates and amendments", "Renewal tracking", "Compliance verification"],
+      "how_it_works": ["Share your business details", "We register or update your records", "We monitor renewal deadlines", "Your records stay current"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "zakat-tax-services",
+      "category": "Government",
+      "title": "Zakat & Tax Services",
+      "short_description": "Zakat and tax filing handled accurately and on time.",
+      "full_description": "Stay compliant with Saudi Zakat and tax requirements through our end-to-end filing service — accurate calculations, timely submissions, and full regulatory alignment.",
+      "whats_included": ["Zakat calculation and filing", "Tax return preparation and submission", "Compliance monitoring"],
+      "how_it_works": ["Share your financial records", "We calculate your obligations", "We file on your behalf", "You receive confirmation of filing"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "admin-commercial-follow-up",
+      "category": "Business Setup",
+      "title": "Administrative & Commercial Follow-up",
+      "short_description": "Ongoing administrative support so nothing falls through the cracks.",
+      "full_description": "Beyond setup, we provide continuous administrative and commercial follow-up — tracking deadlines, renewals, and requirements so your business stays compliant year-round.",
+      "whats_included": ["Deadline and renewal tracking", "Ongoing document management", "Regular compliance check-ins"],
+      "how_it_works": ["We review your ongoing requirements", "We set up a follow-up schedule", "We handle renewals and updates as they arise", "You stay compliant without the hassle"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "catering-services",
+      "category": "Umrah & Hajj",
+      "title": "Catering Services",
+      "short_description": "Quality meal arrangements for pilgrims throughout their stay.",
+      "full_description": "We coordinate reliable, quality catering for individual pilgrims and groups, ensuring proper meals throughout the Umrah or Hajj journey.",
+      "whats_included": ["Daily meal arrangements", "Group catering coordination", "Dietary preference accommodation"],
+      "how_it_works": ["Share your group size and preferences", "We arrange catering partners", "Meals are coordinated throughout your stay", "You enjoy hassle-free dining"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "trusted-license-issuance",
+      "category": "Government",
+      "title": "Trusted License Issuance",
+      "short_description": "Fast, reliable issuance of business and operating licenses.",
+      "full_description": "We streamline the licensing process, working directly with the relevant authorities to secure your business or operating license as efficiently as possible.",
+      "whats_included": ["License application preparation", "Authority coordination", "Status tracking", "Issued license delivery"],
+      "how_it_works": ["Share your licensing needs", "We prepare your application", "We coordinate with the issuing authority", "You receive your license"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "lease-contracts",
+      "category": "Business Setup",
+      "title": "Lease Contracts",
+      "short_description": "Commercial lease agreements drafted and managed for you.",
+      "full_description": "We draft, review, and manage your commercial lease contracts, ensuring terms are clear, compliant, and in your best interest.",
+      "whats_included": ["Lease contract drafting", "Terms review and negotiation support", "Documentation and filing"],
+      "how_it_works": ["Share your leasing requirements", "We draft or review the contract", "We finalize terms with the landlord/tenant", "Your lease is signed and filed"],
+      "cta": "Get in Touch"
+    },
+    {
+      "id": "premium-residency-application",
+      "category": "Business Setup",
+      "title": "Premium Residency Application",
+      "short_description": "Premium residency applications processed with full support.",
+      "full_description": "We guide you through Saudi Arabia's premium residency program from eligibility assessment to final approval, handling documentation and submission at every stage.",
+      "whats_included": ["Eligibility assessment", "Document preparation", "Application submission", "Status tracking through approval"],
+      "how_it_works": ["We assess your eligibility", "We prepare your documentation", "We submit your application", "You receive your premium residency approval"],
+      "cta": "Get in Touch"
+    }
+  ]
+}

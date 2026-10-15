@@ -1,0 +1,5 @@
+---
+// Fallback for "/" (Cloudflare Pages serves public/_redirects first).
+import { DEFAULT_LOCALE } from '../i18n';
+return Astro.redirect(`/${DEFAULT_LOCALE}/`);
+---

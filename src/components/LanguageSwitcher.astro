@@ -1,0 +1,22 @@
+---
+// Keeps the user on the same page when switching language. Styling TODO from prototype.
+import { LOCALES, getMain, localizePath, stripLocale, type Locale } from '../i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const rest = stripLocale(Astro.url.pathname);
+---
+<nav aria-label="Language">
+  <ul>
+    {LOCALES.map((l) => (
+      <li>
+        <a
+          href={localizePath(l, rest)}
+          hreflang={l}
+          lang={l}
+          aria-current={l === lang ? 'true' : undefined}
+        >{getMain(l).meta.name}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
