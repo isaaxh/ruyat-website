@@ -91,7 +91,8 @@
     font-variant-ligatures: no-common-ligatures;
   }
   html:lang(ar) body { font-family: var(--font-arabic); }
-  html:lang(ur) body { font-family: var(--font-urdu); line-height: 2.2; }
+  /* Latin digits and letters stay Plus Jakarta Sans (design system); Urdu script isn't in that font, so it falls through to Nastaliq. */
+  html:lang(ur) body { font-family: 'Plus Jakarta Sans', var(--font-urdu); line-height: 2.2; }
   html:lang(bn) body { font-family: var(--font-bangla); line-height: 1.75; }
   button, input, select, textarea { font-family: inherit; letter-spacing: inherit; font-variant-ligatures: inherit; }
   a { color: var(--accent); }
@@ -184,7 +185,7 @@
   :lang(ar) .btn { padding-top: 0.28em; }
   :lang(ar) .btn > svg { translate: 0 -0.14em; }
   /* Nastaliq is tall: extra line-height. */
-  :lang(ur) .btn { line-height: 2; padding-bottom: 3px; }
+  :lang(ur) .btn { line-height: 2; padding-top: 3px; }
   .btn:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
   .btn-gold { background: var(--accent-fill); color: var(--on-accent); }
   .btn-gold:hover { background: var(--accent-fill-hover); color: var(--on-accent); }
@@ -238,10 +239,10 @@
  * avatars look pushed down. Shift the text up with asymmetric padding; box sizes stay the same. Unlayered so it beats
  * component-scoped rules.
  */
-html:lang(ur) .eyebrow { line-height: 21px; padding-block: 2px 11px; }
+html:lang(ur) .eyebrow { line-height: 24px; padding-block: 5px 12px; }
 html:lang(ur) .pill { font-size: 15px; font-weight: 700; line-height: 1.4; padding-block: 3px 10px; }
 html:lang(ur) .svc-tag { font-size: 15px; font-weight: 700; line-height: 1.4; padding: 0 14px 9px; }
-html:lang(ur) .avatar { font-size: 15px; font-weight: 700; padding-bottom: 13px; }
+html:lang(ur) .avatar { box-sizing: border-box; font-size: 15px; font-weight: 700; line-height: 1; white-space: nowrap; padding-bottom: 6px; }
 /* Checklist tick: centre it on the first (tall) line instead of the top of the line box. */
 html:lang(ur) .check { margin-top: calc((1lh - var(--size-icon)) / 2); }
 /* Latin-only strings (English address, place names) inside Urdu rows: keep them LTR internally but right-aligned like the rest. */
@@ -251,3 +252,11 @@ html:lang(ur) [dir='auto'] { text-align: end; font-family: var(--font-latin); li
   html:lang(ur) footer .links { grid-template-columns: 1fr; }
 }
 html:lang(ur) footer .link { line-height: 1.9; white-space: nowrap; }
+
+/* Urdu on phones: more leading on headings so tall Nastaliq ascenders and descenders don't touch the line above/below. */
+@media (max-width: 640px) {
+  html:lang(ur) .t-display { line-height: 2.2; }
+  html:lang(ur) .t-h1, html:lang(ur) .h2, html:lang(ur) .t-h3 { line-height: 2.1; }
+}
+/* Form labels: Nastaliq swashes overhang the reading-start edge; inset them from the start edge so they align with the field. */
+html:lang(ur) label.label { padding-inline-start: 6px; margin-bottom: 12px; }
