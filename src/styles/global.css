@@ -183,9 +183,8 @@
   /* Tajawal's glyphs sit above the line-box centre; nudge text down, keep icons centred. */
   :lang(ar) .btn { padding-top: 0.28em; }
   :lang(ar) .btn > svg { translate: 0 -0.14em; }
-  /* Nastaliq is tall: extra line-height, and keep the label optically centred. */
-  :lang(ur) .btn { line-height: 2; padding-top: 0.3em; }
-  :lang(ur) .btn > svg { translate: 0 -0.15em; }
+  /* Nastaliq is tall: extra line-height. */
+  :lang(ur) .btn { line-height: 2; padding-bottom: 3px; }
   .btn:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
   .btn-gold { background: var(--accent-fill); color: var(--on-accent); }
   .btn-gold:hover { background: var(--accent-fill-hover); color: var(--on-accent); }
@@ -233,3 +232,22 @@
     transform: rotate(calc(var(--rot, 0deg) * var(--dir)));
   }
 }
+
+/*
+ * Urdu optical centring. Noto Nastaliq's ink sits low in its line box (long descenders), so labels in pills, tags and
+ * avatars look pushed down. Shift the text up with asymmetric padding; box sizes stay the same. Unlayered so it beats
+ * component-scoped rules.
+ */
+html:lang(ur) .eyebrow { line-height: 21px; padding-block: 2px 11px; }
+html:lang(ur) .pill { font-size: 15px; font-weight: 700; line-height: 1.4; padding-block: 3px 10px; }
+html:lang(ur) .svc-tag { font-size: 15px; font-weight: 700; line-height: 1.4; padding: 0 14px 9px; }
+html:lang(ur) .avatar { font-size: 15px; font-weight: 700; padding-bottom: 13px; }
+/* Checklist tick: centre it on the first (tall) line instead of the top of the line box. */
+html:lang(ur) .check { margin-top: calc((1lh - var(--size-icon)) / 2); }
+/* Latin-only strings (English address, place names) inside Urdu rows: keep them LTR internally but right-aligned like the rest. */
+html:lang(ur) [dir='auto'] { text-align: end; font-family: var(--font-latin); line-height: 1.6 !important; }
+/* Urdu footer quick links are wider than the desktop column pair: stack them in one column so "ہمارے بارے میں" doesn't wrap. */
+@media (min-width: 1024px) {
+  html:lang(ur) footer .links { grid-template-columns: 1fr; }
+}
+html:lang(ur) footer .link { line-height: 1.9; white-space: nowrap; }
