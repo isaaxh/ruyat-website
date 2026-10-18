@@ -149,6 +149,9 @@ const pos = (i: number, cur: number) => {
   }
   .name { display: block; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.4; }
   .role { display: block; color: var(--ink-muted); font-size: 13px; font-weight: 500; line-height: 1.5; }
+  /* Nastaliq is tall: give name and role their own line boxes so they don't overlap. */
+  :lang(ur) .name { line-height: 2; }
+  :lang(ur) .role { font-size: 15px; font-weight: 400; line-height: 2; }
 
   .arrows { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-5); }
   .arrow {

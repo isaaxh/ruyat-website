@@ -37,8 +37,8 @@ const t = getMain(lang).contact.map;
   {chip && (
     <div class="chip">
       <span class="place">
-        <span class="name">{t.place}</span>
-        <span class="street">{t.street}</span>
+        <span class="name" dir="auto">{t.place}</span>
+        <span class="street" dir="auto">{t.street}</span>
       </span>
       <a class="go" href={mapsDirectionsUrl(OFFICE.lat, OFFICE.lng)} target="_blank" rel="noopener">{t.directions}</a>
     </div>

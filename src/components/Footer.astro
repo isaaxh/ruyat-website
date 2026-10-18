@@ -44,7 +44,7 @@ const year = new Date().getFullYear();
         <div class="rows">
           <a class="row r-phone" href={`tel:${PHONE_TEL}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.phone}></path></svg><span class="latin num">{PHONE_DISPLAY}</span></a>
           <a class="row r-mail" href={`mailto:${EMAIL}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.mail}></path></svg><span class="latin">{EMAIL}</span></a>
-          <div class="row r-address"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.pin}></path></svg><span>{t.contact.address}</span></div>
+          <div class="row r-address"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.pin}></path></svg><span dir="auto">{t.contact.address}</span></div>
           <a class="row r-web" href={SITE_URL}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.globe}></path></svg><span class="latin">{f.website}</span></a>
         </div>
       </div>
