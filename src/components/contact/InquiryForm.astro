@@ -117,6 +117,9 @@ const [consentBefore, consentMid, consentAfter] = f.consent.split(/\{privacy\}|\
   :lang(ar) .input { line-height: 1.6; }
   .input { transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease; }
   .input:focus { border-color: var(--gold-400); box-shadow: 0 0 0 4px rgba(220, 160, 77, 0.18); }
+  /* Fixed height + normal line-height so Latin and Arabic placeholders center on the same axis. */
+  .input:not(.textarea) { height: 58px; padding-block: 0; line-height: normal; }
+  :lang(ar) .input:not(.textarea), .page:lang(ar) .input:not(.textarea) { line-height: normal; }
   .select-wrap { position: relative; }
   .select { appearance: none; cursor: pointer; padding-inline-end: 40px; color: var(--ink); }
   .select:has(option[value='']:checked) { color: var(--ink-muted); }
