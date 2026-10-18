@@ -51,11 +51,18 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
     ))}
   </div>
 </section>
+<noscript><style is:inline>.hero .photo img { opacity: 1 !important; }</style></noscript>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-hero]').forEach((hero) => {
     const slides = [...hero.querySelectorAll<HTMLElement>('[data-slide]')];
     const dots = [...hero.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    // Reveal each photo only once fully decoded: a progressive JPEG otherwise paints as a hard-edged strip at the top.
+    hero.querySelectorAll<HTMLImageElement>('.photo img').forEach((img) => {
+      const reveal = () => img.decode().catch(() => {}).then(() => img.classList.add('is-loaded'));
+      if (img.complete && img.naturalWidth) reveal();
+      else img.addEventListener('load', reveal, { once: true });
+    });
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     let current = 0;
     let timer: number | undefined;
@@ -92,9 +99,10 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
   .photo { position: absolute; inset: 0; overflow: hidden; }
   .photo img {
     width: 100%; height: 100%; object-fit: cover; object-position: var(--pos-m);
-    transition: transform 4.5s ease-out;
+    opacity: 0; transition: transform 4.5s ease-out, opacity 0.6s ease;
   }
-  .slide[data-active] .photo img { transform: scale(1.08); }
+  .photo img.is-loaded { opacity: 1; }
+  .slide[data-active] .photo img.is-loaded { transform: scale(1.08); }
   .plain { display: none; position: absolute; inset: 0; background: var(--navy-900); }
   .shade { position: absolute; inset: 0; background: var(--hero-scrim); }
 
@@ -124,7 +132,7 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
   /* Tablet: taller, wrap-aligned text, 44px dot targets. */
   @media (min-width: 641px) {
     .photo img { object-position: var(--pos-t); transition-duration: 5s; }
-    .slide[data-active] .photo img { transform: scale(1.06); }
+    .slide[data-active] .photo img.is-loaded { transform: scale(1.06); }
     .photo.no-tablet { display: none; }
     .plain { display: block; }
     .watermark { position: absolute; inset-inline-end: -90px; top: 110px; width: 520px; opacity: var(--opacity-watermark); }
@@ -154,7 +162,7 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
       content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 0; width: 24%;
       background: linear-gradient(calc(90deg * var(--dir)), var(--navy-900) 0%, rgba(4, 18, 56, 0) 100%);
     }
-    .photo img, .slide[data-active] .photo img { object-position: center; transform: scale(1.025); transition: none; }
+    .photo img, .slide[data-active] .photo img.is-loaded { object-position: center; transform: scale(1.025); transition: opacity 0.6s ease; }
     .plain, .shade { display: none; }
     .content-wrap { padding-inline: var(--space-10); }
     .dots { padding-inline: var(--space-10); }
