@@ -133,38 +133,38 @@
     "items": [
       {
         "quote": "Ruyat Al Injaz made setting up our company seamless from day one. Fast, professional, and reliable.",
-        "author": "Abdullah Al-Qahtani",
-        "role": "Business Owner",
+        "author": "Abdulaziz Al-Otaibi",
+        "role": "Chief Executive Officer",
         "rating": 5,
-        "initials": "AQ"
+        "initials": "AO"
       },
       {
         "quote": "Their Umrah coordination was flawless — hotels, transport, everything handled with care.",
-        "author": "Fatimah Al-Zahrani",
-        "role": "Group Organizer",
+        "author": "Imran Khan",
+        "role": "Head of Pilgrim Services",
         "rating": 5,
-        "initials": "FZ"
+        "initials": "IK"
       },
       {
         "quote": "Excellent government liaison support. They handled our licensing faster than we expected.",
-        "author": "Mohammed Al-Otaibi",
-        "role": "CEO",
+        "author": "Faisal Siddiqui",
+        "role": "Finance Manager",
         "rating": 4,
-        "initials": "MO"
+        "initials": "FS"
       },
       {
         "quote": "As a first-time investor in Saudi Arabia, their team guided me through every step with patience.",
-        "author": "Noura Al-Harbi",
-        "role": "Investor",
+        "author": "Rafiqul Islam",
+        "role": "Operations Manager",
         "rating": 5,
-        "initials": "NH"
+        "initials": "RI"
       },
       {
         "quote": "Professional Hajj services — well organized, attentive, and stress-free for our entire group.",
-        "author": "Khalid Al-Dosari",
-        "role": "Travel Coordinator",
+        "author": "Nusrat Jahan",
+        "role": "Customer Relations Manager",
         "rating": 5,
-        "initials": "KD"
+        "initials": "NJ"
       }
     ]
   },

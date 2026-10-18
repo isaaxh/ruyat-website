@@ -2,8 +2,8 @@
 export const ALL_LOCALES = ['ar', 'en', 'ur', 'bn'] as const;
 export type Locale = (typeof ALL_LOCALES)[number];
 
-/** Languages live on the site. Urdu and Bangla are paused for now (copy kept in src/i18n/ur and src/i18n/bn); add them back here to enable. */
-export const LOCALES: readonly Locale[] = ['ar', 'en'];
+/** Languages live on the site. Bangla is paused for now (copy kept in src/i18n/bn); add it back here to enable. */
+export const LOCALES: readonly Locale[] = ['ar', 'en', 'ur'];
 
 // Default language. Also update public/_redirects if this changes.
 export const DEFAULT_LOCALE: Locale = 'ar';
