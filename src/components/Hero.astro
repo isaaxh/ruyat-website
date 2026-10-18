@@ -51,15 +51,23 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
     ))}
   </div>
 </section>
-<noscript><style is:inline>.hero .photo img { opacity: 1 !important; }</style></noscript>
+<noscript><style is:inline>.hero .photo img { visibility: visible !important; }</style></noscript>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-hero]').forEach((hero) => {
     const slides = [...hero.querySelectorAll<HTMLElement>('[data-slide]')];
     const dots = [...hero.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    // Start the slow zoom on the next frame, so the first painted frame is the whole photo at scale 1.
+    const startZoom = (slide: HTMLElement) => {
+      const img = slide.querySelector<HTMLImageElement>('.photo img');
+      if (!img || !img.classList.contains('is-loaded') || !slide.hasAttribute('data-active')) return;
+      requestAnimationFrame(() => requestAnimationFrame(() => slide.hasAttribute('data-active') && slide.setAttribute('data-zoom', '')));
+    };
     // Reveal each photo only once fully decoded: a progressive JPEG otherwise paints as a hard-edged strip at the top.
-    hero.querySelectorAll<HTMLImageElement>('.photo img').forEach((img) => {
-      const reveal = () => img.decode().catch(() => {}).then(() => img.classList.add('is-loaded'));
+    slides.forEach((slide) => {
+      const img = slide.querySelector<HTMLImageElement>('.photo img');
+      if (!img) return;
+      const reveal = () => img.decode().catch(() => {}).then(() => { img.classList.add('is-loaded'); startZoom(slide); });
       if (img.complete && img.naturalWidth) reveal();
       else img.addEventListener('load', reveal, { once: true });
     });
@@ -70,7 +78,11 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
       current = (n + slides.length) % slides.length;
       slides.forEach((s, i) => {
         const on = i === current;
+        const was = s.hasAttribute('data-active');
         s.toggleAttribute('data-active', on);
+        if (on && !was) startZoom(s);
+        // Once the outgoing slide is fully covered, snap its zoom back so it starts at scale 1 next time.
+        if (!on && was) window.setTimeout(() => { if (!s.hasAttribute('data-active')) s.removeAttribute('data-zoom'); }, 1000);
         s.toggleAttribute('aria-hidden', !on);
         s.querySelectorAll('a').forEach((a) => (on ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
       });
@@ -92,17 +104,19 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
 
   .slide {
     position: absolute; inset: 0; opacity: 0; pointer-events: none;
-    transition: opacity var(--duration-slide) ease;
+    /* Outgoing slide stays opaque until the incoming one (above it) has fully faded in, so the navy never shows through. */
+    transition: opacity 0s linear var(--duration-slide);
   }
-  .slide[data-active] { opacity: 1; pointer-events: auto; }
+  .slide[data-active] { opacity: 1; pointer-events: auto; z-index: 1; transition: opacity var(--duration-slide) ease; }
 
   .photo { position: absolute; inset: 0; overflow: hidden; }
   .photo img {
     width: 100%; height: 100%; object-fit: cover; object-position: var(--pos-m);
-    opacity: 0; transition: transform 4.5s ease-out, opacity 0.6s ease;
+    visibility: hidden;
   }
-  .photo img.is-loaded { opacity: 1; }
-  .slide[data-active] .photo img.is-loaded { transform: scale(1.08); }
+  .photo img.is-loaded { visibility: visible; }
+  /* Zoom runs only while a slide is zooming; resetting it (no data-zoom) is instant. */
+  .slide[data-zoom] .photo img { transform: scale(1.08); transition: transform 4.5s ease-out; }
   .plain { display: none; position: absolute; inset: 0; background: var(--navy-900); }
   .shade { position: absolute; inset: 0; background: var(--hero-scrim); }
 
@@ -126,13 +140,13 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
   .dot[aria-current] span { width: 32px; background: var(--gold-400); }
 
   @media (prefers-reduced-motion: reduce) {
-    .slide, .photo img, .content, .dot span { transition: none; }
+    .slide, .slide[data-active], .slide[data-zoom] .photo img, .content, .dot span { transition: none; }
   }
 
   /* Tablet: taller, wrap-aligned text, 44px dot targets. */
   @media (min-width: 641px) {
-    .photo img { object-position: var(--pos-t); transition-duration: 5s; }
-    .slide[data-active] .photo img.is-loaded { transform: scale(1.06); }
+    .photo img { object-position: var(--pos-t); }
+    .slide[data-zoom] .photo img { transform: scale(1.06); transition-duration: 5s; }
     .photo.no-tablet { display: none; }
     .plain { display: block; }
     .watermark { position: absolute; inset-inline-end: -90px; top: 110px; width: 520px; opacity: var(--opacity-watermark); }
@@ -162,7 +176,7 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
       content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 0; width: 24%;
       background: linear-gradient(calc(90deg * var(--dir)), var(--navy-900) 0%, rgba(4, 18, 56, 0) 100%);
     }
-    .photo img, .slide[data-active] .photo img.is-loaded { object-position: center; transform: scale(1.025); transition: opacity 0.6s ease; }
+    .photo img, .slide[data-zoom] .photo img { object-position: center; transform: scale(1.025); transition: none; }
     .plain, .shade { display: none; }
     .content-wrap { padding-inline: var(--space-10); }
     .dots { padding-inline: var(--space-10); }
