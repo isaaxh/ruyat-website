@@ -80,8 +80,8 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
 </script>
 
 <style>
-  /* The reference screenshots show the mobile hero at 560px on a 390x844 screen. */
-  .hero { position: relative; height: 560px; background: var(--navy-900); overflow: hidden; }
+  /* Full-screen hero (deliberate change from the prototype's fixed heights); min-height keeps the text clear on short landscape screens. */
+  .hero { position: relative; height: 100vh; height: 100svh; min-height: 560px; background: var(--navy-900); overflow: hidden; }
 
   .slide {
     position: absolute; inset: 0; opacity: 0; pointer-events: none;
@@ -123,7 +123,6 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
 
   /* Tablet: taller, wrap-aligned text, 44px dot targets. */
   @media (min-width: 641px) {
-    .hero { height: 820px; }
     .photo img { object-position: var(--pos-t); transition-duration: 5s; }
     .slide[data-active] .photo img { transform: scale(1.06); }
     .photo.no-tablet { display: none; }
@@ -150,7 +149,6 @@ const slides = t.hero.slides.map((s, i) => ({ ...s, ...SLIDES[i] }));
 
   /* Desktop: photo panel on the reading-end side, faded into navy on its reading-start edge. */
   @media (min-width: 1024px) {
-    .hero { height: var(--hero-height); }
     .photo, .photo.no-tablet { display: block; inset: 0; inset-inline-start: auto; width: 720px; }
     .photo::after {
       content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 0; width: 24%;
