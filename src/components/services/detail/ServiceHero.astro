@@ -53,6 +53,8 @@ const p = getServices(lang).service_detail_page;
   .back:hover { color: var(--gold-200); }
   .back svg { width: 14px; height: 14px; flex: none; }
   :global([dir='rtl']) .back svg { transform: scaleX(-1); }
+  :lang(ar) .back { padding-top: 0.28em; }
+  :lang(ar) .back svg { translate: 0 -0.14em; }
   .crumbs { display: none; }
   .pill {
     display: inline-block; margin-bottom: var(--space-4); padding: 6px 14px;
