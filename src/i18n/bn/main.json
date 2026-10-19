@@ -263,8 +263,8 @@
     "design_credit": "Ishaq Hussain"
   },
   "whatsapp": {
-    "fab_message": "আসসালামু আলাইকুম রুয়াত আল ইনজাজ, আমি আপনাদের সেবা সম্পর্কে জানতে চাই।",
-    "form_message": "আসসালামু আলাইকুম রুয়াত আল ইনজাজ, আমি আপনাদের একটি সেবা সম্পর্কে জানতে চাই।\n\nনাম: {name}\nফোন: {phone}\nসেবা: {service}\nবার্তা: {message}",
+    "fab_message": "Hello Ruyat Al Injaz, I'd like to ask about your services.",
+    "form_message": "Hello Ruyat Al Injaz, I'd like to ask about a service.\n\nName: {name}\nPhone: {phone}\nService: {service}\nMessage: {message}",
     "fab_label": "হোয়াটসঅ্যাপে আমাদের সাথে চ্যাট করুন"
   },
   "brand": {

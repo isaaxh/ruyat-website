@@ -38,7 +38,7 @@ Languages: English, Arabic, Urdu, Bangla.
 ### Contact (WhatsApp only)
 - The inquiry form builds a `wa.me` link from the form values (name, selected service, and so on) using `encodeURIComponent`, and opens it. No backend.
 - `wa.me` needs the international format with no `+` or leading zero. The business number 0534880040 becomes `966534880040`.
-- Message text is in the page's current language: templates `whatsapp.fab_message` and `whatsapp.form_message` in `src/i18n/<lang>/main.json`, filled by `buildInquiryMessage()` in `src/lib/whatsapp.ts`.
+- Message text is in the page's current language (Bangla is the exception: its templates are in English, by client request): templates `whatsapp.fab_message` and `whatsapp.form_message` in `src/i18n/<lang>/main.json`, filled by `buildInquiryMessage()` in `src/lib/whatsapp.ts`.
 
 ### Map
 - Google Maps embed iframe, `loading="lazy"`, no API key.
