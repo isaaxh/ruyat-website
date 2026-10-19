@@ -25,12 +25,12 @@ Languages: English, Arabic, Urdu, Bangla.
 
 ## i18n and RTL
 
-- Routes: `/ar`, `/en` (Urdu `/ur` and Bangla `/bn` paused for now; enable in `src/i18n/config.ts`). `/` redirects to the default language. Default language: Arabic (`/` → `/ar/`).
+- Routes: `/ar`, `/en`, `/bn` (Urdu `/ur` paused for now; enable in `src/i18n/config.ts`). `/` redirects to the default language. Default language: Arabic (`/` → `/ar/`).
 - Arabic and Urdu are RTL: set `dir="rtl"` and the matching `lang` on `<html>`.
 - Use Tailwind logical properties only (`ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-`, `text-start`). Avoid `left`/`right`/`ml-`/`mr-`.
 - Flip directional icons and arrows with the `rtl:` variant.
 - Numerals: Western digits in all languages. English uses Western digits, Gregorian dates, SAR currency, +966 phone format.
-- SEO: `hreflang` for all four languages plus `x-default`, per-language title and meta tags, sitemap.
+- SEO: `hreflang` for every live language plus `x-default`, per-language title and meta tags, sitemap.
 - The language switcher keeps the user on the same page in the new language.
 
 ## Features
@@ -38,7 +38,7 @@ Languages: English, Arabic, Urdu, Bangla.
 ### Contact (WhatsApp only)
 - The inquiry form builds a `wa.me` link from the form values (name, selected service, and so on) using `encodeURIComponent`, and opens it. No backend.
 - `wa.me` needs the international format with no `+` or leading zero. The business number 0534880040 becomes `966534880040`.
-- Message text is in the page's current language: templates `whatsapp.fab_message` and `whatsapp.form_message` in `src/i18n/<lang>/main.json`, filled by `buildInquiryMessage()` in `src/lib/whatsapp.ts`.
+- Message text is in the page's current language (Bangla is the exception: its templates are in English, by client request): templates `whatsapp.fab_message` and `whatsapp.form_message` in `src/i18n/<lang>/main.json`, filled by `buildInquiryMessage()` in `src/lib/whatsapp.ts`.
 
 ### Map
 - Google Maps embed iframe, `loading="lazy"`, no API key.
