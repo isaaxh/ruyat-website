@@ -182,7 +182,8 @@
     text-transform: uppercase; font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.06em;
   }
   .eyebrow.on-dark { background: var(--navy-600); }
-  :lang(ar) .eyebrow { font-size: 15px; line-height: 1.5; letter-spacing: 0; }
+  /* Tajawal's glyphs sit above the line-box centre; shift padding so the label centres optically (height unchanged). */
+  :lang(ar) .eyebrow { padding-block: calc(6px + 0.15em) calc(6px - 0.15em); font-size: 15px; line-height: 1.5; letter-spacing: 0; }
 
   .h2 { margin: 14px 0 0; color: var(--ink); }
   @media (min-width: 641px) { .h2 { margin-top: var(--space-4); } }

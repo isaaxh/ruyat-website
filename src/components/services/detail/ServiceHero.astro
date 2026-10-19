@@ -59,7 +59,7 @@ const p = getServices(lang).service_detail_page;
     border-radius: var(--radius-pill); border: 1px solid var(--gold-line-strong); color: var(--gold-400);
     font-size: 13px; font-weight: 500; line-height: 1.5;
   }
-  :lang(ar) .pill { padding-block: 5px; font-size: 15px; font-weight: 700; line-height: 1.33; }
+  :lang(ar) .pill { padding-block: calc(5px + 0.15em) calc(5px - 0.15em); font-size: 15px; font-weight: 700; line-height: 1.33; }
   .title { margin: 0 0 var(--space-3); color: var(--white); }
   .intro { color: var(--on-navy-text); font-size: 16px; }
   :lang(ar) .intro { font-weight: 400; }
@@ -79,7 +79,7 @@ const p = getServices(lang).service_detail_page;
     .back svg { width: 16px; height: 16px; }
     .split { display: flex; flex-direction: column; gap: 36px; padding-top: var(--space-6); }
     .pill { margin-bottom: 18px; padding: 7px 14px; font-size: 15px; font-weight: 700; line-height: 1.4; }
-    :lang(ar) .pill { padding-block: 7px; line-height: 1.4; }
+    :lang(ar) .pill { padding-block: calc(7px + 0.15em) calc(7px - 0.15em); line-height: 1.4; }
     .title { margin-bottom: 18px; }
     .intro { font-size: 18px; }
     :lang(ar) .intro { font-weight: 500; }
