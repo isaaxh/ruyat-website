@@ -126,12 +126,22 @@
   :lang(ar) .t-body { line-height: 1.8; }
   :lang(ar) .t-caption { line-height: 1.6; }
 
+  /* Bangla: Hind Siliguri tops out at 700; open the leading so matras and conjuncts don't clip; no tracking. */
+  :lang(bn) .t-display { line-height: 1.4; font-weight: 700; letter-spacing: 0; }
+  :lang(bn) .t-h1, :lang(bn) .h2 { line-height: 1.45; font-weight: 700; letter-spacing: 0; }
+  :lang(bn) .t-h3 { line-height: 1.5; font-weight: 700; }
+  :lang(bn) .t-lead, :lang(bn) .t-body { line-height: 1.75; }
+  :lang(bn) .t-label { line-height: 1.6; }
+  :lang(bn) .t-caption { line-height: 1.65; }
+
   @media (min-width: 641px) {
     .t-display { font-size: 42px; line-height: 1.12; }
     .t-h1, .h2 { font-size: 38px; line-height: 1.15; }
     :lang(ar) .t-display { font-size: 44px; line-height: 1.25; }
     :lang(ar) .t-h1, :lang(ar) .h2 { font-size: 40px; line-height: 1.3; }
     :lang(ar) .t-h3 { font-size: 22px; }
+    :lang(bn) .t-display { line-height: 1.35; }
+    :lang(bn) .t-h1, :lang(bn) .h2 { line-height: 1.4; }
   }
   @media (min-width: 1024px) {
     .t-display { font-size: 52px; }
@@ -183,6 +193,7 @@
   }
   .eyebrow.on-dark { background: var(--navy-600); }
   /* Tajawal's glyphs sit above the line-box centre; shift padding so the label centres optically (height unchanged). */
+  :lang(bn) .eyebrow { text-transform: none; letter-spacing: 0; font-size: 13px; line-height: 1.6; }
   :lang(ar) .eyebrow { padding-block: calc(6px + 0.15em) calc(6px - 0.15em); font-size: 15px; line-height: 1.5; letter-spacing: 0; }
 
   .h2 { margin: 14px 0 0; color: var(--ink); }
