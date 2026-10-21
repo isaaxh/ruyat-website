@@ -70,11 +70,11 @@
     "eyebrow": "About Us",
     "title": "From idea to achievement",
     "paragraphs": [
-      "Ruyat Al Injaz is your trusted partner in business solutions, backed by 10+ years of experience in e-services and 4+ years in company establishment. From idea to achievement, we help clients navigate their business needs with speed, credibility, and expertise.",
+      "Ruyat Al Enjaz is your trusted partner in business solutions, backed by 10+ years of experience in e-services and 4+ years in company establishment. From idea to achievement, we help clients navigate their business needs with speed, credibility, and expertise.",
       "We also proudly serve the guests of the Most Merciful, offering complete Umrah and Hajj coordination — from visa processing to hotels, transport, and catering — so every pilgrim's journey is seamless from start to finish."
     ],
     "cta": "Explore Our Services",
-    "image_alt": "Ruyat Al Injaz Business Services — From idea to achievement"
+    "image_alt": "Ruyat Al Enjaz Business Services — From idea to achievement"
   },
   "services": {
     "heading": "Services",
@@ -132,7 +132,7 @@
     "next": "Next testimonial",
     "items": [
       {
-        "quote": "Ruyat Al Injaz made setting up our company seamless from day one. Fast, professional, and reliable.",
+        "quote": "Ruyat Al Enjaz made setting up our company seamless from day one. Fast, professional, and reliable.",
         "author": "Hassan Raza",
         "role": "Chief Executive Officer",
         "rating": 5,
@@ -174,7 +174,7 @@
     "help": "Can't find the answer you're looking for? Our team is happy to help.",
     "items": [
       {
-        "question": "What services does Ruyat Al Injaz provide?",
+        "question": "What services does Ruyat Al Enjaz provide?",
         "answer": "We offer company establishment, government liaison services, Umrah and Hajj coordination, licensing, residency applications, and full business support solutions."
       },
       {
@@ -224,8 +224,8 @@
       "required": "Please fill in your full name, phone number and service."
     },
     "map": {
-      "label": "Map showing Ruyat Al Injaz office in Al Shawqiyah, Makkah",
-      "title": "Ruyat Al Injaz office on Google Maps",
+      "label": "Map showing Ruyat Al Enjaz office in Al Shawqiyah, Makkah",
+      "title": "Ruyat Al Enjaz office on Google Maps",
       "place": "Al Shawqiyah, Makkah",
       "street": "Abi Raja Al-Utaridi St.",
       "directions": "Directions"
@@ -240,14 +240,14 @@
     "find_us": "Find us"
   },
   "footer": {
-    "about": "Ruyat Al Injaz is your trusted partner in business setup, government services, and Umrah & Hajj coordination.",
+    "about": "Ruyat Al Enjaz is your trusted partner in business setup, government services, and Umrah & Hajj coordination.",
     "about_short": "Your trusted partner in business setup, government services, and Umrah & Hajj coordination.",
     "learn_more": "Learn more",
     "quick_links": "Quick Links",
     "follow": "Follow Us",
     "contact": "Contact",
     "get_in_touch": "Get in touch",
-    "copyright": "© {year} Ruyat Al Injaz Business Services. All rights reserved.",
+    "copyright": "© {year} Ruyat Al Enjaz Business Services. All rights reserved.",
     "design_by": "Design by {credit}",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
@@ -263,15 +263,15 @@
     "design_credit": "Ishaq Hussain"
   },
   "whatsapp": {
-    "fab_message": "Hello Ruyat Al Injaz, I'd like to ask about your services.",
-    "form_message": "Hello Ruyat Al Injaz, I'd like to ask about a service.\n\nName: {name}\nPhone: {phone}\nService: {service}\nMessage: {message}",
+    "fab_message": "Hello Ruyat Al Enjaz, I'd like to ask about your services.",
+    "form_message": "Hello Ruyat Al Enjaz, I'd like to ask about a service.\n\nName: {name}\nPhone: {phone}\nService: {service}\nMessage: {message}",
     "fab_label": "Chat with us on WhatsApp"
   },
   "brand": {
-    "name": "Ruyat Al Injaz",
+    "name": "Ruyat Al Enjaz",
     "tagline": "Business Services",
-    "home_label": "Ruyat Al Injaz — home",
-    "logo_alt": "Ruyat Al Injaz Business Services"
+    "home_label": "Ruyat Al Enjaz — home",
+    "logo_alt": "Ruyat Al Enjaz Business Services"
   },
   "ui": {
     "language": "Language",
@@ -289,8 +289,8 @@
         "alt": "Al Faisal Group and Partners (Arabic logo)"
       },
       "ruyat": {
-        "name": "Ruyat Al Injaz Business Services",
-        "alt": "Ruyat Al Injaz Business Services"
+        "name": "Ruyat Al Enjaz Business Services",
+        "alt": "Ruyat Al Enjaz Business Services"
       },
       "ruyat-shams": {
         "name": "Ruyat Shams",
