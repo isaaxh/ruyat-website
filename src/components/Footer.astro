@@ -78,7 +78,8 @@ const year = new Date().getFullYear();
   .lockup { display: flex; flex-direction: column; align-items: center; margin-bottom: 18px; font-family: var(--font-latin); line-height: 1.2; text-align: center; }
   .brand .lockup img { width: 62px; height: 79px; margin-bottom: 10px; }
   .lockup-name { font-size: 22px; font-weight: 800; color: var(--white); }
-  .lockup-tag { margin-top: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-400); }
+  /* Tracked out so the tagline spans the same width as the name; the negative end margin drops the trailing letter-space so it stays centred. */
+  .lockup-tag { margin-top: 4px; margin-inline-end: -0.145em; font-size: 12px; font-weight: 600; letter-spacing: 0.145em; text-transform: uppercase; color: var(--gold-400); }
   .about { margin: 0 0 28px; color: var(--on-navy-faint); }
   .about a { color: var(--gold-400); text-decoration: underline; }
   .about.long, .label .long { display: none; }
