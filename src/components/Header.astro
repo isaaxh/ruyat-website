@@ -115,6 +115,8 @@ const items = navItems(lang, active);
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
   .brand img { width: 36px; height: 41px; object-fit: contain; }
   .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  /* Bangla pages show the English wordmark (client request): keep it in the Latin font, not the Bangla body font. */
+  .brand-text:lang(bn) { font-family: var(--font-latin); }
   .brand-name { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: 0.01em; }
   .brand-tag { font-size: 10.5px; font-weight: 600; color: var(--gold-400); letter-spacing: 0.06em; text-transform: uppercase; }
 
