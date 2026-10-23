@@ -41,7 +41,9 @@ const hreflang = (l: Locale) => getMain(l).meta.hreflang;
     {description && <meta property="og:description" content={description} />}
     <meta property="og:locale" content={lang} />
     <meta property="og:url" content={abs(lang)} />
-    <link rel="icon" type="image/svg+xml" href="/logos/ruyat-logo-submark.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
