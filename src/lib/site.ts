@@ -29,10 +29,10 @@ export const EMAIL = 'info@ruyat.sa';
 /** Social profile URLs. null = placeholder, to be added later. Labels come from i18n footer.social (same order). */
 export const SOCIAL = [
   { key: 'whatsapp', url: `https://wa.me/${WHATSAPP_NUMBER}` },
-  { key: 'instagram', url: null }, // TODO
+  { key: 'instagram', url: 'https://www.instagram.com/ruyat.sa/' },
   { key: 'tiktok', url: 'https://www.tiktok.com/@ruyat.sa' },
-  { key: 'x', url: null }, // TODO
   { key: 'snapchat', url: 'https://www.snapchat.com/add/ruyat.sa' },
+  { key: 'x', url: null }, // TODO
   { key: 'youtube', url: null }, // TODO
 ] as const;
 
